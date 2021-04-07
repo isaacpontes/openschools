@@ -1,5 +1,6 @@
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
+const morgan = require('morgan');
 const methodOverride = require('method-override');
 const flash = require('connect-flash');
 const session = require('express-session');
@@ -47,11 +48,13 @@ app.use((req, res, next) => {
 // Method Override
 app.use(methodOverride('_method', { methods: ['POST', 'GET'] }));
 
+// Morgan logs
+app.use(morgan('dev'));
+
 // Routes
 app.use('/', require('./routes/index'));
 app.use('/auth', require('./routes/auth'));
 app.use('/users', require('./routes/users'));
-
 
 const PORT = process.env.PORT || 5000;
 
