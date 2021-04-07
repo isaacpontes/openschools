@@ -1,0 +1,32 @@
+<section class="section has-background-light">
+  <div class="container">
+    <div class="card">
+      <div class="card-content">
+        <h1 class="title">Escola</h1>
+        <hr>
+        <div class="field">
+          <h4 class="title is-4">Nome</h4>
+          <h6 class="subtitle"><%= school.name %></h6>
+        </div>
+        <div class="field">
+          <h4 class="title is-4">Código do INEP</h4>
+          <h6 class="subtitle"><%= school.inepCode %></h6>
+        </div>
+        <div class="field">
+          <h4 class="title is-4">Endereço</h4>
+          <h6 class="subtitle"><%= school.address %></h6>
+        </div>
+        <div class="field">
+          <h4 class="title is-4">Gestor</h4>
+          <h6 class="subtitle">
+            <a href="/users/<%= school.manager._id %>">
+              <%= school.manager.name %>
+            </a>
+          </h6>
+        </div>
+        <a href="/schools/<%= school._id %>/edit" class="button is-link">Editar</a>
+        <a href="/schools" class="button">Voltar</a>
+      </div>
+    </div>
+  </div>
+</section>
