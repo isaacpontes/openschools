@@ -73,7 +73,7 @@
             
             <option
               value="<%= manager._id %>"
-              <%= school.manager.equals(manager._id) ? 'selected' : '' %>
+              <%= manager._id.equals(school.manager) ? 'selected' : '' %>
             >
               <%= manager.name %>
             </option>
