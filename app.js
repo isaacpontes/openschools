@@ -21,7 +21,7 @@ app.use(expressLayouts);
 app.set('view engine', 'ejs');
 
 // Body Parser
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }));
 
 // Express Session
 app.use(session({
@@ -43,7 +43,7 @@ app.use((req, res, next) => {
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
   next();
-})
+});
 
 // Method Override
 app.use(methodOverride('_method', { methods: ['POST', 'GET'] }));
@@ -56,6 +56,7 @@ app.use('/', require('./routes/index'));
 app.use('/auth', require('./routes/auth'));
 app.use('/users', require('./routes/users'));
 app.use('/schools', require('./routes/schools'));
+app.use('/schools/:schoolId/classrooms', require('./routes/classrooms'));
 
 const PORT = process.env.PORT || 5000;
 

@@ -1,0 +1,57 @@
+<%- include('../partials/messages') %>
+
+<form action="<%= url %>" method="POST">
+
+  <div class="columns">
+    <div class="column is-half">
+      <div class="field">
+        <label class="label" for="name">Nome</label>
+        <div class="control">
+          <input
+            class="input"
+            type="text"
+            name="classroom[name]"
+            id="name"
+            placeholder="Insira um nome"
+            value="<%= typeof classroom.name != 'undefined' ? classroom.name : '' %>"
+            autofocus
+            autocomplete="off"
+    
+          />
+          <% if (classroom.errors && classroom.errors.hasOwnProperty('name')) { %>
+            <p class="is-danger help"><%= classroom.errors.name %></p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+    <div class="column is-half">
+      <div class="field">
+        <label class="label" for="code">Código de Identificação</label>
+        <div class="control">
+          <input
+            class="input"
+            type="text"
+            name="classroom[code]"
+            id="code"
+            placeholder="Insira um código único"
+            value="<%= typeof classroom.code != 'undefined' ? classroom.code : '' %>"
+            autocomplete="off"
+          />
+          <% if (classroom.errors && classroom.errors.hasOwnProperty('code')) { %>
+            <p class="is-danger help"><%= classroom.errors.code %></p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <input type="hidden" name="classroom[school]" value="<%= classroom.school %>">
+
+  <div class="field">
+    <div class="control">
+      <button class="button is-link" type="submit">Salvar</button>
+      <a href="/schools/<%= classroom.school %>/classrooms" class="button">Voltar</a>
+    </div>
+  </div>
+
+</form>
