@@ -11,6 +11,7 @@ const app = express();
 const passport = require('passport');
 require('./config/passport')(passport);
 
+// Database configuration and connection
 require('./config/database');
 
 // Static Files
@@ -57,6 +58,7 @@ app.use('/auth', require('./routes/auth'));
 app.use('/users', require('./routes/users'));
 app.use('/schools', require('./routes/schools'));
 app.use('/schools/:schoolId/classrooms', require('./routes/classrooms'));
+app.use('/transports', require('./routes/transports'));
 
 const PORT = process.env.PORT || 5000;
 
