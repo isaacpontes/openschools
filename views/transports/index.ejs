@@ -1,3 +1,5 @@
+<%- include('../layouts/header') %>
+
 <section class="section has-background-light">
   <div class="container">
     <div class="card">
@@ -7,7 +9,7 @@
             <h1 class="title size-4">Rotas de Transporte</h1>
           </div>
           <div class="column is-one-fifth">
-            <a href="/transports/new" class="button is-link">Novo Transporte</a>
+            <a href="/admin/transports/new" class="button is-link">Novo Transporte</a>
           </div>
         </div>
       </div>
@@ -32,13 +34,13 @@
                   <%= transport.driver %>
                 </td>
                 <td>
-                  <a href="/transports/<%= transport._id %>">Exibir</a>
+                  <a href="/admin/transports/<%= transport._id %>">Exibir</a>
                 </td>
                 <td>
-                  <a href="/transports/<%= transport._id %>/edit">Editar</a>
+                  <a href="/admin/transports/<%= transport._id %>/edit">Editar</a>
                 </td>
                 <td>
-                  <a href="/transports/<%= transport._id %>?_method=delete" class="has-text-danger">Excluir</a>
+                  <a href="/admin/transports/<%= transport._id %>?_method=delete" class="has-text-danger">Excluir</a>
                 </td>
               </tr>
             <% }) %>
@@ -48,3 +50,5 @@
     </div>
   </div>
 </section>
+
+<%- include('../layouts/footer') %>

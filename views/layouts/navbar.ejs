@@ -21,13 +21,15 @@
         Escolas
       </a>
 
-      <a class="navbar-item" href="/students">
-        Alunos
-      </a>
-
-      <a class="navbar-item" href="/transports">
-        Transporte
-      </a>
+      <% if (isAdmin) { %>
+        <a class="navbar-item" href="/admin/students">
+          Alunos
+        </a>
+  
+        <a class="navbar-item" href="/admin/transports">
+          Transporte
+        </a>
+      <% } %>
     </div>
 
     <div class="navbar-end">

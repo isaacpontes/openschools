@@ -1,3 +1,5 @@
+<%- include('../layouts/header') %>
+
 <section class="section has-background-light">
   <div class="container">
     <div class="card">
@@ -17,10 +19,12 @@
           <h6 class="subtitle"><%= transport.info %></h6>
         </div>
         <div class="field buttons">
-          <a href="/transports/<%= transport._id %>/edit" class="button is-link">Editar</a>
-          <a href="/transports" class="button">Voltar</a>
+          <a href="/admin/transports/<%= transport._id %>/edit" class="button is-link">Editar</a>
+          <a href="/admin/transports" class="button">Voltar</a>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<%- include('../layouts/footer') %>

@@ -1,5 +1,4 @@
 const express = require('express');
-const expressLayouts = require('express-ejs-layouts');
 const morgan = require('morgan');
 const methodOverride = require('method-override');
 const flash = require('connect-flash');
@@ -17,8 +16,7 @@ require('./config/database');
 // Static Files
 app.use(express.static('public'));
 
-// EJS layouts
-app.use(expressLayouts);
+// EJS as View Engine
 app.set('view engine', 'ejs');
 
 // Body Parser
@@ -46,6 +44,16 @@ app.use((req, res, next) => {
   next();
 });
 
+// Global variable for the admin role
+app.use((req, res, next) => {
+  if (req.isAuthenticated()) {
+    res.locals.isAdmin = req.user.role === 'admin';
+  } else {
+    res.locals.isAdmin = false;
+  }
+  next();
+});
+
 // Method Override
 app.use(methodOverride('_method', { methods: ['POST', 'GET'] }));
 
@@ -57,9 +65,9 @@ app.use('/', require('./routes/index'));
 app.use('/auth', require('./routes/auth'));
 app.use('/users', require('./routes/users'));
 app.use('/schools', require('./routes/schools'));
-app.use('/schools/:schoolId/classrooms', require('./routes/classrooms'));
-app.use('/transports', require('./routes/transports'));
+app.use('/classrooms', require('./routes/classrooms'));
 app.use('/students', require('./routes/students'));
+app.use('/admin/transports', require('./routes/transports'));
 
 const PORT = process.env.PORT || 5000;
 
