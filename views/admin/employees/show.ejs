@@ -1,0 +1,206 @@
+<%- include('../../layouts/header') %>
+
+<section class="section has-background-light">
+  <div class="container">
+    <div class="card">
+      <div class="card-content">
+        <h1 class="title">Funcionário</h1>
+        <hr>
+        <div class="columns">
+          <div class="column is-one-one-half">
+            <div class="field">
+              <h4 class="title is-4">Matrícula</h4>
+              <h6 class="subtitle"><%= employee.enrollment %></h6>
+            </div>
+          </div>
+
+          <div class="column is-one-one-half">
+            <div class="field">
+              <h4 class="title is-4">Nome</h4>
+              <h6 class="subtitle"><%= employee.name %></h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="title is-4">Cargo</h4>
+              <h6 class="subtitle"><%= employee.position %></h6>
+            </div>
+          </div>
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="title is-4">Função</h4>
+              <h6 class="subtitle"><%= employee.role %></h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="title is-4">Vínculo</h4>
+              <h6 class="subtitle"><%= employee.bond %></h6>
+            </div>
+          </div>
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="title is-4">Data de Nascimento</h4>
+              <h6 class="subtitle"><%= dayjs(employee.birthday).format('DD/MM/YYYY') %></h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="title is-4">CPF</h4>
+              <h6 class="subtitle"><%= employee.cpf %></h6>
+            </div>
+          </div>
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="title is-4">RG</h4>
+              <h6 class="subtitle"><%= employee.rg %></h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="title is-4">CTPS</h4>
+              <h6 class="subtitle"><%= employee.ctps %></h6>
+            </div>
+          </div>
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="title is-4">Título de Eleitor</h4>
+              <h6 class="subtitle"><%= employee.electorTitle %></h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="title is-4">PIS</h4>
+              <h6 class="subtitle"><%= employee.pis %></h6>
+            </div>
+          </div>
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="title is-4">Fundeb</h4>
+              <h6 class="subtitle"><%= employee.fundeb %></h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <h4 class="title is-4">Endereço</h4>
+          <h6 class="subtitle"><%= employee.address %></h6>
+        </div>
+
+        <div class="columns">
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="title is-4">Telefone</h4>
+              <h6 class="subtitle"><%= employee.phone %></h6>
+            </div>
+          </div>
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="title is-4">Email</h4>
+              <h6 class="subtitle"><%= employee.email %></h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="title is-4">Formação</h4>
+              <h6 class="subtitle"><%= employee.formation %></h6>
+            </div>
+          </div>
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="title is-4">Formação Complementar</h4>
+              <h6 class="subtitle"><%= employee.complementaryFormation %></h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column is-one-third">
+            <div class="field">
+              <h4 class="title is-4">Situação</h4>
+              <h6 class="subtitle"><%= employee.situation %></h6>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <div class="field">
+              <h4 class="title is-4">Data de Admissão</h4>
+              <h6 class="subtitle"><%= dayjs(employee.admissionDate).format('DD/MM/YYYY') %></h6>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <div class="field">
+              <h4 class="title is-4">Carga Horária</h4>
+              <h6 class="subtitle"><%= employee.workload %></h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="title is-4">Setor de Origem</h4>
+              <h6 class="subtitle"><%= employee.originSector.name %></h6>
+            </div>
+          </div>
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="title is-4">Setor Atual</h4>
+              <h6 class="subtitle"><%= employee.currentSector.name %></h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="title is-4">Escola</h4>
+              <h6 class="subtitle"><%= employee.school.name %></h6>
+            </div>
+          </div>
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="title is-4">Turma</h4>
+              <h6 class="subtitle"><%= employee.classroom.name %></h6>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <div class="field">
+              <h4 class="title is-4">Turno</h4>
+              <h6 class="subtitle"><%= employee.shift %></h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <h4 class="title is-4">Informações Adicionais</h4>
+          <h6 class="subtitle"><%= employee.info %></h6>
+        </div>
+
+        <div class="field buttons">
+          <a href="/admin/employees/<%= employee._id %>/edit" class="button is-link">Editar</a>
+          <a href="/admin/employees" class="button">Voltar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('../../layouts/footer') %>

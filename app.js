@@ -68,6 +68,8 @@ app.use('/schools', require('./routes/schools'));
 app.use('/classrooms', require('./routes/classrooms'));
 app.use('/students', require('./routes/students'));
 app.use('/admin/transports', require('./routes/transports'));
+app.use('/admin/sectors', require('./routes/sectors'));
+app.use('/admin/employees', require('./routes/employees'));
 
 const PORT = process.env.PORT || 5000;
 
