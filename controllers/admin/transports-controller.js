@@ -1,4 +1,4 @@
-const Transport = require('../models/transport');
+const Transport = require('../../models/transport');
 
 module.exports = {
   // Render a list of all transports
@@ -6,7 +6,7 @@ module.exports = {
   index: async function (req, res) {
     try {
       const transports = await Transport.find({});
-      res.render('transports/index', { transports });
+      res.render('admin/transports/index', { transports });
     } catch (error) {
       res.render('pages/error', { error: 'Erro ao carregar lista de transportes.' });
     }
@@ -21,9 +21,9 @@ module.exports = {
     try {
       await transport.save();
       req.flash('success', 'Transporte salvo com sucesso.');
-      res.redirect('/transports');
+      res.redirect('/admin/transports');
     } catch (error) {
-      res.render('transports/new', { transport, error: 'Erro ao salvar transporte.' });
+      res.render('admin/transports/new', { transport, error: 'Erro ao salvar transporte.' });
     }
   },
 
@@ -32,7 +32,7 @@ module.exports = {
   new: async function (req, res) {
     try {
       const transport = new Transport();
-      res.render('transports/new', { transport });
+      res.render('admin/transports/new', { transport });
     } catch (error) {
       res.render('pages/error', { error: 'Erro ao carregar página.' });
     }
@@ -45,7 +45,7 @@ module.exports = {
   
     try {
       const transport = await Transport.findById(id);
-      res.render('transports/show', { transport });
+      res.render('admin/transports/show', { transport });
     } catch (error) {
       res.render('pages/error', { error: 'Erro ao carregar página.' });
     }
@@ -58,7 +58,7 @@ module.exports = {
   
     try {
       const transport = await Transport.findById(id);
-      res.render('transports/edit', { transport });
+      res.render('admin/transports/edit', { transport });
     } catch (error) {
       res.render('pages/error', { error: 'Erro ao carregar página.' });
     }
@@ -74,9 +74,9 @@ module.exports = {
       await Transport.findByIdAndUpdate(id, { name, driver, info });
   
       req.flash('success', 'Transporte atualizado com sucesso.');
-      res.redirect('/transports');
+      res.redirect('/admin/transports');
     } catch (error) {
-      res.render('transports/new', { transport: { name, driver, info }, error: 'Erro ao salvar transporte.' });
+      res.render('admin/transports/new', { transport: { name, driver, info }, error: 'Erro ao salvar transporte.' });
     }
   },
 
@@ -89,9 +89,9 @@ module.exports = {
       await Transport.findByIdAndRemove(id);
   
       req.flash('success', 'Transporte excluído com sucesso.');
-      res.redirect('/transports');
+      res.redirect('/admin/transports');
     } catch (error) {
-      res.render('transports/index', { error: 'Erro ao excluir transporte.' });
+      res.render('admin/transports/index', { error: 'Erro ao excluir transporte.' });
     }
   }
 };

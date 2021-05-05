@@ -18,10 +18,18 @@
       </a>
 
       <a class="navbar-item" href="/schools">
-        Escolas
+        Minhas Escolas
       </a>
 
       <% if (isAdmin) { %>
+        <a class="navbar-item" href="/admin/schools">
+          Escolas
+        </a>
+
+        <a class="navbar-item" href="/admin/classrooms">
+          Turmas
+        </a>
+
         <a class="navbar-item" href="/admin/students">
           Alunos
         </a>
@@ -29,16 +37,24 @@
         <a class="navbar-item" href="/admin/transports">
           Transporte
         </a>
+  
+        <a class="navbar-item" href="/admin/sectors">
+          Setores
+        </a>
+  
+        <a class="navbar-item" href="/admin/employees">
+          Funcionários
+        </a>
       <% } %>
     </div>
 
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="buttons">
-          <a class="button is-primary">
+          <a class="button is-light">
             Meu Usuário
           </a>
-          <a class="button is-white" href="/auth/logout">
+          <a class="button is-danger" href="/auth/logout">
             Sair
           </a>
         </div>

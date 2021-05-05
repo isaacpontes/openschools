@@ -1,17 +1,17 @@
-<%- include('../layouts/header') %>
+<%- include('../../layouts/header') %>
 
 <section class="hero is-fullheight is-light">
   <div class="columns mt-6">
     <div class="column is-6 is-offset-3">
       <div class="card">
         <div class="card-content">
-          <h1 class="title is-4">Novo Transporte</h1>
+          <h1 class="title is-4">Nova Escola</h1>
           <hr>
-          <%- include('_form', { url: '/admin/transports?_method=post', transport: transport }) %> 
+          <%- include('_form', { url: '/admin/schools?_method=post', school: school }) %> 
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<%- include('../layouts/footer') %>
+<%- include('../../layouts/footer') %>
