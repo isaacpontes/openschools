@@ -13,14 +13,37 @@
 
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
-
-      <% if (!isAdmin) { %>
-        <a class="navbar-item" href="/dashboard">
+      <% if (isAdmin) { %>
+        <a class="navbar-item" href="/admin">
           Início
         </a>
 
-        <a class="navbar-item" href="/schools">
-          Minhas Escolas
+        <a class="navbar-item" href="/admin/schools">
+          Escolas
+        </a>
+
+        <a class="navbar-item" href="/admin/classrooms">
+          Turmas
+        </a>
+
+        <a class="navbar-item" href="/admin/students">
+          Alunos
+        </a>
+  
+        <a class="navbar-item" href="/admin/transports">
+          Transporte
+        </a>
+  
+        <a class="navbar-item" href="/admin/sectors">
+          Setores
+        </a>
+  
+        <a class="navbar-item" href="/admin/employees">
+          Funcionários
+        </a>
+  
+        <a class="navbar-item" href="/admin/users">
+          Usuários
         </a>
       <% } %>
     </div>

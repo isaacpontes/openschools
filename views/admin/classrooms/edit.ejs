@@ -4,9 +4,9 @@
   <div class="container">
     <div class="card">
       <div class="card-content">
-        <h1 class="title is-4">Nova Escola</h1>
+        <h1 class="title is-4">Editar Turma | <%= classroom.code %> </h1>
         <hr>
-        <%- include('_form', { url: '/admin/schools?_method=post', school: school }) %> 
+        <%- include('_form', { url: `/admin/classrooms/${classroom._id}?_method=put`, classroom: classroom }) %> 
       </div>
     </div>
   </div>

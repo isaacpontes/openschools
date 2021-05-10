@@ -4,9 +4,9 @@
   <div class="container">
     <div class="card">
       <div class="card-content">
-        <h1 class="title is-4">Nova Escola</h1>
+        <h1 class="title is-4">Novo Usuário</h1>
         <hr>
-        <%- include('_form', { url: '/admin/schools?_method=post', school: school }) %> 
+        <%- include('_form', { url: '/admin/users?_method=post', user: user, isUpdating: false }) %> 
       </div>
     </div>
   </div>

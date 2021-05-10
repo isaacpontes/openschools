@@ -1,4 +1,4 @@
-<%- include('../partials/messages') %>
+<%- include('../../partials/messages') %>
 
 <form action="<%= url %>" method="POST">
 
@@ -45,12 +45,29 @@
     </div>
   </div>
 
-  <input type="hidden" name="classroom[school]" value="<%= classroom.school %>">
+  <div class="field">
+    <label for="school" class="label">Escola</label>
+    <div class="control">
+      <div class="select is-fullwidth">
+        <select name="classroom[school]" id="school">
+          <option>Escolha uma escola...</option>
+          <% schools.forEach(school => { %>
+            <option
+              value="<%= school._id %>"
+              <%= school._id.equals(classroom.school) ? 'selected' : '' %>
+            >
+              <%= school.name %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+    </div>
+  </div>
 
   <div class="field">
     <div class="control">
       <button class="button is-link" type="submit">Salvar</button>
-      <a href="/schools/<%= classroom.school %>" class="button">Voltar</a>
+      <a href="/admin/classrooms" class="button">Voltar</a>
     </div>
   </div>
 

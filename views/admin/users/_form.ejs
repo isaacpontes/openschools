@@ -1,4 +1,4 @@
-<%- include('../partials/messages') %>
+<%- include('../../partials/messages') %>
 
 <form action="<%= url %>" method="POST">
 
@@ -12,7 +12,7 @@
             type="text"
             name="user[name]"
             id="name"
-            placeholder="Digite um nome"
+            placeholder="Ex.: Pedro Henrique"
             value="<%= user.name %>"
             autofocus
             autocomplete="off"
@@ -33,7 +33,7 @@
             type="email"
             name="user[email]"
             id="email"
-            placeholder="Digite um email"
+            placeholder="Ex.: ph@email.com"
             value="<%= user.email %>"
             autocomplete="off"
           />

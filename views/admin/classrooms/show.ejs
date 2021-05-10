@@ -1,4 +1,4 @@
-<%- include('../layouts/header') %>
+<%- include('../../layouts/admin-header') %>
 
 <section class="section">
   <div class="container">
@@ -8,9 +8,19 @@
 
         <hr>
 
-        <div class="field">
-          <h4 class="title is-4">Nome</h4>
-          <h6 class="subtitle"><%= classroom.name %></h6>
+        <div class="columns">
+          <div class="column is-half">
+            <div class="field">
+              <h4 class="title is-4">Nome</h4>
+              <h6 class="subtitle"><%= classroom.name %></h6>
+            </div>
+          </div>
+          <div class="column is-half">
+            <div class="field">
+              <h4 class="title is-4">Escola</h4>
+              <h6 class="subtitle"><%= classroom.school.name %></h6>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -20,13 +30,10 @@
           <div class="column is-four-fifths">
             <h4 class="title is-4">Alunos</h4>
           </div>
-          <div class="column is-one-fifth">
-            <a href="/classrooms/<%= classroom._id %>/addStudent" class="button is-link">Novo Aluno</a>
-          </div>
         </div>
       </div>
       <div class="card-content">
-        <%- include('../partials/messages') %>
+        <%- include('../../partials/messages') %>
         <table class="table">
           <thead>
             <tr>
@@ -34,7 +41,7 @@
               <th>Nome</th>
               <th>Sobrenome</th>
               <th>Telefone</th>
-              <th colspan="3">Ações</th>
+              <th>Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -53,13 +60,7 @@
                   <%= student.phone %>
                 </td>
                 <td>
-                  <a href="/students/<%= student._id %>">Exibir</a>
-                </td>
-                <td>
-                  <a href="/students/<%= student._id %>/edit">Editar</a>
-                </td>
-                <td>
-                  <a href="/students/<%= student._id %>?_method=delete" class="has-text-danger">Excluir</a>
+                  <a href="/admin/students/<%= student._id %>">Exibir</a>
                 </td>
               </tr>
             <% }) %>
@@ -70,16 +71,16 @@
       <div class="card-content">
         <div class="buttons">
           <a
-            href="/classrooms/<%= classroom._id %>/edit"
+            href="/admin/classrooms/<%= classroom._id %>/edit"
             class="button is-link"
           >
             Editar Turma
           </a>
-          <a href="/schools/<%= classroom.school %>" class="button">Voltar</a>
+          <a href="/admin/classrooms" class="button">Voltar</a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<%- include('../layouts/footer') %>
+<%- include('../../layouts/admin-footer') %>

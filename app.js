@@ -63,7 +63,6 @@ app.use(morgan('dev'));
 // Routes
 app.use('/', require('./routes/index'));
 app.use('/auth', require('./routes/auth'));
-app.use('/users', require('./routes/users'));
 app.use('/schools', require('./routes/schools'));
 app.use('/classrooms', require('./routes/classrooms'));
 app.use('/students', require('./routes/students'));

@@ -1,6 +1,6 @@
 <%- include('../layouts/header') %>
 
-<section class="section has-background-light">
+<section class="section">
   <div class="container">
     <div class="card">
       <div class="card-content">
@@ -10,23 +10,19 @@
           <div class="column is-two-quarters">
             <div class="field">
               <h4 class="title is-4">Endereço</h4>
-              <h6 class="subtitle"><%= school.address %></h6>
+              <h5 class="subtitle"><%= school.address %></h5>
             </div>
           </div>
           <div class="column is-one-quarter">
             <div class="field">
               <h4 class="title is-4">Código do INEP</h4>
-              <h6 class="subtitle"><%= school.inepCode %></h6>
+              <h5 class="subtitle"><%= school.inepCode %></h5>
             </div>
           </div>
           <div class="column is-one-quarter">
             <div class="field">
               <h4 class="title is-4">Gestor</h4>
-              <h6 class="subtitle">
-                <a href="/users/<%= school.manager._id %>">
-                  <%= school.manager.name %>
-                </a>
-              </h6>
+              <h5 class="subtitle"><%= school.manager.name %></h5>
             </div>
           </div>
         </div>
@@ -39,7 +35,7 @@
             <h4 class="title is-4">Lista de Turmas</h4>
           </div>
           <div class="column is-one-fifth">
-            <a href="/schools/<%= school._id %>/addClassroom" class="button is-link">Nova Turma</a>
+            <a href="/schools/<%= school._id %>/add-classroom" class="button is-link">Nova Turma</a>
           </div>
         </div>
       </div>
@@ -50,7 +46,7 @@
             <tr>
               <th>Turma</th>
               <th>Nome</th>
-              <th colspan="2">Ações</th>
+              <th colspan="3">Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -78,10 +74,7 @@
       </div>
 
       <div class="card-content">
-        <div class="buttons">
-          <a href="/schools/<%= school._id %>/edit" class="button is-link">Editar Escola</a>
-          <a href="/schools" class="button">Voltar</a>
-        </div>
+        <a href="/schools" class="button">Voltar</a>
       </div>
     </div>
   </div>

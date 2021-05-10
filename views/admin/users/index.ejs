@@ -6,10 +6,10 @@
       <div class="card-content">
         <div class="columns">
           <div class="column is-four-fifths">
-            <h1 class="title size-4">Listagem de Escolas</h1>
+            <h1 class="title size-4">Todos os Usuários</h1>
           </div>
           <div class="column is-one-fifth">
-            <a href="/admin/schools/new" class="button is-link">Nova Escola</a>
+            <a href="/admin/users/new" class="button is-link">Novo Usuário</a>
           </div>
         </div>
       </div>
@@ -20,31 +20,39 @@
           <thead>
             <tr>
               <th>Nome</th>
-              <th>Código do INEP</th>
-              <th>Gestor</th>
+              <th>Email</th>
+              <th>Perfil</th>
               <th colspan="3">Ações</th>
             </tr>
           </thead>
           <tbody>
-            <% schools.forEach(school => { %>
+            <% users.forEach(user => { %>
               <tr>
                 <td>
-                  <%= school.name %>
+                  <%= user.name %>
                 </td>
                 <td>
-                  <%= school.inepCode %>
+                  <%= user.email %>
                 </td>
                 <td>
-                  <%= school.manager.name %>
+                  <% if (user.role === "admin") { %>
+                    <span>Administrador</span>
+                  <% } else if (user.role === "manager") { %>
+                    <span>Gestor</span>
+                  <% } else if (user.role === "teacher") { %>
+                    <span>Professor</span>
+                  <% } else if (user.role === "student") { %>
+                    <span>Aluno</span>
+                  <% } %>
                 </td>
                 <td>
-                  <a href="/admin/schools/<%= school._id %>">Exibir</a>
+                  <a href="/admin/users/<%= user._id %>">Exibir</a>
                 </td>
                 <td>
-                  <a href="/admin/schools/<%= school._id %>/edit">Editar</a>
+                  <a href="/admin/users/<%= user._id %>/edit">Editar</a>
                 </td>
                 <td>
-                  <a href="/admin/schools/<%= school._id %>?_method=delete" class="has-text-danger">Excluir</a>
+                  <a href="/admin/users/<%= user._id %>?_method=delete" class="has-text-danger">Excluir</a>
                 </td>
               </tr>
             <% }) %>
