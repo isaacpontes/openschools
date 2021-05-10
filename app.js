@@ -22,6 +22,9 @@ app.set('view engine', 'ejs');
 // Body Parser
 app.use(express.urlencoded({ extended: true }));
 
+// JSON middleware
+app.use(express.json());
+
 // Express Session
 app.use(session({
   secret: 'a secure secret',
