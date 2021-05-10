@@ -14,5 +14,6 @@ router.get('/schools/:id', ensureAuth, schoolsController.findSchoolById);
 router.get('/schools/:id/classrooms', ensureAuth, schoolsController.findSchoolClassrooms);
 
 router.post('/classrooms', ensureAuth, classroomsController.save);
+router.get('/classrooms/:id', ensureAuth, classroomsController.findOne);
 
 module.exports = router;

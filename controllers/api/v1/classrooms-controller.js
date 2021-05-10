@@ -16,27 +16,17 @@ module.exports = {
     }
   },
 
-  // Render a single classroom
-  // GET /classrooms/:id
-  show: async function (req, res) {
-    try {
-      const classroom = await Classroom.findById(req.params.id);
-      const students = await Student.find({ classroom: classroom._id });
+  // Return a single classroom
+  // GET /api/v1/classrooms/:id
+  findOne: async function (req, res) {
+    const { id } = req.params;
 
-      res.status(200).render('classrooms/show', { classroom, students });
-    } catch (error) {
-      res.status(500).render('pages/error', { error: 'Erro ao carregar página.' });
-    }
-  },
-
-  // Render classroom edit form
-  // GET /classrooms/:id/edit
-  edit: async function (req, res) {
     try {
-      const classroom = await Classroom.findById(req.params.id);
-      res.render('classrooms/edit', { classroom });
+      const classroom = await Classroom.findById(id).populate('school');
+
+      return res.status(200).json(classroom);
     } catch (error) {
-      res.render('pages/error', { error: 'Erro ao carregar página.' });
+      return res.status(400).json({ message: 'Erro ao retornar turma.' })
     }
   },
 
