@@ -68,6 +68,9 @@ app.use('/classrooms', require('./routes/classrooms'));
 app.use('/students', require('./routes/students'));
 app.use('/admin', require('./routes/admin'));
 
+// API routes
+app.use('/api/v1', require('./routes/api/v1'));
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, console.log(`Server started successfully at port ${PORT}`));
