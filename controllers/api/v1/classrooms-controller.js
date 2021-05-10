@@ -31,31 +31,32 @@ module.exports = {
   },
 
   // Update a classroom in the database
-  // PUT /classrooms/:id
+  // PATCH /api/v1/classrooms/:id
   update: async function (req, res) {
-    const { name, code, school } = req.body.classroom;
+    const { id } = req.params;
+    const { name, code } = req.body;
 
     try {
-      await Classroom.findByIdAndUpdate(req.params.id, { name, code });
+      await Classroom.findByIdAndUpdate(id, { name, code });
   
-      req.flash('success', 'Turma atualizada com sucesso.');
-      res.redirect(`/schools/${school}/classrooms`);
+      return res.status(204).json({ message: 'OK' });
     } catch (error) {
-      res.render('classrooms/edit', { classroom: { name, code, school }, error: 'Erro ao atualizar turma.' });
+      return res.status(400).json({ message: 'Erro ao atualizar turma.' });
     }
   },
 
   // Delete classroom from database
   // DELETE /classrooms/:id
   delete: async function (req, res) {
-    const classroom = await Classroom.findById(req.params.id);
-    try {
-      await classroom.remove();
+    const { id } = req.params;
 
-      req.flash('success', 'Turma excluída com sucesso.');
-      res.redirect(`/schools/${classroom.school}`);
+    try {
+      await Classroom.findByIdAndRemove(id);
+
+      return res.status(204).json({ message: 'OK' });
     } catch (error) {
-      res.redirect(`/schools/${classroom.school}`, { error: 'Erro ao excluir turma.' });
+      console.log(error);
+      return res.status(400).json({ message: 'Erro ao excluir turma.' });
     }
   },
 };
