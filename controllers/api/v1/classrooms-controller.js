@@ -59,4 +59,18 @@ module.exports = {
       return res.status(400).json({ message: 'Erro ao excluir turma.' });
     }
   },
+
+  // Return all the classroom's students
+  // GET /api/v1/classrooms/:id/students
+  findClassroomStudents: async function (req, res) {
+    const { id } = req.params;
+
+    try {
+      const students = await Student.find({ classroom: id });
+      
+      return res.status(200).json(students);
+    } catch (error) {
+      return res.status(400).json({ message: 'Erro ao recuperar turmas.'})
+    }
+  }
 };

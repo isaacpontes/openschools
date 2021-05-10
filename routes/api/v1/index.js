@@ -17,5 +17,6 @@ router.post('/classrooms', ensureAuth, classroomsController.save);
 router.get('/classrooms/:id', ensureAuth, classroomsController.findOne);
 router.patch('/classrooms/:id', ensureAuth, classroomsController.update);
 router.delete('/classrooms/:id', ensureAuth, classroomsController.delete);
+router.get('/classrooms/:id/students', ensureAuth, classroomsController.findClassroomStudents);
 
 module.exports = router;
