@@ -10,5 +10,6 @@ router.post('/auth/login', authController.login);
 
 router.get('/schools', ensureAuth, schoolsController.findAuthUserSchools);
 router.get('/schools/:id', ensureAuth, schoolsController.findSchoolById);
+router.get('/schools/:id/classrooms', ensureAuth, schoolsController.findSchoolClassrooms);
 
 module.exports = router;

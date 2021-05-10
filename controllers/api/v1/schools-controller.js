@@ -27,11 +27,23 @@ module.exports = {
       if (!school.manager._id.equals(req.user._id))
         return res.status(401).json({ message: 'Você não tem acesso a esta escola.'});
 
-      const classrooms = await Classroom.find({ school: school._id });
-  
-      return res.status(200).json({ school, classrooms });
+      return res.status(200).json(school);
     } catch (error) {
       return res.status(400).json({ message: 'Erro ao recuperar escola.' });
     }
   },
+
+  // Return all the school's classrooms
+  // GET /api/v1/schools/:id/classrooms
+  findSchoolClassrooms: async function (req, res) {
+    const { id } = req.params;
+
+    try {
+      const classrooms = await Classroom.find({ school: id });
+      
+      return res.status(200).json(classrooms);
+    } catch (error) {
+      return res.status(400).json({ message: 'Erro ao recuperar turmas.'})
+    }
+  }
 };
