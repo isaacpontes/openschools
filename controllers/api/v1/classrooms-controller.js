@@ -37,9 +37,16 @@ module.exports = {
     const { name, code } = req.body;
 
     try {
-      await Classroom.findByIdAndUpdate(id, { name, code });
+      const classroom = await Classroom.findById(id);
+
+      if (name) classroom.name = name;
+      if (code) classroom.code = code;
+
+      classroom.updated = Date.now();
+
+      await classroom.save();
   
-      return res.status(204).json({ message: 'OK' });
+      return res.json(classroom);
     } catch (error) {
       return res.status(400).json({ message: 'Erro ao atualizar turma.' });
     }

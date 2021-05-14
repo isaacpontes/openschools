@@ -48,15 +48,36 @@ module.exports = {
     } = req.body;
   
     try {
-      await Student.findByIdAndUpdate(id, {
-        enrollment, firstName, lastName, gender, phone, address, birthday,
-        birthPlace, fatherName, fatherOcupation, motherName, motherOcupation,
-        bloodType, info, transport, school, classroom, updated: Date.now()
-      });
+      const student = await Student.findById(id);
+
+      if (enrollment) student.enrollment = enrollment;
+      if (firstName) student.firstName = firstName;
+      if (lastName) student.lastName = lastName;
+      if (gender) student.gender = gender;
+      if (phone) student.phone = phone;
+      if (address) student.address = address;
+      if (birthday) student.birthday = birthday;
+      if (birthPlace) student.birthPlace = birthPlace;
+      if (fatherName) student.fatherName = fatherName;
+      if (motherName) student.motherName = motherName;
+      if (motherOcupation) student.motherOcupation = motherOcupation;
+      if (bloodType) student.bloodType = bloodType;
+      if (info) student.info = info;
+      if (transport) student.transport = transport;
+      if (school) student.school = school;
+      if (school) student.school = school;
+      if (classroom) student.classroom = classroom;
+      student.updated = Date.now();
+
+      // console.log(student);
+      await student.save();
   
-      return res.status(204).json({ message: 'OK' });
+      return res.json(student);
     } catch (error) {
-      return res.status(400).json({ message: 'Erro ao atualizar aluno.' });
+      return res.status(400).json({
+        message: 'Erro ao atualizar aluno.',
+        error: error.message
+      });
     }
   },
 
