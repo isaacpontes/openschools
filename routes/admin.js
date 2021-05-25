@@ -1,5 +1,5 @@
 const express = require('express');
-const { ensureAdmin } = require('../config/auth');
+const { ensureAdmin } = require('../middlewares/auth');
 const classroomsController = require('../controllers/admin/classrooms-controller');
 const dashboardController = require('../controllers/admin/dashboard-controller');
 

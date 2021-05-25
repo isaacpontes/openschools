@@ -5,7 +5,7 @@ const classroomsController = require('../../../controllers/api/v1/classrooms-con
 const schoolsController = require('../../../controllers/api/v1/schools-controller');
 const studentsController = require('../../../controllers/api/v1/students-controller');
 const transportsController = require('../../../controllers/api/v1/transports-controller');
-const ensureAuth = require('../../../middlewares/auth');
+const ensureAuth = require('../../../middlewares/auth-api');
 
 const router = express.Router();
 

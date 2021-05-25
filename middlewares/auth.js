@@ -1,25 +1,22 @@
-const User = require('../models/user');
-const { verifyToken } = require('../services/jwt');
+module.exports = {
+  ensureAuthenticated: (req, res, next) => {
+    if (!req.isAuthenticated()) {
+      req.flash('error', 'Você precisar estar logado para acessar este recurso.');
+      return res.redirect('/');
+    }
 
-const ensureAuth = (req, res, next) => {
-  const token = req.headers['x-access-token'];
+    return next();
+  },
+  ensureAdmin: (req, res, next) => {
+    if (!req.isAuthenticated()) {
+      req.flash('error', 'Você precisar estar logado para acessar este recurso.');
+      return res.redirect('/');
+    }
+    if (req.user.role !== 'admin') {
+      req.flash('error', 'Você não tem permissão para acessar este recurso.');
+      return res.redirect('/dashboard');
+    }
 
-  if (!token)
-    return res.status(401).json({ message: 'Não Autorizado: nenhum token encontrado.'});
-
-  const tokenEmail = verifyToken(token);
-
-  if (!tokenEmail)
-    return res.status(401).json({ message: 'Não Autorizado: token inválido.'});
-  
-  User.findOne({ email: tokenEmail })
-    .then(user => {
-      req.user = user;
-      next();
-    })
-    .catch(error => {
-      return res.status(400).json({ message: 'Conteúdo do token inválido.'});
-    })
+    return next();
+  }
 };
-
-module.exports = ensureAuth;
