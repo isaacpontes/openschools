@@ -1,0 +1,15 @@
+<%- include('../../layouts/admin-header') %>
+
+<section class="section">
+  <div class="container">
+    <div class="card">
+      <div class="card-content">
+        <h1 class="title is-4">Editar Transporte | <%= transport.name %></h1>
+        <hr>
+        <%- include('_form', { url: `/admin/transports/${transport._id}?_method=put`, transport: transport }) %> 
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('../../layouts/admin-footer') %>

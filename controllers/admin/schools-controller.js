@@ -7,7 +7,7 @@ module.exports = {
   // GET /admin/schools
   index: async function (req, res) {
     try {
-      const schools = await School.find({});
+      const schools = await School.find({}).populate('manager');
       return res.status(200).render('admin/schools/index', { schools });
     } catch (error) {
       return res.status(500).render('pages/error', { error: 'Erro ao carregar lista de escolas.' });

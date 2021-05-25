@@ -1,0 +1,54 @@
+<%- include('../../layouts/admin-header') %>
+
+<section class="section">
+  <div class="container">
+    <div class="card">
+      <div class="card-content">
+        <div class="columns">
+          <div class="column is-four-fifths">
+            <h1 class="title size-4">Rotas de Transporte</h1>
+          </div>
+          <div class="column is-one-fifth">
+            <a href="/admin/transports/new" class="button is-link">Novo Transporte</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-content">
+        <%- include('../../partials/messages') %>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Motorista</th>
+              <th colspan="3">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% transports.forEach(transport => { %>
+              <tr>
+                <td>
+                  <%= transport.name %>
+                </td>
+                <td>
+                  <%= transport.driver %>
+                </td>
+                <td>
+                  <a href="/admin/transports/<%= transport._id %>">Exibir</a>
+                </td>
+                <td>
+                  <a href="/admin/transports/<%= transport._id %>/edit">Editar</a>
+                </td>
+                <td>
+                  <a href="/admin/transports/<%= transport._id %>?_method=delete" class="has-text-danger">Excluir</a>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('../../layouts/admin-footer') %>

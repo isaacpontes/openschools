@@ -1,0 +1,74 @@
+<%- include('../../partials/messages') %>
+
+<form action="<%= url %>" method="POST">
+
+  <div class="columns">
+    <div class="column is-half">
+      <div class="field">
+        <label class="label" for="name">Nome</label>
+        <div class="control">
+          <input
+            class="input"
+            type="text"
+            name="classroom[name]"
+            id="name"
+            placeholder="Ex.: 7º Ano do Ensino Fundamental (Manhã)"
+            value="<%= typeof classroom.name != 'undefined' ? classroom.name : '' %>"
+            autofocus
+            autocomplete="off"
+    
+          />
+          <% if (classroom.errors && classroom.errors.hasOwnProperty('name')) { %>
+            <p class="is-danger help"><%= classroom.errors.name %></p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+    <div class="column is-half">
+      <div class="field">
+        <label class="label" for="code">Código de Identificação</label>
+        <div class="control">
+          <input
+            class="input"
+            type="text"
+            name="classroom[code]"
+            id="code"
+            placeholder="Ex.: 701A"
+            value="<%= typeof classroom.code != 'undefined' ? classroom.code : '' %>"
+            autocomplete="off"
+          />
+          <% if (classroom.errors && classroom.errors.hasOwnProperty('code')) { %>
+            <p class="is-danger help"><%= classroom.errors.code %></p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="school" class="label">Escola</label>
+    <div class="control">
+      <div class="select is-fullwidth">
+        <select name="classroom[school]" id="school">
+          <option>Escolha uma escola...</option>
+          <% schools.forEach(school => { %>
+            <option
+              value="<%= school._id %>"
+              <%= school._id.equals(classroom.school) ? 'selected' : '' %>
+            >
+              <%= school.name %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="control">
+      <button class="button is-link" type="submit">Salvar</button>
+      <a href="/admin/classrooms" class="button">Voltar</a>
+    </div>
+  </div>
+
+</form>

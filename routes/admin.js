@@ -1,13 +1,26 @@
 const express = require('express');
-const { ensureAdmin } = require('../config/auth');
+const { ensureAdmin } = require('../middlewares/auth');
+const classroomsController = require('../controllers/admin/classrooms-controller');
+const dashboardController = require('../controllers/admin/dashboard-controller');
 
 const employeesController = require('../controllers/admin/employees-controller');
 const schoolController = require('../controllers/admin/schools-controller');
 const sectorsController = require('../controllers/admin/sectors-controller');
 const studentsController = require('../controllers/admin/students-controller');
 const transportsController = require('../controllers/admin/transports-controller');
+const usersController = require('../controllers/admin/users-controller');
 
 const router = express.Router();
+
+router.get('/', ensureAdmin, dashboardController.index);
+
+router.get('/classrooms', ensureAdmin, classroomsController.index);
+router.post('/classrooms', ensureAdmin, classroomsController.save);
+router.get('/classrooms/new', ensureAdmin, classroomsController.new);
+router.get('/classrooms/:id', ensureAdmin, classroomsController.show);
+router.get('/classrooms/:id/edit', ensureAdmin, classroomsController.edit);
+router.put('/classrooms/:id', ensureAdmin, classroomsController.update);
+router.delete('/classrooms/:id', ensureAdmin, classroomsController.delete);
 
 router.get('/employees', ensureAdmin, employeesController.index);
 router.post('/employees', ensureAdmin, employeesController.save);
@@ -47,5 +60,13 @@ router.get('/transports/:id', ensureAdmin, transportsController.show);
 router.get('/transports/:id/edit', ensureAdmin, transportsController.edit);
 router.put('/transports/:id', ensureAdmin, transportsController.update);
 router.delete('/transports/:id', ensureAdmin, transportsController.delete);
+
+router.get('/users', ensureAdmin, usersController.index);
+router.post('/users', ensureAdmin, usersController.save);
+router.get('/users/new', ensureAdmin, usersController.new);
+router.get('/users/:id', ensureAdmin, usersController.show);
+router.get('/users/:id/edit', ensureAdmin, usersController.edit);
+router.put('/users/:id', ensureAdmin, usersController.update);
+router.delete('/users/:id', ensureAdmin, usersController.delete);
 
 module.exports = router;

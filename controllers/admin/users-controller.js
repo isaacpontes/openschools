@@ -4,7 +4,7 @@ module.exports = {
   index: async function (req, res) {
     try {
       const users = await User.find({});
-      res.render('users/index', { users });
+      res.render('admin/users/index', { users });
     } catch (error) {
       res.render('pages/error', { error: 'Erro ao carregar lista de usuários.' });
     }
@@ -22,16 +22,16 @@ module.exports = {
       }
       await newUser.save();
       req.flash('success', 'Usuário salvo com sucesso.');
-      res.redirect('/users');
+      res.redirect('/admin/users');
     } catch (error) {
-      res.render('users/new', { user: newUser, error: 'Erro ao salvar usuário.' });
+      res.render('admin/users/new', { user: newUser, error: 'Erro ao salvar usuário.' });
     }
   },
 
   new: async function (req, res) {
     try {
       const user = new User();
-      res.render('users/new', { user });
+      res.render('admin/users/new', { user });
     } catch (error) {
       res.render('pages/error', { error: 'Erro ao carregar página.' });
     }
@@ -39,8 +39,8 @@ module.exports = {
 
   show: async function (req, res) {
     try {
-      const user = await User.findById(req.params.id).populate('tasks');
-      res.render('users/show', { user: user });
+      const user = await User.findById(req.params.id);
+      res.render('admin/users/show', { user: user });
     } catch (error) {
       res.render('pages/error', { error: 'Erro ao carregar página.' });
     }
@@ -49,7 +49,7 @@ module.exports = {
   edit: async function (req, res) {
     try {
       const user = await User.findById(req.params.id);
-      res.render('users/edit', { user: user });
+      res.render('admin/users/edit', { user: user });
     } catch (error) {
       res.render('pages/error', { error: 'Erro ao carregar página.' });
     }
@@ -73,9 +73,9 @@ module.exports = {
   
       await user.save();
       req.flash('success', 'Usuário atualizado com sucesso.');
-      res.redirect('/users');
+      res.redirect('/admin/users');
     } catch (error) {
-      res.render('users/edit', { user: { name, role, email }, error: 'Erro ao salvar usuário.' });
+      res.render('admin/users/edit', { user: { name, role, email }, error: 'Erro ao salvar usuário.' });
     }
   },
 
@@ -83,9 +83,9 @@ module.exports = {
     try {
       await User.findByIdAndRemove(req.params.id);
       req.flash('success', 'Usuário excluído com sucesso.');
-      res.redirect('/users');
+      res.redirect('/admin/users');
     } catch (error) {
-      res.render('users/index', { error: 'Erro ao excluir usuário.' });
+      res.render('admin/users/index', { error: 'Erro ao excluir usuário.' });
     }
   },
 };

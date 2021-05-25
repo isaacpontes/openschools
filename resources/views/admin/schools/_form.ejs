@@ -1,0 +1,93 @@
+<%- include('../../partials/messages') %>
+
+<form action="<%= url %>" method="POST">
+
+  <div class="columns">
+    <div class="column is-half">
+      <div class="field">
+        <label class="label" for="name">Nome</label>
+        <div class="control">
+          <input
+            class="input"
+            type="text"
+            name="school[name]"
+            id="name"
+            placeholder="Ex.: Escola Municipal Mestra Maria Firmina"
+            value="<%= typeof school.name != 'undefined' ? school.name : '' %>"
+            autofocus
+            autocomplete="off"
+    
+          />
+          <% if (school.errors && school.errors.hasOwnProperty('name')) { %>
+            <p class="is-danger help"><%= school.errors.name %></p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+    <div class="column is-half">
+      <div class="field">
+        <label class="label" for="inepCode">Código do INEP</label>
+        <div class="control">
+          <input
+            class="input"
+            type="text"
+            name="school[inepCode]"
+            id="inepCode"
+            placeholder="Ex.: 33012504"
+            value="<%= typeof school.inepCode != 'undefined' ? school.inepCode : '' %>"
+            autocomplete="off"
+          />
+          <% if (school.errors && school.errors.hasOwnProperty('inepCode')) { %>
+            <p class="is-danger help"><%= school.errors.inepCode %></p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="address" class="label">Endereço</label>
+    <div class="control">
+      <input
+        class="input"
+        type="text"
+        name="school[address]"
+        id="address"
+        placeholder="Ex.: Rua Augusto Andrade, Vila dos Coroados."
+        value="<%= typeof school.address != 'undefined' ? school.address : '' %>"
+        autocomplete="off"
+      />
+      <% if (school.errors && school.errors.hasOwnProperty('address')) { %>
+        <p class="is-danger help"><%= school.errors.address %></p>
+      <% } %>
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="manager" class="label">Gestor</label>
+    <div class="control">
+      <div class="select">
+        <select name="school[manager]" id="manager">
+          <option>Escolha um usuário gestor...</option>
+          <% allManagers.forEach(manager => { %>
+            
+            <option
+              value="<%= manager._id %>"
+              <%= manager._id.equals(school.manager) ? 'selected' : '' %>
+            >
+              <%= manager.name %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="control">
+      <button class="button is-link" type="submit">Salvar</button>
+      <a href="/schools" class="button">Voltar</a>
+    </div>
+  </div>
+
+</form>

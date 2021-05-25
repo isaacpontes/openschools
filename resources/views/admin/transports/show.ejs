@@ -1,0 +1,30 @@
+<%- include('../../layouts/admin-header') %>
+
+<section class="section">
+  <div class="container">
+    <div class="card">
+      <div class="card-content">
+        <h1 class="title">Transporte</h1>
+        <hr>
+        <div class="field">
+          <h4 class="title is-4">Nome</h4>
+          <h6 class="subtitle"><%= transport.name %></h6>
+        </div>
+        <div class="field">
+          <h4 class="title is-4">Motorista</h4>
+          <h6 class="subtitle"><%= transport.driver %></h6>
+        </div>
+        <div class="field">
+          <h4 class="title is-4">Informações Adicionais</h4>
+          <h6 class="subtitle"><%= transport.info %></h6>
+        </div>
+        <div class="field buttons">
+          <a href="/admin/transports/<%= transport._id %>/edit" class="button is-link">Editar</a>
+          <a href="/admin/transports" class="button">Voltar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('../../layouts/admin-footer') %>

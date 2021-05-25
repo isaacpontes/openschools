@@ -71,8 +71,7 @@ const studentSchema = new mongoose.Schema({
   },
   transport: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Transport',
-    required: true,
+    ref: 'Transport'
   }
 });
 

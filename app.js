@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
 const methodOverride = require('method-override');
@@ -17,10 +18,14 @@ require('./config/database');
 app.use(express.static('public'));
 
 // EJS as View Engine
+app.set('views', path.join(__dirname, 'resources/views'));
 app.set('view engine', 'ejs');
 
 // Body Parser
 app.use(express.urlencoded({ extended: true }));
+
+// JSON middleware
+app.use(express.json());
 
 // Express Session
 app.use(session({
@@ -63,11 +68,13 @@ app.use(morgan('dev'));
 // Routes
 app.use('/', require('./routes/index'));
 app.use('/auth', require('./routes/auth'));
-app.use('/users', require('./routes/users'));
 app.use('/schools', require('./routes/schools'));
 app.use('/classrooms', require('./routes/classrooms'));
 app.use('/students', require('./routes/students'));
 app.use('/admin', require('./routes/admin'));
+
+// API routes
+app.use('/api/v1', require('./routes/api/v1'));
 
 const PORT = process.env.PORT || 5000;
 

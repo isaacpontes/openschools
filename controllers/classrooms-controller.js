@@ -54,7 +54,7 @@ module.exports = {
       req.flash('success', 'Turma atualizada com sucesso.');
       res.redirect(`/schools/${school}/classrooms`);
     } catch (error) {
-      res.render('classrooms/new', { classroom: { name, code, school }, error: 'Erro ao salvar turma.' });
+      res.render('classrooms/edit', { classroom: { name, code, school }, error: 'Erro ao atualizar turma.' });
     }
   },
 
