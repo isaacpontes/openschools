@@ -7,7 +7,7 @@ const employeeSchema = new mongoose.Schema({
   role: { type: String, required: true },
   bond: {
     type: String,
-    enum: ['Efetivo', 'DAS', 'RPA', 'Contrato'],
+    enum: ['Efetivo', 'Comissionado', 'Contratado', 'Cedido', 'Permutado'],
     required: true
   },
   birthday: { type: String, required: true },
@@ -21,6 +21,7 @@ const employeeSchema = new mongoose.Schema({
   email: { type: String, required: true },
   situation: {
     type: String,
+    enum: ['Ativo', 'Cedido', 'Extraclasse', 'Licenciado', 'Permutado', 'Professor Regente', 'Readaptado'],
     required: true
   },
   admissionDate: { type: Date, required: true },

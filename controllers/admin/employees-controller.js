@@ -40,6 +40,8 @@ module.exports = {
       req.flash('success', 'Funcionário salvo com sucesso.');
       return res.redirect('/admin/employees');
     } catch (error) {
+      console.log(error);
+
       const allSectors = await Sector.find({});
       const allSchools = await School.find({});
       const allClasses = await Classroom.find({}).populate('school');

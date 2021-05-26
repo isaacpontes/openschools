@@ -101,14 +101,17 @@
               <option value="Efetivo" <%= employee.bond === 'Efetivo' ? 'selected' : '' %>>
                 Efetivo
               </option>
-              <option value="DAS" <%= employee.bond === 'DAS' ? 'selected' : '' %>>
-                DAS
+              <option value="Comissionado" <%= employee.bond === 'Comissionado' ? 'selected' : '' %>>
+                Comissionado
               </option>
-              <option value="RPA" <%= employee.bond === 'RPA' ? 'selected' : '' %>>
-                RPA
+              <option value="Contratado" <%= employee.bond === 'Contratado' ? 'selected' : '' %>>
+                Contratado
               </option>
-              <option value="Contrato" <%= employee.bond === 'Contrato' ? 'selected' : '' %>>
-                Contrato
+              <option value="Cedido" <%= employee.bond === 'Cedido' ? 'selected' : '' %>>
+                Cedido
+              </option>
+              <option value="Permutado" <%= employee.bond === 'Permutado' ? 'selected' : '' %>>
+                Permutado
               </option>
             </select>
           </div>
@@ -379,18 +382,34 @@
   <div class="columns">
     <div class="column is-one-third">
       <div class="field">
-        <label class="label" for="situation">Situação</label>
+        <label for="situation" class="label">Situação</label>
         <div class="control">
-          <input
-            class="input"
-            type="text"
-            name="employee[situation]"
-            id="situation"
-            placeholder="Ex.: Ativo"
-            value="<%= typeof employee.situation != 'undefined' ? employee.situation : '' %>"
-            autofocus
-            autocomplete="off"
-          />
+          <div class="select is-fullwidth">
+            <select name="employee[situation]" id="situation">
+              <option>Selecione um situação</option>
+              <option value="Ativo" <%= employee.situation === 'Ativo' ? 'selected' : '' %>>
+                Ativo
+              </option>
+              <option value="Cedido" <%= employee.situation === 'Cedido' ? 'selected' : '' %>>
+                Cedido
+              </option>
+              <option value="Extraclasse" <%= employee.situation === 'Extraclasse' ? 'selected' : '' %>>
+                Extraclasse
+              </option>
+              <option value="Licenciado" <%= employee.situation === 'Licenciado' ? 'selected' : '' %>>
+                Licenciado
+              </option>
+              <option value="Permutado" <%= employee.situation === 'Permutado' ? 'selected' : '' %>>
+                Permutado
+              </option>
+              <option value="Professor Regente" <%= employee.situation === 'Professor Regente' ? 'selected' : '' %>>
+                Professor Regente
+              </option>
+              <option value="Readaptado" <%= employee.situation === 'Readaptado' ? 'selected' : '' %>>
+                Readaptado
+              </option>
+            </select>
+          </div>
           <% if (employee.errors && employee.errors.hasOwnProperty('situation')) { %>
             <p class="is-danger help"><%= employee.errors.situation %></p>
           <% } %>
