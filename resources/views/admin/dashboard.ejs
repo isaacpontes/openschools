@@ -2,28 +2,218 @@
 
 <section class="section">
   <div class="container">
-    <div class="card">
-      <div class="card-content">
-        <h3 class="title">Dashboard</h3>
-      </div>
-
-      <div class="card-content">
         <%- include('../partials/messages') %>
 
+        <div class="columns is-multiline has-text-centered">
+          <div class="column is-6-tablet is-3-desktop">
+            <div class="card mb-5">
+              <div class="card-content is-flex is-justify-content-space-between">
+                <span class="is-size-4 is-uppercase has-text-weight-bold">Escolas:</span>
+                <span class="is-size-4 is-uppercase has-text-weight-bold"><%= schoolsCount %></span>
+              </div>
+            </div>
+            <div class="card mb-5">
+              <div class="card-content is-flex is-justify-content-space-between">
+                <span class="is-size-4 is-uppercase has-text-weight-bold">Alunos:</span>
+                <span class="is-size-4 is-uppercase has-text-weight-bold"><%= studentsCount %></span>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-content is-flex is-justify-content-space-between">
+                <span class="is-size-4 is-uppercase has-text-weight-bold">Funcionários:</span>
+                <span class="is-size-4 is-uppercase has-text-weight-bold"><%= employeesCount %></span>
+              </div>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-3-desktop">
+            <div class="card">
+              <div class="card-content">
+                <h4 class="title is-5">
+                  Alunos por Escola
+                </h4>
+                <canvas id="schoolsDonutChart"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-3-desktop">
+            <div class="card">
+              <div class="card-content">
+                <h4 class="title is-5">
+                  Alunos por Ano Escolar
+                </h4>
+                <canvas id="gradesChart"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-3-desktop">
+            <div class="card">
+              <div class="card-content">
+                <h4 class="title is-5">
+                  Funcionários por Setor
+                </h4>
+                <canvas id="employeesChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
         <div class="columns">
-          <div class="column is-one-third">
-            <h5 class="subtitle is-4">Total de Escolas: <%= schoolsCount %></h5>
-          </div>
-          <div class="column is-one-third">
-            <h5 class="subtitle is-4">Total de Alunos: <%= studentsCount %></h5>
-          </div>
-          <div class="column is-one-third">
-            <h5 class="subtitle is-4">Total de Funcionários: <%= employeesCount %></h5>
+          <div class="column is-three-thirds">
+            <div class="card">
+              <div class="card-content">
+                <canvas id="schoolsBarChart" width="1024" height="480"></canvas>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
 </section>
+
+<script>
+  var schoolsDonutChartElement = document.getElementById('schoolsDonutChart');
+  var schoolsDonutChartCanvas = schoolsDonutChartElement.getContext('2d');
+
+  var schoolNames = '<%= schoolNames %>'.split(',');
+  var schoolStudents = '<%= schoolStudents %>'.split(',');
+
+  var schoolsData = {
+    labels: schoolNames,
+    datasets: [
+      {
+        label: 'Alunos por Escola',
+        data: schoolStudents,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }
+    ]
+  };
+  
+  var schoolsDonutChart = new Chart(schoolsDonutChartCanvas, {
+    type: 'doughnut',
+    data: schoolsData,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false,
+        },
+        title: {
+          display: false,
+          text: 'Alunos por Escola'
+        }
+      }
+    }
+  });
+
+  var schoolsBarChartCanvas = document.getElementById('schoolsBarChart').getContext('2d');
+  var schoolsBarChart = new Chart(schoolsBarChartCanvas, {
+    type: 'bar',
+    data: schoolsData,
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  var gradesChartCanvas = document.getElementById('gradesChart').getContext('2d');
+
+  var gradeNames = '<%= gradeNames %>'.split(',');
+  var gradeStudents = '<%= gradeStudents %>'.split(',');
+
+  var gradesData = {
+    labels: gradeNames,
+    datasets: [
+      {
+        label: 'Alunos por Ano Escolar',
+        data: gradeStudents,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.5)',
+          'rgba(54, 162, 235, 0.5)',
+          'rgba(255, 206, 86, 0.5)',
+          'rgba(75, 192, 192, 0.5)',
+          'rgba(153, 102, 255, 0.5)',
+          'rgba(255, 159, 64, 0.5)'
+        ]
+      }
+    ]
+  };
+
+  var gradesChart = new Chart(gradesChartCanvas, {
+    type: 'doughnut',
+    data: gradesData,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false,
+          position: 'left'
+        },
+        title: {
+          display: false,
+          text: 'Alunos por Ano Escolar'
+        }
+      }
+    }
+  });
+
+  var employeesChartCanvas = document.getElementById('employeesChart').getContext('2d');
+
+  var sectorNames = '<%= sectorNames %>'.split(',');
+  var sectorEmployees = '<%= sectorEmployees %>'.split(',');
+
+  var employeesData = {
+    labels: sectorNames,
+    datasets: [
+      {
+        label: 'Funcionários por Setor',
+        data: sectorEmployees,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.5)',
+          'rgba(54, 162, 235, 0.5)',
+          'rgba(255, 206, 86, 0.5)',
+          'rgba(75, 192, 192, 0.5)',
+          'rgba(153, 102, 255, 0.5)',
+          'rgba(255, 159, 64, 0.5)'
+        ]
+      }
+    ]
+  };
+  
+  var employeesChart = new Chart(employeesChartCanvas, {
+    type: 'doughnut',
+    data: employeesData,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false,
+        },
+        title: {
+          display: false,
+          text: 'Funcionários por Setor'
+        }
+      }
+    }
+  });
+</script>
 
 <%- include('../layouts/admin-footer') %>

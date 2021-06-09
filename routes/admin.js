@@ -2,13 +2,13 @@ const express = require('express');
 const { ensureAdmin } = require('../middlewares/auth');
 const classroomsController = require('../controllers/admin/classrooms-controller');
 const dashboardController = require('../controllers/admin/dashboard-controller');
-
 const employeesController = require('../controllers/admin/employees-controller');
 const schoolController = require('../controllers/admin/schools-controller');
 const sectorsController = require('../controllers/admin/sectors-controller');
 const studentsController = require('../controllers/admin/students-controller');
 const transportsController = require('../controllers/admin/transports-controller');
 const usersController = require('../controllers/admin/users-controller');
+const gradesController = require('../controllers/admin/grades-controller');
 
 const router = express.Router();
 
@@ -28,7 +28,12 @@ router.get('/employees/new', ensureAdmin, employeesController.new);
 router.get('/employees/:id', ensureAdmin, employeesController.show);
 router.get('/employees/:id/edit', ensureAdmin, employeesController.edit);
 router.put('/employees/:id', ensureAdmin, employeesController.update);
-router.delete('/:id', ensureAdmin, employeesController.delete);
+router.delete('/employees/:id', ensureAdmin, employeesController.delete);
+
+router.get('/grades', ensureAdmin, gradesController.index);
+router.post('/grades', ensureAdmin, gradesController.save);
+router.put('/grades/:id', ensureAdmin, gradesController.update);
+router.delete('/grades/:id', ensureAdmin, gradesController.delete);
 
 router.get('/schools', ensureAdmin, schoolController.index);
 router.post('/schools', ensureAdmin, schoolController.save);

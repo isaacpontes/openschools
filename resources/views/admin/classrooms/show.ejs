@@ -4,7 +4,7 @@
   <div class="container">
     <div class="card">
       <div class="card-content">
-        <h1 class="title">Turma: <%= classroom.code %></h1>
+        <h1 class="title">Turma: <%= classroom.name %></h1>
 
         <hr>
 
@@ -12,7 +12,7 @@
           <div class="column is-half">
             <div class="field">
               <h4 class="title is-4">Nome</h4>
-              <h6 class="subtitle"><%= classroom.name %></h6>
+              <h6 class="subtitle"><%= classroom.grade.name %></h6>
             </div>
           </div>
           <div class="column is-half">

@@ -1,0 +1,55 @@
+<%- include('../../layouts/admin-header') %>
+
+<section class="section">
+  <div class="container">
+    <div class="card mb-6">
+      <div class="card-content">
+        <div class="is-flex is-align-items-center is-justify-content-space-between">
+          <h1 class="title size-4 mb-0">Anos Escolares</h1>
+          <button class="button is-success" onclick="toggleModal('add-grade-modal')">Adicionar</button>
+        </div>
+      </div>
+    </div>
+
+    <%- include('../../partials/messages') %>
+
+    <div class="columns is-multiline is-mobile">
+      <% grades.forEach(grade => { %>
+        <div class="column is-6-mobile is-4-tablet is-3-desktop">
+          <div class="card">
+            <div class="card-content">
+              <h3 class="title is-5">
+                <%= grade.name %>
+              </h3>
+            </div>
+            <footer class="card-footer">
+              <div class="card-footer-item">
+                <a onclick="toggleModal('editModalGrade_<%= grade._id %>')">Editar</a>
+              </div>
+              <div class="card-footer-item">
+                <a onclick="toggleModal('deleteModalGrade_<%= grade._id %>')" class="has-text-danger">Excluir</a>
+              </div>
+            </footer>
+          </div>
+        </div>
+        
+        <div id="editModalGrade_<%= grade._id %>" class="modal">
+          <div class="modal-background" onclick="toggleModal('editModalGrade_<%= grade._id %>')"></div>
+          <div class="modal-card">
+            <header class="modal-card-head">
+              <p class="modal-card-title">Editar Ano Escolar</p>
+              <button class="delete" aria-label="close" onclick="toggleModal('editModalGrade_<%= grade._id %>')"></button>
+            </header>
+            <%- include('_form', { url: `/admin/grades/${grade._id}?_method=put`, grade: grade }) %> 
+          </div>
+        </div>
+
+        <%- include('../../partials/_delete-modal', { name: 'Grade', _id: grade._id, url: `/admin/grades/${grade._id}?_method=delete` }) %>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<%- include('_add') %>
+
+<%- include('../../layouts/admin-footer') %>

@@ -17,22 +17,6 @@
         <a class="navbar-item" href="/admin">
           Início
         </a>
-
-        <a class="navbar-item" href="/admin/schools">
-          Escolas
-        </a>
-
-        <a class="navbar-item" href="/admin/classrooms">
-          Turmas
-        </a>
-
-        <a class="navbar-item" href="/admin/students">
-          Alunos
-        </a>
-  
-        <a class="navbar-item" href="/admin/transports">
-          Transporte
-        </a>
   
         <a class="navbar-item" href="/admin/sectors">
           Setores
@@ -41,23 +25,59 @@
         <a class="navbar-item" href="/admin/employees">
           Funcionários
         </a>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            Escolas
+          </a>
   
-        <a class="navbar-item" href="/admin/users">
-          Usuários
-        </a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="/admin/schools">
+              Escolas
+            </a>
+
+            <a class="navbar-item" href="/admin/classrooms">
+              Turmas
+            </a>
+
+            <a class="navbar-item" href="/admin/students">
+              Alunos
+            </a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            Administração
+          </a>
+
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="/admin/grades">
+              Anos Escolares
+            </a>
+
+            <a class="navbar-item" href="/admin/transports">
+              Transporte
+            </a>
+
+            <a class="navbar-item" href="/admin/users">
+              Usuários
+            </a>
+          </div>
+        </div>
       <% } %>
     </div>
 
     <div class="navbar-end">
       <div class="navbar-item">
-        <div class="buttons">
-          <a class="button is-light">
-            Meu Usuário
-          </a>
-          <a class="button is-danger" href="/auth/logout">
-            Sair
-          </a>
-        </div>
+        <a class="button is-light">
+          Meu Usuário
+        </a>
+      </div>
+      <div class="navbar-item">
+        <a class="button is-danger" href="/auth/logout">
+          Sair
+        </a>
       </div>
     </div>
   </div>

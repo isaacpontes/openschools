@@ -1,0 +1,10 @@
+<div id="add-grade-modal" class="modal">
+  <div class="modal-background" onclick="toggleModal('add-grade-modal')"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Novo Ano Escolar</p>
+      <button class="delete" aria-label="close" onclick="toggleModal('add-grade-modal')"></button>
+    </header>
+    <%- include('_form', { url: '/admin/grades?_method=post', grade: newGrade }) %> 
+  </div>
+</div>

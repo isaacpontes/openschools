@@ -1,0 +1,10 @@
+<div id="edit-grade-<%= grade._id %>-modal" class="modal">
+  <div class="modal-background" onclick="toggleModal('edit-grade-<%= grade._id %>-modal')"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Editar Ano Escolar</p>
+      <button class="delete" aria-label="close" onclick="toggleModal('edit-grade-<%= grade._id %>-modal')"></button>
+    </header>
+    <%- include('_form', { url: `/admin/grades/${grade._id}?_method=put`, grade: grade }) %> 
+  </div>
+</div>

@@ -21,20 +21,17 @@ module.exports = {
   
     try {
       await student.save();
-  
+
       req.flash('success', 'Estudante salvo com sucesso.');
-      res.redirect(`/classrooms/${classroom}`);
-  
+      return res.redirect(`/classrooms/${classroom}`);
     } catch (error) {
-  
       const currentUser = req.user._id;
       const userSchools = await School.find({ manager: currentUser });
       const schoolIds = userSchools.map((school) => school._id);
       const schoolsClassrooms = await Classroom.find({ school: { $in: schoolIds } }).populate('school');
       const allTransports = await Transport.find({});
-  
-      console.log(error);
-      res.status(500).render('students/new', userSchools, allTransports, schoolsClassrooms, { student, error: 'Erro ao salvar estudante.' });
+
+      return res.redirect('/students/new', userSchools, allTransports, schoolsClassrooms, { student, error: 'Erro ao salvar estudante.' });
     }
   },
 
@@ -45,9 +42,9 @@ module.exports = {
   
     try {
       const student = await Student.findById(id).populate(['school', 'classroom', 'transport']);
-      res.render('students/show', { student, dayjs });
+      return res.status(200).render('students/show', { student, dayjs });
     } catch (error) {
-      res.render('pages/error', { error: 'Erro ao carregar página.' });
+      return res.status(400).render('pages/error', { error });
     }
   },
 
@@ -64,7 +61,7 @@ module.exports = {
       const allTransports = await Transport.find({});
       const student = await Student.findById(id);
   
-      res.render('students/edit', {
+      return res.status(200).render('students/edit', {
         student,
         userSchools,
         schoolsClassrooms,
@@ -72,7 +69,7 @@ module.exports = {
         dayjs
       });
     } catch (error) {
-      res.render('pages/error', { error: 'Erro ao carregar página.' });
+      return res.status(400).render('pages/error', { error });
     }
   },
 
@@ -92,13 +89,11 @@ module.exports = {
         birthPlace, fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info,
         transport, school, classroom, updated: Date.now()
       });
-  
+
       req.flash('success', 'Estudante atualizado com sucesso.');
-      res.redirect(`/classrooms/${classroom}`);
-      
+      return res.redirect(`/classrooms/${classroom}`);
     } catch (error) {
-  
-      res.render('students/edit', { student: {
+      return res.redirect(`/students/${id}/edit`, { student: {
         enrollment, firstName, lastName, gender, phone, address, birthday, birthPlace,
         fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info,
         transport, school, classroom
@@ -115,9 +110,9 @@ module.exports = {
       await student.remove();
   
       req.flash('success', 'Estudante excluído com sucesso.');
-      res.redirect(`/classrooms/${student.classroom}`);
+      return res.redirect(`/classrooms/${student.classroom}`);
     } catch (error) {
-      res.render(`/classrooms/${student.classroom}`, { error: 'Erro ao excluir estudante.' });
+      return res.redirect(`/classrooms/${student.classroom}`, { error });
     }
   }
 };

@@ -1,5 +1,7 @@
 <%- include('../partials/messages') %>
 
+<% console.log({classroom, grades}) %>
+
 <form action="<%= url %>" method="POST">
 
   <div class="columns">
@@ -26,20 +28,21 @@
     </div>
     <div class="column is-half">
       <div class="field">
-        <label class="label" for="code">Código de Identificação</label>
+        <label for="grade" class="label">Ano Escolar</label>
         <div class="control">
-          <input
-            class="input"
-            type="text"
-            name="classroom[code]"
-            id="code"
-            placeholder="Ex.: 701A"
-            value="<%= typeof classroom.code != 'undefined' ? classroom.code : '' %>"
-            autocomplete="off"
-          />
-          <% if (classroom.errors && classroom.errors.hasOwnProperty('code')) { %>
-            <p class="is-danger help"><%= classroom.errors.code %></p>
-          <% } %>
+          <div class="select is-fullwidth">
+            <select name="classroom[grade]" id="grade">
+              <option disabled selected>Escolha um ano...</option>
+              <% grades.forEach(grade => { %>
+                <option
+                  value="<%= grade._id %>"
+                  <%= grade._id.equals(classroom.grade) ? 'selected' : '' %>
+                >
+                  <%= grade.name %>
+                </option>
+              <% }) %>
+            </select>
+          </div>
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 const Classroom = require('../../models/classroom');
+const Grade = require('../../models/grade');
 const School = require('../../models/school');
 const Student = require('../../models/student');
 
@@ -7,7 +8,7 @@ module.exports = {
   // GET /admin/classrooms
   index: async function (req, res) {
     try {
-      const classrooms = await Classroom.find({}).populate('school');
+      const classrooms = await Classroom.find({}).populate(['grade', 'school']);
       return res.status(200).render('admin/classrooms/index', { classrooms });
     } catch (error) {
       return res.status(400).render('pages/error', { error: 'Erro ao carregar lista de escolas.' });
@@ -17,8 +18,8 @@ module.exports = {
   // Save a new classroom to the database
   // POST /classrooms
   save: async function (req, res) {
-    const { name, code, school } = req.body.classroom;
-    const classroom = new Classroom({ name, code, school });
+    const { name, grade, school } = req.body.classroom;
+    const classroom = new Classroom({ name, grade, school });
   
     try {
       await classroom.save();
@@ -33,13 +34,13 @@ module.exports = {
   // Render the new classroom form
   // GET /admin/classrooms/new
   new: async function (req, res) {
-    const { id } = req.params;
+    const classroom = new Classroom();
 
     try {
-      const classroom = await Classroom.findById(id);
       const schools = await School.find({});
+      const grades = await Grade.find({});
 
-      return res.render('admin/classrooms/edit', { classroom, schools });
+      return res.render('admin/classrooms/new', { classroom, schools, grades });
     } catch (error) {
       return res.render('pages/error', { error: 'Erro ao carregar página.' });
     }
@@ -50,7 +51,7 @@ module.exports = {
   show: async function (req, res) {
     const { id } = req.params;
     try {
-      const classroom = await Classroom.findById(id).populate('school');
+      const classroom = await Classroom.findById(id).populate(['grade', 'school']);
       const students = await Student.find({ classroom: classroom._id });
 
       res.status(200).render('admin/classrooms/show', { classroom, students });
@@ -67,8 +68,9 @@ module.exports = {
     try {
       const classroom = await Classroom.findById(id);
       const schools = await School.find({});
+      const grades = await Grade.find({});
 
-      return res.render('admin/classrooms/edit', { classroom, schools });
+      return res.render('admin/classrooms/edit', { classroom, schools, grades });
     } catch (error) {
       return res.render('pages/error', { error: 'Erro ao carregar página.' });
     }
@@ -77,11 +79,11 @@ module.exports = {
   // Update a classroom in the database
   // PUT /admin/classrooms/:id
   update: async function (req, res) {
-    const { name, code, school } = req.body.classroom;
+    const { name, grade, school } = req.body.classroom;
     const { id } = req.params;
 
     try {
-      await Classroom.findByIdAndUpdate(id, { name, code, school });
+      await Classroom.findByIdAndUpdate(id, { name, grade, school });
   
       req.flash('success', 'Turma atualizada com sucesso.');
       return res.status(200).redirect('/admin/classrooms');
@@ -89,7 +91,7 @@ module.exports = {
       const schools = await School.find({});
 
       return res.status(400).render('admin/classrooms/edit', {
-        classroom: { name, code, school },
+        classroom: { name, grade, school },
         schools,
         error: 'Erro ao atualizar turma.'
       });

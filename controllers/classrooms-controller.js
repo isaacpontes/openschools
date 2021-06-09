@@ -1,4 +1,5 @@
 const Classroom = require('../models/classroom');
+const Grade = require('../models/grade');
 const School = require('../models/school');
 const Student = require('../models/student');
 const Transport = require('../models/transport');
@@ -7,15 +8,16 @@ module.exports = {
   // Save a new classroom to the database
   // POST /classrooms
   save: async function (req, res) {
-    const { name, code, school } = req.body.classroom;
-    const classroom = new Classroom({ name, code, school });
+    const { name, grade, school} = req.body.classroom;
+    const classroom = new Classroom({ name, grade, school });
   
     try {
       await classroom.save();
       req.flash('success', 'Turma salva com sucesso.');
-      res.redirect(`/schools/${classroom.school}`);
+      return res.redirect(`/schools/${classroom.school}`);
     } catch (error) {
-      res.render('classrooms/new', { classroom, error: 'Erro ao salvar turma.' });
+      console.log(error);
+      return res.status(400).render('classrooms/new', { classroom, error: 'Erro ao salvar turma.' });
     }
   },
 
@@ -26,9 +28,9 @@ module.exports = {
       const classroom = await Classroom.findById(req.params.id);
       const students = await Student.find({ classroom: classroom._id });
 
-      res.status(200).render('classrooms/show', { classroom, students });
+      return res.status(200).render('classrooms/show', { classroom, students });
     } catch (error) {
-      res.status(500).render('pages/error', { error: 'Erro ao carregar página.' });
+      return res.status(400).render('pages/error', { error });
     }
   },
 
@@ -37,24 +39,27 @@ module.exports = {
   edit: async function (req, res) {
     try {
       const classroom = await Classroom.findById(req.params.id);
-      res.render('classrooms/edit', { classroom });
+      const grades = await Grade.find({});
+
+      return res.status(200).render('classrooms/edit', { classroom, grades });
     } catch (error) {
-      res.render('pages/error', { error: 'Erro ao carregar página.' });
+      return res.status(400).render('pages/error', { error });
     }
   },
 
   // Update a classroom in the database
   // PUT /classrooms/:id
   update: async function (req, res) {
-    const { name, code, school } = req.body.classroom;
+    const { name, grade, school } = req.body.classroom;
+    const { id } = req.params;
 
     try {
-      await Classroom.findByIdAndUpdate(req.params.id, { name, code });
+      await Classroom.findByIdAndUpdate(id, { name, grade });
   
       req.flash('success', 'Turma atualizada com sucesso.');
-      res.redirect(`/schools/${school}/classrooms`);
+      return res.redirect(`/schools/${school}`);
     } catch (error) {
-      res.render('classrooms/edit', { classroom: { name, code, school }, error: 'Erro ao atualizar turma.' });
+      return res.redirect(`/classrooms/${id}/edit`, { error: 'Erro ao atualizar turma.' });
     }
   },
 
@@ -66,9 +71,9 @@ module.exports = {
       await classroom.remove();
 
       req.flash('success', 'Turma excluída com sucesso.');
-      res.redirect(`/schools/${classroom.school}`);
+      return res.redirect(`/schools/${classroom.school}`);
     } catch (error) {
-      res.redirect(`/schools/${classroom.school}`, { error: 'Erro ao excluir turma.' });
+      return res.redirect(`/schools/${classroom.school}`, { error: 'Erro ao excluir turma.' });
     }
   },
 
@@ -80,7 +85,7 @@ module.exports = {
     try {
       const userSchools = await School.find({ manager: currentUser });
       const schoolIds = userSchools.map((school) => school._id);
-      const schoolsClassrooms = await Classroom.find({ school: { $in: schoolIds } }).populate('school');
+      const schoolsClassrooms = await Classroom.find({ school: { $in: schoolIds } }).populate(['grade', 'school']);
       
       const classroom = await Classroom.findById(req.params.id);
       const allTransports = await Transport.find({});
@@ -89,14 +94,14 @@ module.exports = {
       student.school = classroom.school;
       student.classroom = classroom._id;
 
-      res.render('students/new', {
+      return res.render('students/new', {
         student,
         userSchools,
         schoolsClassrooms,
         allTransports,
       });
     } catch (error) {
-      res.render('pages/error', { error: 'Erro ao carregar página.' });
+      return res.status(400).render('pages/error', { error });
     }
   }
 };

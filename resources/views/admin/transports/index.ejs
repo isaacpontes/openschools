@@ -4,17 +4,13 @@
   <div class="container">
     <div class="card">
       <div class="card-content">
-        <div class="columns">
-          <div class="column is-four-fifths">
-            <h1 class="title size-4">Rotas de Transporte</h1>
-          </div>
-          <div class="column is-one-fifth">
-            <a href="/admin/transports/new" class="button is-link">Novo Transporte</a>
-          </div>
+        <div class="is-flex is-align-items-center is-justify-content-space-between">
+            <h1 class="title size-4 mb-0">Rotas de Transporte</h1>
+            <a href="/admin/transports/new" class="button is-success">Novo Transporte</a>
         </div>
-      </div>
 
-      <div class="card-content">
+        <hr>
+
         <%- include('../../partials/messages') %>
         <table class="table">
           <thead>

@@ -1,0 +1,26 @@
+<form action="<%= url %>" method="POST">
+  <section class="modal-card-body">
+    <div class="field">
+      <label class="label" for="name">Nome</label>
+      <div class="control">
+        <input
+          class="input"
+          type="text"
+          name="grade[name]"
+          id="name"
+          placeholder="Ex.: 1º Ano do Ensino Fundamental"
+          value="<%= typeof grade.name != 'undefined' ? grade.name : '' %>"
+          autofocus
+          autocomplete="off"
+  
+        />
+        <% if (grade.errors && grade.errors.hasOwnProperty('name')) { %>
+          <p class="is-danger help"><%= grade.errors.name %></p>
+        <% } %>
+      </div>
+    </div>
+  </section>
+  <footer class="modal-card-foot">
+    <button class="button is-success" type="submit">Salvar</button>
+  </footer>
+</form>

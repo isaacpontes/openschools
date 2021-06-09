@@ -1,0 +1,45 @@
+<div
+  id="deleteModal<%= name %>_<%= _id %>"
+  class="modal"
+>
+  <div
+    class="modal-background"
+    onclick="toggleModal('deleteModal<%= name %>_<%= _id %>')"
+  ></div>
+
+  <div
+    class="modal-content"
+  >
+    <form action="<%= url %>" method="POST">
+      <div class="card">
+        <div class="card-content">
+          <h4 class="title is-4">
+            Tem certeza que deseja excluir este registro?
+          </h4>
+          <h5 class="subtitle">
+            Atenção! Esta ação é irreversível!
+          </h5>
+          
+          <button
+            class="button is-danger"
+            type="submit"
+          >
+            Excluir
+          </button>
+          <button
+            class="button"
+            type="button"
+            onclick="toggleModal('deleteModal<%= name %>_<%= _id %>')"
+          >
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <button
+    class="modal-close is-large"
+    aria-label="close"
+    onclick="toggleModal('deleteModal<%= name %>_<%= _id %>')"
+  ></button>
+</div>

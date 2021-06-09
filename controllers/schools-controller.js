@@ -1,4 +1,5 @@
 const Classroom = require('../models/classroom');
+const Grade = require('../models/grade');
 const School = require('../models/school');
 
 module.exports = {
@@ -9,9 +10,9 @@ module.exports = {
 
     try {
       const schools = await School.find({ manager: currentUser });
-      res.status(200).render('schools/index', { schools });
+      return res.status(200).render('schools/index', { schools });
     } catch (error) {
-      res.status(400).render('pages/error', { error: 'Erro ao carregar lista de escolas.' });
+      return res.status(400).render('pages/error', { error });
     }
   },
 
@@ -20,24 +21,26 @@ module.exports = {
   show: async function (req, res) {
     try {
       const school = await School.findById(req.params.id).populate('manager');
-      const classrooms = await Classroom.find({ school: school._id });
+      const classrooms = await Classroom.find({ school: school._id }).populate('grade');
   
-      res.status(200).render('schools/show', { school, classrooms });
+      return res.status(200).render('schools/show', { school, classrooms });
     } catch (error) {
-      res.status(400).render('pages/error', { error: 'Erro ao carregar página.' });
+      return res.status(400).render('pages/error', { error });
     }
   },
 
   // Render the new classroom form
   // GET /schools/:id/addClassroom
   addClassroom: async function (req, res) {
-    try {
-      const classroom = new Classroom();
-      classroom.school = req.params.id;
+    const classroom = new Classroom();
+    classroom.school = req.params.id;
 
-      res.status(200).render('classrooms/new', { classroom });
+    try {
+      const grades = await Grade.find({});
+
+      return res.status(200).render('classrooms/new', { classroom, grades });
     } catch (error) {
-      res.status(400).render('pages/error', { error: 'Erro ao carregar página.' });
+      return res.status(400).render('pages/error', { error });
     }
   }
 };
