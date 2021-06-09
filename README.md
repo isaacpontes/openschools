@@ -1,4 +1,4 @@
-# OpenSchools: Gestão de Escolas com Foco na Rede Pública Municipal
+# OpenSchools: Gestão Simplficada de Escolas
 
 *Atenção! Este é um projeto ainda em desenvolvimento.*
 
