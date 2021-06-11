@@ -6,7 +6,7 @@
       <div class="card-content">
         <div class="is-flex is-align-items-center is-justify-content-space-between">
             <h1 class="title size-4 mb-0">Todos os Usuários</h1>
-            <a href="/admin/users/new" class="button is-success">Novo Usuário</a>
+            <a href="/admin/users/new" class="button is-link">Novo Usuário</a>
         </div>
 
         <hr>
@@ -42,15 +42,14 @@
                   <% } %>
                 </td>
                 <td>
-                  <a href="/admin/users/<%= user._id %>">Exibir</a>
-                </td>
-                <td>
                   <a href="/admin/users/<%= user._id %>/edit">Editar</a>
                 </td>
                 <td>
-                  <a href="/admin/users/<%= user._id %>?_method=delete" class="has-text-danger">Excluir</a>
+                  <a onclick="toggleModal('deleteModalUser_<%= user._id %>')" class="has-text-danger">Excluir</a>
                 </td>
               </tr>
+
+              <%- include('../../partials/_delete-modal', { name: 'User', _id: user._id, url: `/admin/users/${user._id}?_method=delete` }) %>
             <% }) %>
           </tbody>
         </table>

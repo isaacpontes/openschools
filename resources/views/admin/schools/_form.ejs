@@ -16,7 +16,7 @@
             value="<%= typeof school.name != 'undefined' ? school.name : '' %>"
             autofocus
             autocomplete="off"
-    
+            required
           />
           <% if (school.errors && school.errors.hasOwnProperty('name')) { %>
             <p class="is-danger help"><%= school.errors.name %></p>
@@ -36,6 +36,7 @@
             placeholder="Ex.: 33012504"
             value="<%= typeof school.inepCode != 'undefined' ? school.inepCode : '' %>"
             autocomplete="off"
+            required
           />
           <% if (school.errors && school.errors.hasOwnProperty('inepCode')) { %>
             <p class="is-danger help"><%= school.errors.inepCode %></p>
@@ -56,6 +57,7 @@
         placeholder="Ex.: Rua Augusto Andrade, Vila dos Coroados."
         value="<%= typeof school.address != 'undefined' ? school.address : '' %>"
         autocomplete="off"
+        required
       />
       <% if (school.errors && school.errors.hasOwnProperty('address')) { %>
         <p class="is-danger help"><%= school.errors.address %></p>
@@ -67,10 +69,9 @@
     <label for="manager" class="label">Gestor</label>
     <div class="control">
       <div class="select">
-        <select name="school[manager]" id="manager">
-          <option>Escolha um usuário gestor...</option>
+        <select name="school[manager]" id="manager" required>
+          <option value="" disabled selected>Escolha um usuário gestor...</option>
           <% allManagers.forEach(manager => { %>
-            
             <option
               value="<%= manager._id %>"
               <%= manager._id.equals(school.manager) ? 'selected' : '' %>
@@ -85,8 +86,8 @@
 
   <div class="field">
     <div class="control">
-      <button class="button is-link" type="submit">Salvar</button>
-      <a href="/schools" class="button">Voltar</a>
+      <button class="button is-success" type="submit">Salvar</button>
+      <a href="/admin/schools" class="button">Voltar</a>
     </div>
   </div>
 

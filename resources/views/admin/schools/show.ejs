@@ -45,8 +45,8 @@
         <table class="table">
           <thead>
             <tr>
-              <th>Turma</th>
               <th>Nome</th>
+              <th>Ano Escolar</th>
               <th colspan="2">Ações</th>
             </tr>
           </thead>
@@ -54,10 +54,10 @@
             <% classrooms.forEach(classroom => { %>
               <tr>
                 <td>
-                  <%= classroom.code %>
+                  <%= classroom.name %>
                 </td>
                 <td>
-                  <%= classroom.name %>
+                  <%= classroom.grade.name %>
                 </td>
                 <td>
                   <a href="/admin/classrooms/<%= classroom._id %>">Exibir</a>

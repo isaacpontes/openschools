@@ -4,7 +4,13 @@
   <div class="container">
     <div class="card">
       <div class="card-content">
-        <h1 class="title">Funcionário</h1>
+        <div class="is-flex is-align-items-center is-justify-content-space-between">
+          <h1 class="title size-4 mb-0">Funcionário</h1>
+          <div class="buttons">
+            <a href="/admin/employees/<%= employee._id %>/edit" class="button is-link">Editar</a>
+            <a href="/admin/employees" class="button">Voltar</a>
+          </div>
+        </div>
         <hr>
         <div class="columns">
           <div class="column is-one-one-half">
@@ -157,13 +163,13 @@
           <div class="column is-one-half">
             <div class="field">
               <h4 class="title is-4">Setor de Origem</h4>
-              <h6 class="subtitle"><%= employee.originSector.name %></h6>
+              <h6 class="subtitle"><%= typeof employee.originSector !== 'undefined' ? employee.originSector.name : 'Não Definido' %></h6>
             </div>
           </div>
           <div class="column is-one-half">
             <div class="field">
               <h4 class="title is-4">Setor Atual</h4>
-              <h6 class="subtitle"><%= employee.currentSector.name %></h6>
+              <h6 class="subtitle"><%= typeof employee.currentSector !== 'undefined' ? employee.currentSector.name : 'Não Definido' %></h6>
             </div>
           </div>
         </div>
@@ -172,13 +178,13 @@
           <div class="column is-one-half">
             <div class="field">
               <h4 class="title is-4">Escola</h4>
-              <h6 class="subtitle"><%= employee.school.name %></h6>
+              <h6 class="subtitle"><%= typeof employee.school !== 'undefined' ? employee.school.name : 'Não Definido' %></h6>
             </div>
           </div>
           <div class="column is-one-half">
             <div class="field">
               <h4 class="title is-4">Turma</h4>
-              <h6 class="subtitle"><%= employee.classroom.name %></h6>
+              <h6 class="subtitle"><%= typeof employee.classroom !== 'undefined' ? employee.classroom.name : 'Não Definido' %></h6>
             </div>
           </div>
           <div class="column is-one-third">
@@ -192,11 +198,6 @@
         <div class="field">
           <h4 class="title is-4">Informações Adicionais</h4>
           <h6 class="subtitle"><%= employee.info %></h6>
-        </div>
-
-        <div class="field buttons">
-          <a href="/admin/employees/<%= employee._id %>/edit" class="button is-link">Editar</a>
-          <a href="/admin/employees" class="button">Voltar</a>
         </div>
       </div>
     </div>

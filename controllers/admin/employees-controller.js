@@ -3,16 +3,18 @@ const Employee = require('../../models/employee');
 const Sector = require('../../models/sector');
 const School = require('../../models/school');
 const Classroom = require('../../models/classroom');
+const employeesService = require('../../services/employees-service');
+const sectorsService = require('../../services/sectors-service');
 
 module.exports = {
   // Render a list of all employees
   // GET /employees
   index: async function (req, res) {
     try {
-      const employees = await Employee.find({}).populate('currentSector');
+      const employees = await employeesService.findAll(true, { path: 'currentSector'});
       return res.render('admin/employees/index', { employees });
     } catch (error) {
-      return res.render('pages/error', { error: 'Erro ao carregar lista de funcionários.' });
+      return res.render('pages/error', { error });
     }
   },
 
@@ -20,56 +22,32 @@ module.exports = {
   // POST /employees
   save: async function (req, res) {
     const {
-      name, enrollment, position, role, bond, birthday,
-      cpf, rg, ctps, electorTitle, pis, address, phone,
-      email, situation, admissionDate, formation,
-      complementaryFormation, workload, fundeb, originSector,
-      currentSector, school, classroom, shift, info
+      name, enrollment, position, role, bond, cpf, rg, ctps, electorTitle, pis, address, phone,
+      email, situation, admissionDate, formation, complementaryFormation, workload, fundeb,
+      originSector, currentSector, school, classroom, shift, info
     } = req.body.employee;
-
-    const employee = new Employee({
-      name, enrollment, position, role, bond, birthday: dayjs(birthday),
-      cpf, rg, ctps, electorTitle, pis, address, phone,
-      email, situation, admissionDate, formation,
-      complementaryFormation, workload, fundeb, originSector,
-      currentSector, school, classroom, shift, info
-    });
-  
+    const birthday = dayjs(req.body.employee.birthday);
     try {
-      await employee.save();
+      await employeesService.save(name, enrollment, position, role, bond, birthday, cpf, rg, ctps, electorTitle, pis, address, phone, email, situation, admissionDate, formation, complementaryFormation, workload, fundeb, originSector, currentSector, school, classroom, shift, info);
       req.flash('success', 'Funcionário salvo com sucesso.');
       return res.redirect('/admin/employees');
     } catch (error) {
-      console.log(error);
-
-      const allSectors = await Sector.find({});
-      const allSchools = await School.find({});
-      const allClasses = await Classroom.find({}).populate('school');
-
-      return res.render('admin/employees/new', {
-        employee,
-        allSectors,
-        allSchools,
-        allClasses,
-        dayjs,
-        error: 'Erro ao salvar funcionário.'
-      });
+      req.flash('error', 'Erro ao salvar funcionário.');
+      return res.redirect('/admin/employees/new');
     }
   },
 
   // Render the new employee form
   // GET /admin/employees/new
   new: async function (req, res) {
-    const employee = new Employee();
-    
+    const employee = employeesService.create();
     try {
-      const allSectors = await Sector.find({});
+      const allSectors = await sectorsService.findAll();
       const allSchools = await School.find({});
       const allClasses = await Classroom.find({}).populate('school');
-
       return res.render('admin/employees/new', { employee, allSectors, allSchools, allClasses, dayjs });
     } catch (error) {
-      return res.render('pages/error', { error: 'Erro ao carregar página.' });
+      return res.render('pages/error', { error });
     }
   },
 
@@ -77,17 +55,11 @@ module.exports = {
   // GET /admin/employees/:id
   show: async function (req, res) {
     const { id } = req.params;
-  
     try {
-      const employee = await Employee.findById(id).populate([
-        'originSector',
-        'currentSector',
-        'school',
-        'classroom'
-      ]);
-      res.render('admin/employees/show', { employee, dayjs });
+      const employee = await employeesService.findOne(id, true, [ 'originSector', 'currentSector', 'school', 'classroom' ]);
+      return res.render('admin/employees/show', { employee, dayjs });
     } catch (error) {
-      res.render('pages/error', { error: 'Erro ao carregar página.' });
+      return res.render('pages/error', { error });
     }
   },
 
@@ -95,16 +67,14 @@ module.exports = {
   // GET /admin/employees/:id/edit
   edit: async function (req, res) {
     const { id } = req.params;
-    const allSectors = await Sector.find({});
-    const allSchools = await School.find({});
-    const allClasses = await Classroom.find({}).populate('school');
-  
     try {
+      const allSectors = await sectorsService.findAll();
+      const allSchools = await School.find({});
+      const allClasses = await Classroom.find({}).populate('school');
       const employee = await Employee.findById(id);
-
       return res.render('admin/employees/edit', { employee, allSectors, allSchools, allClasses, dayjs });
     } catch (error) {
-      return res.render('pages/error', { error: 'Erro ao carregar página.' });
+      return res.render('pages/error', { error });
     }
   },
 
@@ -112,36 +82,14 @@ module.exports = {
   // PUT /admin/employees/:id
   update: async function (req, res) {
     const { id } = req.params;
-    const {
-      name, enrollment, position, role, bond, birthday,
-      cpf, rg, ctps, electorTitle, pis, address, phone,
-      email, situation, admissionDate, formation,
-      complementaryFormation, workload, fundeb, originSector,
-      currentSector, school, classroom, shift, info
-    } = req.body.employee;
-  
+    const { name, enrollment, position, role, bond, birthday, cpf, rg, ctps, electorTitle, pis, address, phone, email, situation, admissionDate, formation, complementaryFormation, workload, fundeb, originSector, currentSector, school, classroom, shift, info } = req.body.employee;
     try {
-      await Employee.findByIdAndUpdate(id, {
-        name, enrollment, position, role, bond, birthday,
-        cpf, rg, ctps, electorTitle, pis, address, phone,
-        email, situation, admissionDate, formation,
-        complementaryFormation, workload, fundeb, originSector,
-        currentSector, school, classroom, shift, info
-      });
-  
+      await employeesService.update(id, name, enrollment, position, role, bond, birthday, cpf, rg, ctps, electorTitle, pis, address, phone, email, situation, admissionDate, formation, complementaryFormation, workload, fundeb, originSector, currentSector, school, classroom, shift, info);
       req.flash('success', 'Funcionário atualizado com sucesso.');
       return res.redirect('/admin/employees');
     } catch (error) {
-      return res.render('admin/employees/edit', {
-        employee: {
-          name, enrollment, position, role, bond, birthday,
-          cpf, rg, ctps, electorTitle, pis, address, phone,
-          email, situation, admissionDate, formation,
-          complementaryFormation, workload, fundeb, originSector,
-          currentSector, school, classroom, shift, info
-        },
-        error: 'Erro ao salvar funcionário.'
-      });
+      req.flash('error', 'Erro ao atualizar funcionário.');
+      return res.render('admin/employees/edit');
     }
   },
 
@@ -151,12 +99,12 @@ module.exports = {
     const { id } = req.params;
   
     try {
-      await Employee.findByIdAndRemove(id);
-  
+      await employeesService.delete(id);
       req.flash('success', 'Funcionário excluído com sucesso.');
       return res.redirect('/admin/employees');
     } catch (error) {
-      return res.redirect('/admin/employees', { error: 'Erro ao excluir employeee.' });
+      req.flash('error', 'Erro ao excluir funcionário.');
+      return res.redirect('/admin/employees');
     }
   }
 };

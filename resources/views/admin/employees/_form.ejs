@@ -16,6 +16,7 @@
             value="<%= typeof employee.enrollment != 'undefined' ? employee.enrollment : '' %>"
             autofocus
             autocomplete="off"
+            required
           />
           <% if (employee.errors && employee.errors.hasOwnProperty('enrollment')) { %>
             <p class="is-danger help"><%= employee.errors.enrollment %></p>
@@ -36,7 +37,7 @@
             placeholder="Ex.: Maria Helena da Silva Oliveira"
             value="<%= typeof employee.name != 'undefined' ? employee.name : '' %>"
             autocomplete="off"
-    
+            required
           />
           <% if (employee.errors && employee.errors.hasOwnProperty('name')) { %>
             <p class="is-danger help"><%= employee.errors.name %></p>
@@ -59,6 +60,7 @@
             placeholder="Ex.: Professora de História"
             value="<%= typeof employee.position != 'undefined' ? employee.position : '' %>"
             autocomplete="off"
+            required
           />
           <% if (employee.errors && employee.errors.hasOwnProperty('position')) { %>
             <p class="is-danger help"><%= employee.errors.position %></p>
@@ -80,7 +82,7 @@
             value="<%= typeof employee.role != 'undefined' ? employee.role : '' %>"
             autofocus
             autocomplete="off"
-    
+            required
           />
           <% if (employee.errors && employee.errors.hasOwnProperty('role')) { %>
             <p class="is-danger help"><%= employee.errors.role %></p>
@@ -96,8 +98,8 @@
         <label for="bond" class="label">Vínculo</label>
         <div class="control">
           <div class="select is-fullwidth">
-            <select name="employee[bond]" id="bond">
-              <option>Selecione um vínculo</option>
+            <select name="employee[bond]" id="bond" required>
+              <option value="" disabled selected>Selecione um vínculo</option>
               <option value="Efetivo" <%= employee.bond === 'Efetivo' ? 'selected' : '' %>>
                 Efetivo
               </option>
@@ -132,6 +134,7 @@
             name="employee[birthday]"
             id="birthday"
             value="<%= typeof employee.birthday != 'undefined' ? dayjs(employee.birthday).format('YYYY-MM-DD') : '' %>"
+            required
           />
           <% if (employee.errors && employee.errors.hasOwnProperty('birthday')) { %>
             <p class="is-danger help"><%= employee.errors.birthday %></p>
@@ -154,6 +157,7 @@
             placeholder="Insira apenas números. Ex.: 04196574911"
             value="<%= typeof employee.cpf != 'undefined' ? employee.cpf : '' %>"
             autocomplete="off"
+            required
           />
           <% if (employee.errors && employee.errors.hasOwnProperty('cpf')) { %>
             <p class="is-danger help"><%= employee.errors.cpf %></p>
@@ -175,7 +179,7 @@
             value="<%= typeof employee.rg != 'undefined' ? employee.rg : '' %>"
             autofocus
             autocomplete="off"
-    
+            required
           />
           <% if (employee.errors && employee.errors.hasOwnProperty('rg')) { %>
             <p class="is-danger help"><%= employee.errors.rg %></p>
@@ -198,6 +202,7 @@
             placeholder="Insira apenas números"
             value="<%= typeof employee.ctps != 'undefined' ? employee.ctps : '' %>"
             autocomplete="off"
+            required
           />
           <% if (employee.errors && employee.errors.hasOwnProperty('ctps')) { %>
             <p class="is-danger help"><%= employee.errors.ctps %></p>
@@ -219,7 +224,7 @@
             value="<%= typeof employee.electorTitle != 'undefined' ? employee.electorTitle : '' %>"
             autofocus
             autocomplete="off"
-    
+            required
           />
           <% if (employee.errors && employee.errors.hasOwnProperty('electorTitle')) { %>
             <p class="is-danger help"><%= employee.errors.electorTitle %></p>
@@ -242,6 +247,7 @@
             placeholder="Insira apenas números"
             value="<%= typeof employee.pis != 'undefined' ? employee.pis : '' %>"
             autocomplete="off"
+            required
           />
           <% if (employee.errors && employee.errors.hasOwnProperty('pis')) { %>
             <p class="is-danger help"><%= employee.errors.pis %></p>
@@ -263,7 +269,7 @@
             value="<%= typeof employee.fundeb != 'undefined' ? employee.fundeb : '' %>"
             autofocus
             autocomplete="off"
-    
+            required
           />
           <% if (employee.errors && employee.errors.hasOwnProperty('fundeb')) { %>
             <p class="is-danger help"><%= employee.errors.fundeb %></p>
@@ -284,6 +290,7 @@
         placeholder="Ex.: Avenida 24 de Abril, nº 71, Centro. São Fidélis / RJ"
         value="<%= typeof employee.address != 'undefined' ? employee.address : '' %>"
         autocomplete="off"
+        required
       />
       <% if (employee.errors && employee.errors.hasOwnProperty('address')) { %>
         <p class="is-danger help"><%= employee.errors.address %></p>
@@ -305,6 +312,7 @@
             value="<%= typeof employee.phone != 'undefined' ? employee.phone : '' %>"
             autofocus
             autocomplete="off"
+            required
           />
           <% if (employee.errors && employee.errors.hasOwnProperty('phone')) { %>
             <p class="is-danger help"><%= employee.errors.phone %></p>
@@ -325,7 +333,7 @@
             placeholder="Ex.: mhelena@gmail.com"
             value="<%= typeof employee.email != 'undefined' ? employee.email : '' %>"
             autocomplete="off"
-    
+            required
           />
           <% if (employee.errors && employee.errors.hasOwnProperty('email')) { %>
             <p class="is-danger help"><%= employee.errors.email %></p>
@@ -349,6 +357,7 @@
             value="<%= typeof employee.formation != 'undefined' ? employee.formation : '' %>"
             autofocus
             autocomplete="off"
+            required
           />
           <% if (employee.errors && employee.errors.hasOwnProperty('formation')) { %>
             <p class="is-danger help"><%= employee.errors.formation %></p>
@@ -369,7 +378,7 @@
             placeholder="Ex.: Pós-Graduação em História Antiga"
             value="<%= typeof employee.complementaryFormation != 'undefined' ? employee.complementaryFormation : '' %>"
             autocomplete="off"
-    
+            required
           />
           <% if (employee.errors && employee.errors.hasOwnProperty('complementaryFormation')) { %>
             <p class="is-danger help"><%= employee.errors.complementaryFormation %></p>
@@ -385,8 +394,8 @@
         <label for="situation" class="label">Situação</label>
         <div class="control">
           <div class="select is-fullwidth">
-            <select name="employee[situation]" id="situation">
-              <option>Selecione um situação</option>
+            <select name="employee[situation]" id="situation" required>
+              <option value="" disabled selected>Selecione um situação</option>
               <option value="Ativo" <%= employee.situation === 'Ativo' ? 'selected' : '' %>>
                 Ativo
               </option>
@@ -427,6 +436,7 @@
             name="employee[admissionDate]"
             id="admissionDate"
             value="<%= typeof employee.admissionDate != 'undefined' ? dayjs(employee.admissionDate).format('YYYY-MM-DD') : '' %>"
+            required
           />
           <% if (employee.errors && employee.errors.hasOwnProperty('admissionDate')) { %>
             <p class="is-danger help"><%= employee.errors.admissionDate %></p>
@@ -448,6 +458,7 @@
             value="<%= typeof employee.workload != 'undefined' ? employee.workload : '' %>"
             autofocus
             autocomplete="off"
+            required
           />
           <% if (employee.errors && employee.errors.hasOwnProperty('workload')) { %>
             <p class="is-danger help"><%= employee.errors.workload %></p>
@@ -463,8 +474,8 @@
         <label for="originSector" class="label">Setor de Origem</label>
         <div class="control">
           <div class="select is-fullwidth">
-            <select name="employee[originSector]" id="originSector">
-              <option>Escolha um setor...</option>
+            <select name="employee[originSector]" id="originSector" required>
+              <option value="" disabled selected>Escolha um setor...</option>
               <% allSectors.forEach(sector => { %>
                 <option
                   value="<%= sector._id %>"
@@ -484,8 +495,8 @@
         <label for="currentSector" class="label">Setor Atual</label>
         <div class="control">
           <div class="select is-fullwidth">
-            <select name="employee[currentSector]" id="currentSector">
-              <option>Escolha um setor...</option>
+            <select name="employee[currentSector]" id="currentSector" required>
+              <option value="" disabled selected>Escolha um setor...</option>
               <% allSectors.forEach(sector => { %>
                 <option
                   value="<%= sector._id %>"
@@ -507,8 +518,8 @@
         <label for="school" class="label">Escola</label>
         <div class="control">
           <div class="select is-fullwidth">
-            <select name="employee[school]" id="school" autofocus>
-              <option>Escolha uma escola...</option>
+            <select name="employee[school]" id="school">
+              <option value="" selected>Escolha uma escola...</option>
               <% allSchools.forEach(school => { %>
                 <option
                   value="<%= school._id %>"
@@ -529,7 +540,7 @@
         <div class="control">
           <div class="select is-fullwidth">
             <select name="employee[shift]" id="shift">
-              <option>Selecione um turno</option>
+              <option value="" selected>Selecione um turno</option>
               <option value="Manhã" <%= employee.shift === 'Manhã' ? 'selected' : '' %>>
                 Manhã
               </option>
@@ -554,7 +565,7 @@
     <div class="control">
       <div class="select is-fullwidth">
         <select name="employee[classroom]" id="classroom" autofocus>
-          <option>Escolha uma turma...</option>
+          <option value="" selected>Escolha uma turma...</option>
           <% allClasses.forEach(classroom => { %>
             <option
               value="<%= classroom._id %>"
@@ -587,7 +598,7 @@
 
   <div class="field">
     <div class="control">
-      <button class="button is-link" type="submit">Salvar</button>
+      <button class="button is-success" type="submit">Salvar</button>
       <a href="/admin/employees" class="button">Voltar</a>
     </div>
   </div>

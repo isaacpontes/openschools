@@ -5,8 +5,8 @@
     <div class="card">
       <div class="card-content">
         <div class="is-flex is-align-items-center is-justify-content-space-between">
-            <h1 class="title size-4 mb-0">Rotas de Transporte</h1>
-            <a href="/admin/transports/new" class="button is-success">Novo Transporte</a>
+            <h1 class="title size-4 mb-0">Transportes</h1>
+            <a href="/admin/transports/new" class="button is-link">Novo Transporte</a>
         </div>
 
         <hr>
@@ -30,15 +30,61 @@
                   <%= transport.driver %>
                 </td>
                 <td>
-                  <a href="/admin/transports/<%= transport._id %>">Exibir</a>
+                  <a onclick="toggleModal('showTransport_<%= transport._id %>')">Exibir</a>
                 </td>
                 <td>
                   <a href="/admin/transports/<%= transport._id %>/edit">Editar</a>
                 </td>
                 <td>
-                  <a href="/admin/transports/<%= transport._id %>?_method=delete" class="has-text-danger">Excluir</a>
+                  <a onclick="toggleModal('deleteModalTransport_<%= transport._id %>')" class="has-text-danger">Excluir</a>
                 </td>
               </tr>
+
+              <div id="showTransport_<%= transport._id %>" class="modal" >
+                <div
+                  class="modal-background"
+                  onclick="toggleModal('showTransport_<%= transport._id %>')"
+                ></div>
+                <div class="modal-content">
+                    <div class="card">
+                      <div class="card-content">
+                        <div class="columns">
+                          <div class="column is-half">
+                            <h4 class="title is-4">Nome</h4>
+                            <h6 class="subtitle"><%= transport.name %></h6>
+                          </div>
+                          <div class="column is-half">
+                            <h4 class="title is-4">Motorista</h4>
+                            <h6 class="subtitle"><%= transport.driver %></h6>
+                          </div>
+                        </div>
+                        <div class="field">
+                          <h4 class="title is-4">Informações Adicionais</h4>
+                          <h6 class="subtitle"><%= transport.info %></h6>
+                        </div>
+
+                        <div class="buttons">
+                          <a href="/admin/transports/<%= transport._id %>/edit" class="button is-link">Editar</a>
+                          <button
+                            class="button"
+                            type="button"
+                            onclick="toggleModal('showTransport_<%= transport._id %>')"
+                          >
+                            Fechar
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <button
+                  class="modal-close is-large"
+                  aria-label="close"
+                  onclick="toggleModal('showTransport_<%= transport._id %>')"
+                ></button>
+              </div>
+
+              <%- include('../../partials/_delete-modal', { name: 'Transport', _id: transport._id, url: `/admin/transports/${transport._id}?_method=delete` }) %>
             <% }) %>
           </tbody>
         </table>

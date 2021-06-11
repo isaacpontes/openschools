@@ -37,15 +37,6 @@ module.exports = {
     }
   },
 
-  show: async function (req, res) {
-    try {
-      const user = await User.findById(req.params.id);
-      res.render('admin/users/show', { user: user });
-    } catch (error) {
-      res.render('pages/error', { error: 'Erro ao carregar página.' });
-    }
-  },
-
   edit: async function (req, res) {
     try {
       const user = await User.findById(req.params.id);

@@ -1,14 +1,14 @@
-const Transport = require('../../models/transport');
+const transportsService = require('../../services/transports-service');
 
 module.exports = {
   // Render a list of all transports
   // GET /transports
   index: async function (req, res) {
     try {
-      const transports = await Transport.find({});
+      const transports = await transportsService.findAll();
       res.render('admin/transports/index', { transports });
     } catch (error) {
-      res.render('pages/error', { error: 'Erro ao carregar lista de transportes.' });
+      res.render('pages/error', { error });
     }
   },
 
@@ -16,38 +16,24 @@ module.exports = {
   // POST /transports
   save: async function (req, res) {
     const { name, driver, info } = req.body.transport;
-    const transport = new Transport({ name, driver, info });
-  
     try {
-      await transport.save();
+      await transportsService.save(name, driver, info);
       req.flash('success', 'Transporte salvo com sucesso.');
-      res.redirect('/admin/transports');
+      return res.redirect('/admin/transports');
     } catch (error) {
-      res.render('admin/transports/new', { transport, error: 'Erro ao salvar transporte.' });
+      req.flash('error', 'Erro ao salvar transporte.');
+      return res.redirect('admin/transports/new');
     }
   },
 
   // Render the new transport form
   // GET /transports/new
-  new: async function (req, res) {
+  new: function (req, res) {
     try {
-      const transport = new Transport();
-      res.render('admin/transports/new', { transport });
+      const transport = transportsService.create();
+      return res.render('admin/transports/new', { transport });
     } catch (error) {
-      res.render('pages/error', { error: 'Erro ao carregar página.' });
-    }
-  },
-
-  // Render a single transport
-  // GET /transports/:id
-  show: async function (req, res) {
-    const id = req.params.id;
-  
-    try {
-      const transport = await Transport.findById(id);
-      res.render('admin/transports/show', { transport });
-    } catch (error) {
-      res.render('pages/error', { error: 'Erro ao carregar página.' });
+      return res.render('pages/error', { error });
     }
   },
 
@@ -55,12 +41,11 @@ module.exports = {
   // GET /transports/:id/edit
   edit: async function (req, res) {
     const id = req.params.id;
-  
     try {
-      const transport = await Transport.findById(id);
-      res.render('admin/transports/edit', { transport });
+      const transport = await transportsService.findOne(id);
+      return res.render('admin/transports/edit', { transport });
     } catch (error) {
-      res.render('pages/error', { error: 'Erro ao carregar página.' });
+      return res.render('pages/error', { error });
     }
   },
 
@@ -69,14 +54,13 @@ module.exports = {
   update: async function (req, res) {
     const id = req.params.id;
     const { name, driver, info } = req.body.transport;
-  
     try {
-      await Transport.findByIdAndUpdate(id, { name, driver, info });
-  
+      await transportsService.updateOne(id, name, driver, info);
       req.flash('success', 'Transporte atualizado com sucesso.');
-      res.redirect('/admin/transports');
+      return res.redirect('/admin/transports');
     } catch (error) {
-      res.render('admin/transports/new', { transport: { name, driver, info }, error: 'Erro ao salvar transporte.' });
+      req.flash('error', 'Erro ao atualizar transporte.');
+      return res.redirect('admin/transports/new');
     }
   },
 
@@ -84,14 +68,13 @@ module.exports = {
   // DELETE /transports/:id
   delete: async function (req, res) {
     const id = req.params.id;
-  
     try {
-      await Transport.findByIdAndRemove(id);
-  
+      await transportsService.deleteOne(id);
       req.flash('success', 'Transporte excluído com sucesso.');
-      res.redirect('/admin/transports');
+      return res.redirect('/admin/transports');
     } catch (error) {
-      res.render('admin/transports/index', { error: 'Erro ao excluir transporte.' });
+      req.flash('error', 'Erro ao excluir transporte.');
+      return res.redirect('admin/transports/index');
     }
   }
 };

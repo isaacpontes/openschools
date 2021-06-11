@@ -1,14 +1,14 @@
-const Sector = require('../../models/sector');
+const sectorsService = require('../../services/sectors-service');
 
 module.exports = {
   // Render a list of all sectors
   // GET /sectors
   index: async function (req, res) {
     try {
-      const sectors = await Sector.find({});
+      const sectors = await sectorsService.findAll();
       return res.render('admin/sectors/index', { sectors });
     } catch (error) {
-      return res.render('pages/error', { error: 'Erro ao carregar lista de setores.' });
+      return res.render('pages/error', { error });
     }
   },
 
@@ -16,38 +16,32 @@ module.exports = {
   // POST /sectors
   save: async function (req, res) {
     const { name } = req.body.sector;
-    const sector = new Sector({ name });
-  
     try {
-      await sector.save();
+      await sectorsService.save(name);
       req.flash('success', 'Setor salvo com sucesso.');
       return res.redirect('/admin/sectors');
     } catch (error) {
-      return res.render('admin/sectors/new', { sector, error: 'Erro ao salvar setor.' });
+      req.flash('error', 'Erro ao salvar setor.');
+      return res.redirect('/admin/sectors/new');
     }
   },
 
   // Render the new sector form
   // GET /sectors/new
   new: async function (req, res) {
-    try {
-      const sector = new Sector();
-      return res.render('admin/sectors/new', { sector });
-    } catch (error) {
-      return res.render('pages/error', { error: 'Erro ao carregar página.' });
-    }
+    const sector = sectorsService.create();
+    return res.render('admin/sectors/new', { sector });
   },
 
   // Render sector edit form
   // GET /sectors/:id/edit
   edit: async function (req, res) {
     const { id } = req.params;
-  
     try {
-      const sector = await Sector.findById(id);
+      const sector = await sectorsService.findOne(id);
       return res.render('admin/sectors/edit', { sector });
     } catch (error) {
-      return res.render('pages/error', { error: 'Erro ao carregar página.' });
+      return res.render('pages/error', { error });
     }
   },
 
@@ -56,14 +50,13 @@ module.exports = {
   update: async function (req, res) {
     const { id } = req.params;
     const { name } = req.body.sector;
-  
     try {
-      await Sector.findByIdAndUpdate(id, { name, updated: Date.now() });
-  
+      await sectorsService.updateOne(id, name);
       req.flash('success', 'Setor atualizado com sucesso.');
       return res.redirect('/admin/sectors');
     } catch (error) {
-      return res.render('admin/sectors/edit', { sector: { name }, error: 'Erro ao salvar setor.' });
+      req.flash('error', 'Erro ao atualizar setor.');
+      return res.redirect(`/admin/sectors/${id}/edit`);
     }
   },
 
@@ -71,14 +64,12 @@ module.exports = {
   // DELETE /sectors/:id
   delete: async function (req, res) {
     const { id } = req.params;
-  
     try {
-      await Sector.findByIdAndRemove(id);
-  
+      await sectorsService.deleteOne(id);
       req.flash('success', 'Setor excluído com sucesso.');
       return res.redirect('/admin/sectors');
     } catch (error) {
       return res.redirect('/admin/sectors', { error: 'Erro ao excluir sectore.' });
     }
-  }
+  },
 };

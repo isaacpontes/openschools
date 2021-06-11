@@ -4,31 +4,31 @@
   <div class="container">
         <%- include('../partials/messages') %>
 
-        <div class="columns is-multiline has-text-centered">
+        <div class="columns is-multiline">
           <div class="column is-6-tablet is-3-desktop">
             <div class="card mb-5">
               <div class="card-content is-flex is-justify-content-space-between">
-                <span class="is-size-4 is-uppercase has-text-weight-bold">Escolas:</span>
-                <span class="is-size-4 is-uppercase has-text-weight-bold"><%= schoolsCount %></span>
+                <span class="is-size-5 is-uppercase has-text-weight-bold">Escolas:</span>
+                <span class="is-size-5 is-uppercase has-text-weight-bold"><%= schoolsCount %></span>
               </div>
             </div>
             <div class="card mb-5">
               <div class="card-content is-flex is-justify-content-space-between">
-                <span class="is-size-4 is-uppercase has-text-weight-bold">Alunos:</span>
-                <span class="is-size-4 is-uppercase has-text-weight-bold"><%= studentsCount %></span>
+                <span class="is-size-5 is-uppercase has-text-weight-bold">Alunos:</span>
+                <span class="is-size-5 is-uppercase has-text-weight-bold"><%= studentsCount %></span>
               </div>
             </div>
             <div class="card">
               <div class="card-content is-flex is-justify-content-space-between">
-                <span class="is-size-4 is-uppercase has-text-weight-bold">Funcionários:</span>
-                <span class="is-size-4 is-uppercase has-text-weight-bold"><%= employeesCount %></span>
+                <span class="is-size-5 is-uppercase has-text-weight-bold">Funcionários:</span>
+                <span class="is-size-5 is-uppercase has-text-weight-bold"><%= employeesCount %></span>
               </div>
             </div>
           </div>
           <div class="column is-6-tablet is-3-desktop">
             <div class="card">
               <div class="card-content">
-                <h4 class="title is-5">
+                <h4 class="title is-5 is-uppercase has-text-weight-bold">
                   Alunos por Escola
                 </h4>
                 <canvas id="schoolsDonutChart"></canvas>
@@ -38,7 +38,7 @@
           <div class="column is-6-tablet is-3-desktop">
             <div class="card">
               <div class="card-content">
-                <h4 class="title is-5">
+                <h4 class="title is-5 is-uppercase has-text-weight-bold">
                   Alunos por Ano Escolar
                 </h4>
                 <canvas id="gradesChart"></canvas>
@@ -48,7 +48,7 @@
           <div class="column is-6-tablet is-3-desktop">
             <div class="card">
               <div class="card-content">
-                <h4 class="title is-5">
+                <h4 class="title is-5 is-uppercase has-text-weight-bold">
                   Funcionários por Setor
                 </h4>
                 <canvas id="employeesChart"></canvas>
@@ -61,6 +61,9 @@
           <div class="column is-three-thirds">
             <div class="card">
               <div class="card-content">
+                <h4 class="title is-5 is-uppercase has-text-weight-bold">
+                  Alunos por Escola
+                </h4>
                 <canvas id="schoolsBarChart" width="1024" height="480"></canvas>
               </div>
             </div>

@@ -16,7 +16,7 @@
             value="<%= user.name %>"
             autofocus
             autocomplete="off"
-    
+            required
           />
           <% if (user.errors && user.errors.hasOwnProperty('name')) { %>
             <p class="is-danger help"><%= user.errors.name %></p>
@@ -36,6 +36,7 @@
             placeholder="Ex.: ph@email.com"
             value="<%= user.email %>"
             autocomplete="off"
+            required
           />
           <% if (user.errors && user.errors.hasOwnProperty('email')) { %>
             <p class="is-danger help"><%= user.errors.email %></p>
@@ -109,8 +110,8 @@
 
   <div class="field">
     <div class="control">
-      <button class="button is-link" type="submit">Salvar</button>
-      <a href="/users" class="button">Voltar</a>
+      <button class="button is-success" type="submit">Salvar</button>
+      <a href="/admin/users" class="button">Voltar</a>
     </div>
   </div>
 

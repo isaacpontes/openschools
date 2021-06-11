@@ -16,7 +16,7 @@
             value="<%= typeof transport.name != 'undefined' ? transport.name : '' %>"
             autofocus
             autocomplete="off"
-    
+            required
           />
           <% if (transport.errors && transport.errors.hasOwnProperty('name')) { %>
             <p class="is-danger help"><%= transport.errors.name %></p>
@@ -36,6 +36,7 @@
             placeholder="Insira o motorista"
             value="<%= typeof transport.driver != 'undefined' ? transport.driver : '' %>"
             autocomplete="off"
+            required
           />
           <% if (transport.errors && transport.errors.hasOwnProperty('driver')) { %>
             <p class="is-danger help"><%= transport.errors.driver %></p>
@@ -64,7 +65,7 @@
 
   <div class="field">
     <div class="control">
-      <button class="button is-link" type="submit">Salvar</button>
+      <button class="button is-success" type="submit">Salvar</button>
       <a href="/admin/transports" class="button">Voltar</a>
     </div>
   </div>

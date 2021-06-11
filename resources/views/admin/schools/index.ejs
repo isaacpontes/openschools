@@ -6,7 +6,7 @@
       <div class="card-content">
         <div class="is-flex is-align-items-center is-justify-content-space-between">
           <h1 class="title size-4 mb-0">Listagem de Escolas</h1>
-          <a href="/admin/schools/new" class="button is-success">Nova Escola</a>
+          <a href="/admin/schools/new" class="button is-link">Nova Escola</a>
         </div>
 
         <hr>
@@ -40,9 +40,11 @@
                   <a href="/admin/schools/<%= school._id %>/edit">Editar</a>
                 </td>
                 <td>
-                  <a href="/admin/schools/<%= school._id %>?_method=delete" class="has-text-danger">Excluir</a>
+                  <a onclick="toggleModal('deleteModalSchool_<%= school._id %>')" class="has-text-danger">Excluir</a>
                 </td>
               </tr>
+
+              <%- include('../../partials/_delete-modal', { name: 'School', _id: school._id, url: `/admin/schools/${school._id}?_method=delete` }) %>
             <% }) %>
           </tbody>
         </table>
