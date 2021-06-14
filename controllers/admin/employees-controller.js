@@ -1,10 +1,8 @@
 const dayjs = require('dayjs');
-const Employee = require('../../models/employee');
-const Sector = require('../../models/sector');
-const School = require('../../models/school');
-const Classroom = require('../../models/classroom');
 const employeesService = require('../../services/employees-service');
 const sectorsService = require('../../services/sectors-service');
+const schoolsService = require('../../services/schools-service');
+const classroomsService = require('../../services/classrooms-service');
 
 module.exports = {
   // Render a list of all employees
@@ -43,8 +41,8 @@ module.exports = {
     const employee = employeesService.create();
     try {
       const allSectors = await sectorsService.findAll();
-      const allSchools = await School.find({});
-      const allClasses = await Classroom.find({}).populate('school');
+      const allSchools = await schoolsService.findAll();
+      const allClasses = await classroomsService.findAll({ path: 'school' });
       return res.render('admin/employees/new', { employee, allSectors, allSchools, allClasses, dayjs });
     } catch (error) {
       return res.render('pages/error', { error });
@@ -68,10 +66,10 @@ module.exports = {
   edit: async function (req, res) {
     const { id } = req.params;
     try {
+      const employee = await employeesService.findOne(id);
       const allSectors = await sectorsService.findAll();
-      const allSchools = await School.find({});
-      const allClasses = await Classroom.find({}).populate('school');
-      const employee = await Employee.findById(id);
+      const allSchools = await schoolsService.findAll();
+      const allClasses = await classroomsService.findAll({ path: 'school' });
       return res.render('admin/employees/edit', { employee, allSectors, allSchools, allClasses, dayjs });
     } catch (error) {
       return res.render('pages/error', { error });

@@ -1,8 +1,11 @@
 const Sector = require('../models/sector');
 
 module.exports = {
-  create: function () {
+  create: function (name) {
     const sector = new Sector();
+    if (typeof name === 'undefined') {
+      sector.name = name;
+    }
     return sector;
   },
 
@@ -17,7 +20,7 @@ module.exports = {
   },
 
   save: async function (name) {
-    const sector = new Sector({ name });
+    const sector = this.create(name);
     await sector.save();
     return sector;
   },

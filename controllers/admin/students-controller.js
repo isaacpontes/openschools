@@ -1,160 +1,104 @@
 const dayjs = require('dayjs');
-const Classroom = require('../../models/classroom');
-const School = require('../../models/school');
-const Student = require('../../models/student');
-const Transport = require('../../models/transport');
+const classroomsService = require('../../services/classrooms-service');
+const schoolsService = require('../../services/schools-service');
+const studentsService = require('../../services/students-service');
+const transportsService = require('../../services/transports-service');
 
 module.exports = {
   // Render a list of all students
   // GET /admin/students
   index: async function (req, res) {
     try {
-      const students = await Student.find({}).populate(['school', 'classroom']);
-      return res.status(200).render('admin/students/index', { students });
+      const students = await studentsService.findAll(['school', 'classroom']);
+      return res.render('admin/students/index', { students });
     } catch (error) {
-      return res.status(400).render('pages/error', { error: 'Erro ao carregar lista de funcionários.' });
+      return res.render('pages/error', { error });
     }
   },
 
   // Save a new student to the database
   // POST /admin/students
   save: async function (req, res) {
-    const {
-      enrollment, firstName, lastName, gender, phone, address, birthday, birthPlace,
-      fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info,
-      transport, school, classroom
-    } = req.body.student;
-    const student = new Student({
-      enrollment, firstName, lastName, gender, phone, address, birthday: dayjs(birthday),
-      birthPlace, fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info,
-      transport, school, classroom
-    });
-  
+    const { enrollment, firstName, lastName, gender, phone, address, birthPlace, fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info, transport, school, classroom } = req.body.student;
+    const birthday = dayjs(req.body.student.birthday);
+    const student = studentsService.create(enrollment, firstName, lastName, gender, phone, address, birthday, birthPlace, fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info, transport, school, classroom);
     try {
-      await student.save();
-  
+      await studentsService.save(student);
       req.flash('success', 'Estudante salvo com sucesso.');
-      res.status(204).redirect('/admin/students');
-  
+      return res.redirect('/admin/students');
     } catch (error) {
-  
-      const allSchools = await School.find({});
-      const allClasses = await Classroom.find({}).populate('school');
-      const allTransports = await Transport.find({});
-  
-      console.log(error);
-      res.status(400).render('/admin/students/new', {
-        student,
-        allSchools,
-        allClasses,
-        allTransports,
-        error: 'Erro ao salvar estudante.'
-      });
+      return res.redirect('/admin/students/new');
     }
   },
 
   // Render new student form
   // GET /admin/students/new
   new: async function (req, res) {
-    const student = new Student();
-  
+    const student = studentsService.create();
     try {
-      const allSchools = await School.find({});
-      const allClasses = await Classroom.find({}).populate('school');
-      const allTransports = await Transport.find({});
+      const allSchools = await schoolsService.findAll();
+      const allClasses = await classroomsService.findAll({ path: 'school' });
+      const allTransports = await transportsService.findAll();
 
-      res.status(200).render('admin/students/new', {
-        student,
-        allSchools,
-        allClasses,
-        allTransports,
-        dayjs
-      });
+      return res.render('admin/students/new', { student, allSchools, allClasses, allTransports, dayjs });
     } catch (error) {
-      res.satus(400).render('pages/error', { error, message: 'Erro ao carregar página.' });
+      return res.satus(400).render('pages/error', { error, message: 'Erro ao carregar página.' });
     }
   },
 
   // Render a single student
   // GET /admin/students/:id
   show: async function (req, res) {
-    const id = req.params.id;
-  
+    const { id } = req.params;
     try {
-      const student = await Student.findById(id).populate(['school', 'classroom', 'transport']);
-      
-      res.status(200).render('admin/students/show', { student, dayjs });
+      const student = await studentsService.findById(id, ['school', 'classroom', 'transport']);
+      return res.status(200).render('admin/students/show', { student, dayjs });
     } catch (error) {
-      res.status(400).render('pages/error', { error: 'Erro ao carregar página.' });
+      return res.status(400).render('pages/error', { error });
     }
   },
 
   // Render student edit form
   // GET /admin/students/:id/edit
   edit: async function (req, res) {
-    const id = req.params.id;
-    const currentUser = req.user._id;
-  
+    const { id } = req.params;
     try {
-      const allSchools = await School.find({});
-      const allClasses = await Classroom.find({}).populate('school');
-      const allTransports = await Transport.find({});
-      const student = await Student.findById(id);
-  
-      res.status(200).render('admin/students/edit', {
-        student,
-        allSchools,
-        allClasses,
-        allTransports,
-        dayjs
-      });
+      const student = await studentsService.findById(id);
+      const allSchools = await schoolsService.findAll();
+      const allClasses = await classroomsService.findAll({ path: 'school' });
+      const allTransports = await transportsService.findAll();
+      return res.render('admin/students/edit', { student, allSchools, allClasses, allTransports, dayjs });
     } catch (error) {
-      res.status(400).render('pages/error', { error: 'Erro ao carregar página.' });
+      return res.render('pages/error', { error });
     }
   },
 
   // Update a student in the database
   // PUT /admin/students/:id
   update: async function (req, res) {
-    const id = req.params.id;
-    const {
-      enrollment, firstName, lastName, gender, phone, address, birthday, birthPlace,
-      fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info,
-      transport, school, classroom
-    } = req.body.student;
-  
+    const { id } = req.params;
+    const { enrollment, firstName, lastName, gender, phone, address, birthPlace, fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info, transport, school, classroom } = req.body.student;
+    const birthday = dayjs(req.body.student.birthday);
     try {
-      await Student.findByIdAndUpdate(id, {
-        enrollment, firstName, lastName, gender, phone, address, birthday: dayjs(birthday),
-        birthPlace, fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info,
-        transport, school, classroom, updated: Date.now()
-      });
-  
+      await studentsService.update(id, enrollment, firstName, lastName, gender, phone, address, birthday, birthPlace, fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info, transport, school, classroom);
       req.flash('success', 'Estudante atualizado com sucesso.');
-      res.status(200).redirect('/admin/students');
-      
+      return res.redirect('/admin/students');
     } catch (error) {
-  
-      res.render('admin/students/edit',{ student: {
-        enrollment, firstName, lastName, gender, phone, address, birthday, birthPlace,
-        fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info,
-        transport, school, classroom
-      }, error: 'Erro ao salvar estudante.' });
+      req.flash('error', 'Erro ao atualizar estudante.');
+      return res.redirect(`/admin/students/${id}/edit`);
     }
   },
 
   // Delete student from database
   // DELETE /admin/students/:id
   delete: async function (req, res) {
-    const student = await Student.findById(req.params.id);
-  
+    const { id } = req.params;
     try {
-      await student.remove();
-  
+      await studentsService.delete(id);
       req.flash('success', 'Estudante excluído com sucesso.');
-      res.status(200).redirect('/admin/students');
+      return res.redirect('/admin/students');
     } catch (error) {
-      res.status(400).render('/admin/students', { error: 'Erro ao excluir estudante.' });
+      return res.redirect('/admin/students');
     }
   }
 };
