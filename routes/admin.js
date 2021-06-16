@@ -53,6 +53,7 @@ router.delete('/sectors/:id', ensureAdmin, sectorsController.delete);
 router.get('/students', ensureAdmin, studentsController.index);
 router.post('/students', ensureAdmin, studentsController.save);
 router.get('/students/new', ensureAdmin, studentsController.new);
+router.get('/students/export-pdf', studentsController.exportPdf);
 router.get('/students/:id', ensureAdmin, studentsController.show);
 router.get('/students/:id/edit', ensureAdmin, studentsController.edit);
 router.put('/students/:id', ensureAdmin, studentsController.update);
