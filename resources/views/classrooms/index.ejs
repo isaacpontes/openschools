@@ -37,9 +37,16 @@
                   <a href="/schools/<%= schoolId %>/classrooms/<%= classroom._id %>/edit">Editar</a>
                 </td>
                 <td>
-                  <a href="/schools/<%= schoolId %>/classrooms/<%= classroom._id %>?_method=delete" class="has-text-danger">Excluir</a>
+                  <a
+                    class="has-text-danger modal-toggler"
+                    data-target="deleteModalClassroom_<%= classroom._id %>"
+                  >
+                    Excluir
+                  </a>
                 </td>
               </tr>
+
+              <%- include('../partials/_delete-modal', { name: 'Classroom', _id: classroom._id, url: `/schools/${schoolId}/classrooms/${classroom._id}?_method=delete` }) %>
             <% }) %>
           </tbody>
         </table>

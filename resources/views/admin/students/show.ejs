@@ -1,130 +1,161 @@
 <%- include('../../layouts/admin-header') %>
 
-<section class="section">
-  <div class="container">
-    <div class="card">
-      <div class="card-content">
-        <div class="is-flex is-justify-content-space-between is-align-items-center">
-          <h1 class="title m-0">Aluno</h1>
+  <section class="section">
+    <div class="container">
+      <div class="card">
+        <div class="card-content">
+          <div class="is-flex is-justify-content-space-between is-align-items-center">
+            <h1 class="title m-0">Aluno</h1>
 
-          <div class="buttons">
-            <a href="/admin/students/<%= student._id %>/edit" class="button is-link">Editar</a>
-            <a href="/admin/students" class="button">Voltar</a>
-          </div>
-        </div>
-        <hr>
-        <div class="columns">
-          <div class="column is-one-half">
-            <div class="field">
-              <h4 class="title is-5">Matrícula</h4>
-              <h6 class="subtitle is-4"><%= student.enrollment %></h6>
+            <div class="buttons">
+              <a href="/admin/students/<%= student._id %>/edit" class="button is-link">Editar</a>
+              <a href="/admin/students" class="button">Voltar</a>
             </div>
           </div>
-          <div class="column is-three-half">
-            <div class="field">
-              <h4 class="title is-5">Nome Completo</h4>
-              <h6 class="subtitle is-4"><%= student.firstName %> <%= student.lastName %></h6>
+          <hr>
+          <div class="columns">
+            <div class="column is-one-half">
+              <div class="field">
+                <h4 class="title is-5">Matrícula</h4>
+                <h6 class="subtitle is-4">
+                  <%= student.enrollment %>
+                </h6>
+              </div>
+            </div>
+            <div class="column is-three-half">
+              <div class="field">
+                <h4 class="title is-5">Nome Completo</h4>
+                <h6 class="subtitle is-4">
+                  <%= student.firstName %>
+                    <%= student.lastName %>
+                </h6>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="columns">
-          <div class="column is-half">
-            <div class="field">
-              <h4 class="title is-5">Escola</h4>
-              <h6 class="subtitle is-4"><%= student.school.name %></h6>
+          <div class="columns">
+            <div class="column is-half">
+              <div class="field">
+                <h4 class="title is-5">Escola</h4>
+                <h6 class="subtitle is-4">
+                  <%= student.school.name %>
+                </h6>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="field">
+                <h4 class="title is-5">Turma</h4>
+                <h6 class="subtitle is-4">
+                  <%= student.classroom.name %>
+                </h6>
+              </div>
             </div>
           </div>
-          <div class="column is-half">
-            <div class="field">
-              <h4 class="title is-5">Turma</h4>
-              <h6 class="subtitle is-4"><%= student.classroom.name %></h6>
-            </div>
-          </div>
-        </div>
-        
-        <div class="columns">
-          <div class="column is-one-half">
-            <div class="field">
-              <h4 class="title is-5">Gênero</h4>
-              <h6 class="subtitle is-4"><%= student.gender === 'male' ? 'Masculino' : 'Feminino' %></h6>
-            </div>
-          </div>
-          <div class="column is-one-half">
-            <div class="field">
-              <h4 class="title is-5">Telefone</h4>
-              <h6 class="subtitle is-4"><%= student.phone %></h6>
-            </div>
-          </div>
-        </div>
 
-        <div class="field">
-          <h4 class="title is-5">Endereço</h4>
-          <h6 class="subtitle is-4"><%= student.address %></h6>
-        </div>
+          <div class="columns">
+            <div class="column is-one-half">
+              <div class="field">
+                <h4 class="title is-5">Gênero</h4>
+                <h6 class="subtitle is-4">
+                  <%= student.gender==='male' ? 'Masculino' : 'Feminino' %>
+                </h6>
+              </div>
+            </div>
+            <div class="column is-one-half">
+              <div class="field">
+                <h4 class="title is-5">Telefone</h4>
+                <h6 class="subtitle is-4">
+                  <%= student.phone %>
+                </h6>
+              </div>
+            </div>
+          </div>
 
-        <div class="columns">
-          <div class="column is-one-half">
-            <div class="field">
-              <h4 class="title is-5">Data de Nascimento</h4>
-              <h6 class="subtitle is-4"><%= dayjs(student.birthday).format('DD/MM/YYYY') %></h6>
-            </div>
+          <div class="field">
+            <h4 class="title is-5">Endereço</h4>
+            <h6 class="subtitle is-4">
+              <%= student.address %>
+            </h6>
           </div>
-          <div class="column is-one-half">
-            <div class="field">
-              <h4 class="title is-5">Local de Nascimento</h4>
-              <h6 class="subtitle is-4"><%= student.birthPlace %></h6>
-            </div>
-          </div>
-        </div>
 
-        <div class="columns">
-          <div class="column is-one-half">
-            <div class="field">
-              <h4 class="title is-5">Nome do Pai</h4>
-              <h6 class="subtitle is-4"><%= student.fatherName %></h6>
+          <div class="columns">
+            <div class="column is-one-half">
+              <div class="field">
+                <h4 class="title is-5">Data de Nascimento</h4>
+                <h6 class="subtitle is-4">
+                  <%= dayjs(student.birthday).format('DD/MM/YYYY') %>
+                </h6>
+              </div>
+            </div>
+            <div class="column is-one-half">
+              <div class="field">
+                <h4 class="title is-5">Local de Nascimento</h4>
+                <h6 class="subtitle is-4">
+                  <%= student.birthPlace %>
+                </h6>
+              </div>
             </div>
           </div>
-          <div class="column is-one-half">
-            <div class="field">
-              <h4 class="title is-5">Ocupação do Pai</h4>
-              <h6 class="subtitle is-4"><%= student.fatherOcupation %></h6>
-            </div>
-          </div>
-        </div>
 
-        <div class="columns">
-          <div class="column is-one-half">
-            <div class="field">
-              <h4 class="title is-5">Nome da Mãe</h4>
-              <h6 class="subtitle is-4"><%= student.motherName %></h6>
+          <div class="columns">
+            <div class="column is-one-half">
+              <div class="field">
+                <h4 class="title is-5">Nome do Pai</h4>
+                <h6 class="subtitle is-4">
+                  <%= student.fatherName %>
+                </h6>
+              </div>
+            </div>
+            <div class="column is-one-half">
+              <div class="field">
+                <h4 class="title is-5">Ocupação do Pai</h4>
+                <h6 class="subtitle is-4">
+                  <%= student.fatherOcupation %>
+                </h6>
+              </div>
             </div>
           </div>
-          <div class="column is-one-half">
-            <div class="field">
-              <h4 class="title is-5">Ocupação da Mãe</h4>
-              <h6 class="subtitle is-4"><%= student.motherOcupation %></h6>
-            </div>
-          </div>
-        </div>
 
-        <div class="columns">
-          <div class="column is-one-half">
-            <div class="field">
-              <h4 class="title is-5">Tipo Sanguíneo</h4>
-              <h6 class="subtitle is-4"><%= student.bloodType %></h6>
+          <div class="columns">
+            <div class="column is-one-half">
+              <div class="field">
+                <h4 class="title is-5">Nome da Mãe</h4>
+                <h6 class="subtitle is-4">
+                  <%= student.motherName %>
+                </h6>
+              </div>
+            </div>
+            <div class="column is-one-half">
+              <div class="field">
+                <h4 class="title is-5">Ocupação da Mãe</h4>
+                <h6 class="subtitle is-4">
+                  <%= student.motherOcupation %>
+                </h6>
+              </div>
             </div>
           </div>
-          <div class="column is-one-half">
-            <div class="field">
-              <h4 class="title is-5">Transporte</h4>
-              <h6 class="subtitle is-4"><%= student.transport.name %></h6>
+
+          <div class="columns">
+            <div class="column is-one-half">
+              <div class="field">
+                <h4 class="title is-5">Tipo Sanguíneo</h4>
+                <h6 class="subtitle is-4">
+                  <%= student.bloodType %>
+                </h6>
+              </div>
+            </div>
+            <div class="column is-one-half">
+              <div class="field">
+                <h4 class="title is-5">Transporte</h4>
+                <h6 class="subtitle is-4">
+                  <%= student.transport.name %>
+                </h6>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<%- include('../../layouts/admin-footer') %>
+  <%- include('../../layouts/footer') %>

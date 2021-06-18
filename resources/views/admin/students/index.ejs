@@ -1,69 +1,72 @@
 <%- include('../../layouts/admin-header') %>
 
-<section class="section">
-  <div class="container">
-    <div class="card">
-      <div class="card-content">
-        <div class="is-flex is-align-items-center is-justify-content-space-between">
-          <h1 class="title size-4 mb-0">Listagem de Alunos</h1>
-          <div class="button-group">
-            <a href="/admin/students/new" class="button is-link m-1">Novo Aluno</a>
-            <a href="/admin/students/export-pdf" class="button is-light m-1" target="_blank">Exportar em PDF</a>
+  <section class="section">
+    <div class="container">
+      <div class="card">
+        <div class="card-content">
+          <div class="is-flex is-align-items-center is-justify-content-space-between">
+            <h1 class="title size-4 mb-0">Listagem de Alunos</h1>
+            <div class="button-group">
+              <a href="/admin/students/new" class="button is-link m-1">Novo Aluno</a>
+              <a href="/admin/students/export-pdf" class="button is-light m-1" target="_blank">Exportar em PDF</a>
+            </div>
           </div>
-        </div>
 
-        <hr>
+          <hr>
 
-        <%- include('../../partials/messages') %>
-        <div class="table-container">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Matrícula</th>
-                <th>Nome</th>
-                <th>Sobrenome</th>
-                <th>Telefone</th>
-                <th>Escola</th>
-                <th colspan="3">Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% students.forEach(student => { %>
-                <tr>
-                  <td>
-                    <%= student.enrollment %>
-                  </td>
-                  <td>
-                    <%= student.firstName %>
-                  </td>
-                  <td>
-                    <%= student.lastName %>
-                  </td>
-                  <td>
-                    <%= student.phone %>
-                  </td>
-                  <td>
-                    <%= student.school.name %>
-                  </td>
-                  <td>
-                    <a href="/admin/students/<%= student._id %>">Exibir</a>
-                  </td>
-                  <td>
-                    <a href="/admin/students/<%= student._id %>/edit">Editar</a>
-                  </td>
-                  <td>
-                    <a onclick="toggleModal('deleteModalStudent_<%= student._id %>')" class="has-text-danger">Excluir</a>
-                  </td>
-                </tr>
+          <%- include('../../partials/messages') %>
+            <div class="table-container">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Matrícula</th>
+                    <th>Nome</th>
+                    <th>Sobrenome</th>
+                    <th>Telefone</th>
+                    <th>Escola</th>
+                    <th colspan="3">Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% students.forEach(student=> { %>
+                    <tr>
+                      <td>
+                        <%= student.enrollment %>
+                      </td>
+                      <td>
+                        <%= student.firstName %>
+                      </td>
+                      <td>
+                        <%= student.lastName %>
+                      </td>
+                      <td>
+                        <%= student.phone %>
+                      </td>
+                      <td>
+                        <%= student.school.name %>
+                      </td>
+                      <td>
+                        <a href="/admin/students/<%= student._id %>">Exibir</a>
+                      </td>
+                      <td>
+                        <a href="/admin/students/<%= student._id %>/edit">Editar</a>
+                      </td>
+                      <td>
+                        <a class="has-text-danger modal-toggler" data-target="deleteModalStudent_<%= student._id %>">
+                          Excluir
+                        </a>
+                      </td>
+                    </tr>
 
-                <%- include('../../partials/_delete-modal', { name: 'Student', _id: student._id, url: `/admin/students/${student._id}?_method=delete` }) %>
-              <% }) %>
-            </tbody>
-          </table>
+                    <%- include('../../partials/_delete-modal', { name: 'Student' , _id: student._id, url:
+                      `/admin/students/${student._id}?_method=delete` }) %>
+                      <% }) %>
+                </tbody>
+              </table>
+            </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<%- include('../../layouts/admin-footer') %>
+  <%- include('../../layouts/footer') %>

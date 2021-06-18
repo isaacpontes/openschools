@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Open Schools</title>
 
-  <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="/dist/main.css">
 </head>
+
 <body>
 
   <section class="hero is-fullheight is-light">
@@ -17,44 +19,32 @@
           <div class="card-content">
             <h1 class="title has-text-centered">Bem-vindo!</h1>
 
-            <%- include('../partials/messages') %> 
+            <%- include('../partials/messages') %>
 
-            <form action="/auth/login" method="post">
+              <form action="/auth/login" method="post">
 
-              <div class="field">
-                <label class="label" for="email">Email</label>
-                <div class="control">
-                  <input
-                    class="input"
-                    type="email"
-                    name="email"
-                    id="email"
-                    placeholder="Digite seu email"
-                    autocomplete="off"
-                  />
+                <div class="field">
+                  <label class="label" for="email">Email</label>
+                  <div class="control">
+                    <input class="input" type="email" name="email" id="email" placeholder="Digite seu email"
+                      autocomplete="off" />
+                  </div>
                 </div>
-              </div>
 
-              <div class="field">
-                <label class="label" for="password">Senha</label>
-                <div class="control">
-                  <input
-                    class="input"
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="Digite sua senha"
-                  />
+                <div class="field">
+                  <label class="label" for="password">Senha</label>
+                  <div class="control">
+                    <input class="input" type="password" name="password" id="password" placeholder="Digite sua senha" />
+                  </div>
                 </div>
-              </div>
 
-              <div class="field">
-                <div class="control">
-                  <button class="button is-primary is-fullwidth" type="submit">Entrar</button>
+                <div class="field">
+                  <div class="control">
+                    <button class="button is-primary is-fullwidth" type="submit">Entrar</button>
+                  </div>
                 </div>
-              </div>
 
-            </form>
+              </form>
           </div>
         </div>
       </div>
@@ -62,4 +52,5 @@
   </section>
 
 </body>
+
 </html>

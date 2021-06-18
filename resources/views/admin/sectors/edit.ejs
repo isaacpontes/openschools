@@ -1,15 +1,16 @@
 <%- include('../../layouts/admin-header') %>
 
-<section class="section">
-  <div class="container">
-    <div class="card">
-      <div class="card-content">
-        <h1 class="title is-4">Editar Setor | <%= sector.name %></h1>
-        <hr>
-        <%- include('_form', { url: `/admin/sectors/${sector._id}?_method=put`, sector: sector }) %> 
+  <section class="section">
+    <div class="container">
+      <div class="card">
+        <div class="card-content">
+          <h1 class="title is-4">Editar Setor | <%= sector.name %>
+          </h1>
+          <hr>
+          <%- include('_form', { url: `/admin/sectors/${sector._id}?_method=put`, sector: sector }) %>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<%- include('../../layouts/admin-footer') %>
+  <%- include('../../layouts/footer') %>

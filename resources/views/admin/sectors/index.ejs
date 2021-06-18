@@ -1,45 +1,48 @@
 <%- include('../../layouts/admin-header') %>
 
-<section class="section">
-  <div class="container">
-    <div class="card">
-      <div class="card-content">
-        <div class="is-flex is-align-items-center is-justify-content-space-between">
+  <section class="section">
+    <div class="container">
+      <div class="card">
+        <div class="card-content">
+          <div class="is-flex is-align-items-center is-justify-content-space-between">
             <h1 class="title size-4 mb-0">Setores</h1>
             <a href="/admin/sectors/new" class="button is-link">Novo Setor</a>
+          </div>
+
+          <hr>
+
+          <%- include('../../partials/messages') %>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th colspan="3">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% sectors.forEach(sector=> { %>
+                  <tr>
+                    <td>
+                      <%= sector.name %>
+                    </td>
+                    <td>
+                      <a href="/admin/sectors/<%= sector._id %>/edit">Editar</a>
+                    </td>
+                    <td>
+                      <a class="has-text-danger modal-toggler" data-target="deleteModalSector_<%= sector._id %>">
+                        Excluir
+                      </a>
+                    </td>
+                  </tr>
+
+                  <%- include('../../partials/_delete-modal', { name: 'Sector' , _id: sector._id, url:
+                    `/admin/sectors/${sector._id}?_method=delete` }) %>
+                    <% }) %>
+              </tbody>
+            </table>
         </div>
-
-        <hr>
-
-        <%- include('../../partials/messages') %>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th colspan="3">Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% sectors.forEach(sector => { %>
-              <tr>
-                <td>
-                  <%= sector.name %>
-                </td>
-                <td>
-                  <a href="/admin/sectors/<%= sector._id %>/edit">Editar</a>
-                </td>
-                <td>
-                  <a onclick="toggleModal('deleteModalSector_<%= sector._id %>')" class="has-text-danger">Excluir</a>
-                </td>
-              </tr>
-
-              <%- include('../../partials/_delete-modal', { name: 'Sector', _id: sector._id, url: `/admin/sectors/${sector._id}?_method=delete` }) %>
-            <% }) %>
-          </tbody>
-        </table>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<%- include('../../layouts/admin-footer') %>
+  <%- include('../../layouts/footer') %>

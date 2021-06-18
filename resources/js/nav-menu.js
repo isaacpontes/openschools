@@ -23,8 +23,3 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
-
-
-function toggleModal(id) {
-  document.getElementById(id).classList.toggle('is-active');
-}

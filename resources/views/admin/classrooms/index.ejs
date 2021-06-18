@@ -1,56 +1,59 @@
 <%- include('../../layouts/admin-header') %>
 
-<section class="section">
-  <div class="container">
-    <div class="card">
-      <div class="card-content">
-        <div class="is-flex is-align-items-center is-justify-content-space-between">
-          <h1 class="title size-4 mb-0">Lista de Turmas</h1>
-          <a href="/admin/classrooms/new" class="button is-link">Nova Turma</a>
+  <section class="section">
+    <div class="container">
+      <div class="card">
+        <div class="card-content">
+          <div class="is-flex is-align-items-center is-justify-content-space-between">
+            <h1 class="title size-4 mb-0">Lista de Turmas</h1>
+            <a href="/admin/classrooms/new" class="button is-link">Nova Turma</a>
+          </div>
+
+          <hr>
+
+          <%- include('../../partials/messages') %>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Ano</th>
+                  <th>Escola</th>
+                  <th colspan="3">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% classrooms.forEach(classroom=> { %>
+                  <tr>
+                    <td>
+                      <%= classroom.name %>
+                    </td>
+                    <td>
+                      <%= classroom.grade.name %>
+                    </td>
+                    <td>
+                      <%= classroom.school.name %>
+                    </td>
+                    <td>
+                      <a href="/admin/classrooms/<%= classroom._id %>">Exibir</a>
+                    </td>
+                    <td>
+                      <a href="/admin/classrooms/<%= classroom._id %>/edit">Editar</a>
+                    </td>
+                    <td>
+                      <a class="has-text-danger modal-toggler" data-target="deleteModalClassroom_<%= classroom._id %>">
+                        Excluir
+                      </a>
+                    </td>
+                  </tr>
+
+                  <%- include('../../partials/_delete-modal', { name: 'Classroom' , _id: classroom._id, url:
+                    `/admin/classrooms/${classroom._id}?_method=delete` }) %>
+                    <% }) %>
+              </tbody>
+            </table>
         </div>
-
-        <hr>
-
-        <%- include('../../partials/messages') %>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Ano</th>
-              <th>Escola</th>
-              <th colspan="3">Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% classrooms.forEach(classroom => { %>
-              <tr>
-                <td>
-                  <%= classroom.name %>
-                </td>
-                <td>
-                  <%= classroom.grade.name %>
-                </td>
-                <td>
-                  <%= classroom.school.name %>
-                </td>
-                <td>
-                  <a href="/admin/classrooms/<%= classroom._id %>">Exibir</a>
-                </td>
-                <td>
-                  <a href="/admin/classrooms/<%= classroom._id %>/edit">Editar</a>
-                </td>
-                <td>
-                  <a onclick="toggleModal('deleteModalClassroom_<%= classroom._id %>')" class="has-text-danger">Excluir</a>
-                </td>
-              </tr>
-
-              <%- include('../../partials/_delete-modal', { name: 'Classroom', _id: classroom._id, url: `/admin/classrooms/${classroom._id}?_method=delete` }) %>
-            <% }) %>
-          </tbody>
-        </table>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<%- include('../../layouts/admin-footer') %>
+  <%- include('../../layouts/footer') %>

@@ -3,8 +3,8 @@
   class="modal"
 >
   <div
-    class="modal-background"
-    onclick="toggleModal('deleteModal<%= name %>_<%= _id %>')"
+    class="modal-background modal-toggler"
+    data-target="deleteModal<%= name %>_<%= _id %>"
   ></div>
 
   <div
@@ -27,9 +27,9 @@
             Excluir
           </button>
           <button
-            class="button"
+            class="button modal-toggler"
             type="button"
-            onclick="toggleModal('deleteModal<%= name %>_<%= _id %>')"
+            data-target="deleteModal<%= name %>_<%= _id %>"
           >
             Cancelar
           </button>
@@ -38,8 +38,8 @@
     </form>
   </div>
   <button
-    class="modal-close is-large"
+    class="modal-close is-large modal-toggler"
     aria-label="close"
-    onclick="toggleModal('deleteModal<%= name %>_<%= _id %>')"
+    data-target="deleteModal<%= name %>_<%= _id %>"
   ></button>
 </div>
