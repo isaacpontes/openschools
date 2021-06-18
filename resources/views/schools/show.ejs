@@ -6,7 +6,7 @@
       <div class="card-content">
         <div class="is-flex is-align-items-center is-justify-content-space-between">
           <h1 class="title mb-0"><%= school.name %></h1>
-          <a href="/schools" class="button">Voltar</a>
+          <a href="/manager/schools" class="button">Voltar</a>
         </div>
         <hr>
         <div class="columns">
@@ -32,7 +32,7 @@
         <hr>
         <div class="is-flex is-align-items-center is-justify-content-space-between mb-4">
           <h4 class="title is-4 mb-0">Lista de Turmas</h4>
-          <a href="/schools/<%= school._id %>/add-classroom" class="button is-success">Nova Turma</a>
+          <a href="/manager/schools/<%= school._id %>/add-classroom" class="button is-link">Nova Turma</a>
         </div>
 
         <%- include('../partials/messages') %>
@@ -54,15 +54,22 @@
                   <%= classroom.grade.name %>
                 </td>
                 <td>
-                  <a href="/classrooms/<%= classroom._id %>">Exibir</a>
+                  <a href="/manager/classrooms/<%= classroom._id %>">Exibir</a>
                 </td>
                 <td>
-                  <a href="/classrooms/<%= classroom._id %>/edit">Editar</a>
+                  <a href="/manager/classrooms/<%= classroom._id %>/edit">Editar</a>
                 </td>
                 <td>
-                  <a href="/classrooms/<%= classroom._id %>?_method=delete" class="has-text-danger">Excluir</a>
+                  <a
+                    class="has-text-danger modal-toggler"
+                    data-target="deleteModalClassroom_<%= classroom._id %>"
+                  >
+                    Excluir
+                  </a>
                 </td>
               </tr>
+
+              <%- include('../partials/_delete-modal', { name: 'Classroom', _id: classroom._id, url: `/manager/classrooms/${classroom._id}?_method=delete` }) %>
             <% }) %>
           </tbody>
         </table>

@@ -7,11 +7,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Open Schools</title>
   <link rel="stylesheet" type="text/css" href="/dist/main.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.0/dist/chart.min.js"></script>
 </head>
 
 <body>
 
-  <%- include('./navbar') %>
+  <% if (currentUser.role === 'admin') { %>
+    <%- include('./navbar-admin') %>
+  <% } else if (currentUser.role === 'manager') { %>
+    <%- include('./navbar-manager') %>
+  <% } else if (currentUser.role === 'teacher') { %>
+    <%- include('./navbar-teacher') %>
+  <% } else if (currentUser.role === 'student') { %>
+    <%- include('./navbar-student') %>
+  <% } %>
 
     <main class="main has-background-light">
       <!-- Start of main section column -->

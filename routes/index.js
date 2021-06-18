@@ -1,21 +1,25 @@
 const express = require('express');
-const { ensureAuthenticated } = require('../middlewares/auth');
+const { auth, authAdmin, authManager } = require('../middlewares/auth');
+
+const authRoutes = require('./auth');
+const managerRoutes = require('./manager');
+const adminRoutes = require('./admin');
+
 const router = express.Router();
 
-// Welcome and Login Page
+// Login Page
 // GET /
 router.get('/', (req, res) => {
-  return res.render('pages/welcome');
+  return req.isAuthenticated() ? res.redirect('/home') : res.render('pages/login');
 });
 
-// Dashboard Main Page
-// GET /dashboard
-router.get('/dashboard', ensureAuthenticated, (req, res) => {
-  if (req.user.role === 'admin') {
-    return res.redirect('/admin');
-  }
+router.get('/home', auth, (req, res) => {
+  const { role } = req.user;
+  return res.redirect(`/${role}`);
+})
 
-  return res.render('pages/dashboard');
-});
+router.use('/auth', authRoutes);
+router.use('/manager', auth, authManager, managerRoutes);
+router.use('/admin', auth, authAdmin, adminRoutes);
 
 module.exports = router;

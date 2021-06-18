@@ -1,15 +1,18 @@
-const path = require('path');
+require('dotenv').config();
 const express = require('express');
-const morgan = require('morgan');
-const methodOverride = require('method-override');
 const flash = require('connect-flash');
+const methodOverride = require('method-override');
+const morgan = require('morgan');
+const passport = require('passport');
+const path = require('path');
 const session = require('express-session');
+const setFlashMessages = require('./middlewares/flash-messages');
+const passportLocal = require('./config/passport');
 
 const app = express();
 
 // Passport config
-const passport = require('passport');
-require('./config/passport')(passport);
+passportLocal(passport);
 
 // Static Files
 app.use(express.static('public'));
@@ -26,7 +29,7 @@ app.use(express.json());
 
 // Express Session
 app.use(session({
-  secret: 'a secure secret',
+  secret: process.env.SESSION_SECRET,
   resave: true,
   saveUninitialized: true,
   cookie: {}
@@ -40,21 +43,7 @@ app.use(passport.session());
 app.use(flash());
 
 // Global variables for controlling messages
-app.use((req, res, next) => {
-  res.locals.success = req.flash('success');
-  res.locals.error = req.flash('error');
-  next();
-});
-
-// Global variable for the admin role
-app.use((req, res, next) => {
-  if (req.isAuthenticated()) {
-    res.locals.isAdmin = req.user.role === 'admin';
-  } else {
-    res.locals.isAdmin = false;
-  }
-  next();
-});
+app.use(setFlashMessages);
 
 // Method Override
 app.use(methodOverride('_method', { methods: ['POST', 'GET'] }));
@@ -64,11 +53,6 @@ app.use(morgan('dev'));
 
 // Routes
 app.use('/', require('./routes/index'));
-app.use('/auth', require('./routes/auth'));
-app.use('/schools', require('./routes/schools'));
-app.use('/classrooms', require('./routes/classrooms'));
-app.use('/students', require('./routes/students'));
-app.use('/admin', require('./routes/admin'));
 
 // API routes
 app.use('/api/v1', require('./routes/api/v1'));

@@ -1,8 +1,8 @@
 const dayjs = require('dayjs');
-const Classroom = require('../models/classroom');
-const School = require('../models/school');
-const Student = require('../models/student');
-const Transport = require('../models/transport');
+const Classroom = require('../../models/classroom');
+const School = require('../../models/school');
+const Student = require('../../models/student');
+const Transport = require('../../models/transport');
 
 module.exports = {
   // Save a new student to the database
@@ -18,12 +18,12 @@ module.exports = {
       birthPlace, fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info,
       transport, school, classroom
     });
-  
+
     try {
       await student.save();
 
       req.flash('success', 'Estudante salvo com sucesso.');
-      return res.redirect(`/classrooms/${classroom}`);
+      return res.redirect(`/manager/classrooms/${classroom}`);
     } catch (error) {
       const currentUser = req.user._id;
       const userSchools = await School.find({ manager: currentUser });
@@ -31,7 +31,7 @@ module.exports = {
       const schoolsClassrooms = await Classroom.find({ school: { $in: schoolIds } }).populate('school');
       const allTransports = await Transport.find({});
 
-      return res.redirect('/students/new', userSchools, allTransports, schoolsClassrooms, { student, error: 'Erro ao salvar estudante.' });
+      return res.redirect('/manager/students/new', userSchools, allTransports, schoolsClassrooms, { student, error: 'Erro ao salvar estudante.' });
     }
   },
 
@@ -39,7 +39,7 @@ module.exports = {
   // GET /students/:id
   show: async function (req, res) {
     const id = req.params.id;
-  
+
     try {
       const student = await Student.findById(id).populate(['school', 'classroom', 'transport']);
       return res.status(200).render('students/show', { student, dayjs });
@@ -53,14 +53,14 @@ module.exports = {
   edit: async function (req, res) {
     const id = req.params.id;
     const currentUser = req.user._id;
-  
+
     try {
       const userSchools = await School.find({ manager: currentUser });
       const schoolIds = userSchools.map((school) => school._id);
       const schoolsClassrooms = await Classroom.find({ school: { $in: schoolIds } }).populate('school');
       const allTransports = await Transport.find({});
       const student = await Student.findById(id);
-  
+
       return res.status(200).render('students/edit', {
         student,
         userSchools,
@@ -82,7 +82,7 @@ module.exports = {
       fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info,
       transport, school, classroom
     } = req.body.student;
-  
+
     try {
       await Student.findByIdAndUpdate(id, {
         enrollment, firstName, lastName, gender, phone, address, birthday: dayjs(birthday),
@@ -91,13 +91,15 @@ module.exports = {
       });
 
       req.flash('success', 'Estudante atualizado com sucesso.');
-      return res.redirect(`/classrooms/${classroom}`);
+      return res.redirect(`/manager/classrooms/${classroom}`);
     } catch (error) {
-      return res.redirect(`/students/${id}/edit`, { student: {
-        enrollment, firstName, lastName, gender, phone, address, birthday, birthPlace,
-        fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info,
-        transport, school, classroom
-      }, error: 'Erro ao salvar estudante.' });
+      return res.redirect(`/manager/students/${id}/edit`, {
+        student: {
+          enrollment, firstName, lastName, gender, phone, address, birthday, birthPlace,
+          fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info,
+          transport, school, classroom
+        }, error: 'Erro ao salvar estudante.'
+      });
     }
   },
 
@@ -105,14 +107,14 @@ module.exports = {
   // DELETE /students/:id
   delete: async function (req, res) {
     const student = await Student.findById(req.params.id);
-  
+
     try {
       await student.remove();
-  
+
       req.flash('success', 'Estudante excluído com sucesso.');
-      return res.redirect(`/classrooms/${student.classroom}`);
+      return res.redirect(`/manager/classrooms/${student.classroom}`);
     } catch (error) {
-      return res.redirect(`/classrooms/${student.classroom}`, { error });
+      return res.redirect(`/manager/classrooms/${student.classroom}`, { error });
     }
   }
 };

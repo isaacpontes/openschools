@@ -8,12 +8,12 @@
           <h1 class="title mb-0">Turma <%= classroom.name %></h1>
           <div class="buttons">
             <a
-              href="/classrooms/<%= classroom._id %>/edit"
+              href="/manager/classrooms/<%= classroom._id %>/edit"
               class="button is-link"
             >
               Editar Turma
             </a>
-            <a href="/schools/<%= classroom.school %>" class="button">Voltar</a>
+            <a href="/manager/schools/<%= classroom.school %>" class="button">Voltar</a>
           </div>
         </div>
 
@@ -21,7 +21,7 @@
         
         <div class="is-flex is-align-items-center is-justify-content-space-between mb-4">
           <h4 class="title is-4 mb-0">Alunos</h4>
-          <a href="/classrooms/<%= classroom._id %>/addStudent" class="button is-success">Novo Aluno</a>
+          <a href="/manager/classrooms/<%= classroom._id %>/addStudent" class="button is-link">Novo Aluno</a>
         </div>
 
         <%- include('../partials/messages') %>
@@ -51,15 +51,22 @@
                   <%= student.phone %>
                 </td>
                 <td>
-                  <a href="/students/<%= student._id %>">Exibir</a>
+                  <a href="/manager/students/<%= student._id %>">Exibir</a>
                 </td>
                 <td>
-                  <a href="/students/<%= student._id %>/edit">Editar</a>
+                  <a href="/manager/students/<%= student._id %>/edit">Editar</a>
                 </td>
                 <td>
-                  <a href="/students/<%= student._id %>?_method=delete" class="has-text-danger">Excluir</a>
+                  <a
+                    class="has-text-danger modal-toggler"
+                    data-target="deleteModalStudent_<%= student._id %>"
+                  >
+                    Excluir
+                  </a>
                 </td>
               </tr>
+
+              <%- include('../partials/_delete-modal', { name: 'Student', _id: student._id, url: `/manager/students/${student._id}?_method=delete` }) %>
             <% }) %>
           </tbody>
         </table>

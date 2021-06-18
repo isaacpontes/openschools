@@ -1,6 +1,6 @@
-const Classroom = require('../models/classroom');
-const Grade = require('../models/grade');
-const School = require('../models/school');
+const Classroom = require('../../models/classroom');
+const Grade = require('../../models/grade');
+const School = require('../../models/school');
 
 module.exports = {
   // Render a list of all schools belonging to current user
@@ -22,7 +22,7 @@ module.exports = {
     try {
       const school = await School.findById(req.params.id).populate('manager');
       const classrooms = await Classroom.find({ school: school._id }).populate('grade');
-  
+
       return res.status(200).render('schools/show', { school, classrooms });
     } catch (error) {
       return res.status(400).render('pages/error', { error });

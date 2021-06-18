@@ -11,7 +11,7 @@
           <div class="card">
             <div class="card-content">
               <h3 class="title">
-                <a href="/schools/<%= school._id %>" class="has-text-dark"><%= school.name %></a>
+                <a href="/manager/schools/<%= school._id %>" class="has-text-dark"><%= school.name %></a>
               </h3>
               <h5 class="subtitle">
                 Código do INEP: <%= school.inepCode %>
@@ -19,10 +19,10 @@
               <p><%= school.address %></p>
             </div>
             <footer class="card-footer">
-              <a href="/schools/<%= school._id %>" class="card-footer-item">
+              <a href="/manager/schools/<%= school._id %>" class="card-footer-item">
                 Ver Escola
               </a>
-              <a href="/schools/<%= school._id %>/add-classroom" class="card-footer-item">
+              <a href="/manager/schools/<%= school._id %>/add-classroom" class="card-footer-item">
                 Nova Turma
               </a>
             </footer>

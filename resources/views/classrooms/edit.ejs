@@ -6,7 +6,7 @@
       <div class="card-content">
         <h1 class="title is-4">Editar Turma | <%= classroom.name %> </h1>
         <hr>
-        <%- include('_form', { url: `/classrooms/${classroom._id}?_method=put`, classroom: classroom }) %> 
+        <%- include('_form', { url: `/manager/classrooms/${classroom._id}?_method=put`, classroom: classroom }) %> 
       </div>
     </div>
   </div>

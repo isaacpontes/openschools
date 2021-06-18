@@ -1,20 +1,20 @@
-const Classroom = require('../models/classroom');
-const Grade = require('../models/grade');
-const School = require('../models/school');
-const Student = require('../models/student');
-const Transport = require('../models/transport');
+const Classroom = require('../../models/classroom');
+const Grade = require('../../models/grade');
+const School = require('../../models/school');
+const Student = require('../../models/student');
+const Transport = require('../../models/transport');
 
 module.exports = {
   // Save a new classroom to the database
   // POST /classrooms
   save: async function (req, res) {
-    const { name, grade, school} = req.body.classroom;
+    const { name, grade, school } = req.body.classroom;
     const classroom = new Classroom({ name, grade, school });
-  
+
     try {
       await classroom.save();
       req.flash('success', 'Turma salva com sucesso.');
-      return res.redirect(`/schools/${classroom.school}`);
+      return res.redirect(`/manager/schools/${classroom.school}`);
     } catch (error) {
       console.log(error);
       return res.status(400).render('classrooms/new', { classroom, error: 'Erro ao salvar turma.' });
@@ -55,11 +55,11 @@ module.exports = {
 
     try {
       await Classroom.findByIdAndUpdate(id, { name, grade });
-  
+
       req.flash('success', 'Turma atualizada com sucesso.');
-      return res.redirect(`/schools/${school}`);
+      return res.redirect(`/manager/schools/${school}`);
     } catch (error) {
-      return res.redirect(`/classrooms/${id}/edit`, { error: 'Erro ao atualizar turma.' });
+      return res.redirect(`/manager/classrooms/${id}/edit`, { error: 'Erro ao atualizar turma.' });
     }
   },
 
@@ -71,9 +71,9 @@ module.exports = {
       await classroom.remove();
 
       req.flash('success', 'Turma excluída com sucesso.');
-      return res.redirect(`/schools/${classroom.school}`);
+      return res.redirect(`/manager/schools/${classroom.school}`);
     } catch (error) {
-      return res.redirect(`/schools/${classroom.school}`, { error: 'Erro ao excluir turma.' });
+      return res.redirect(`/manager/schools/${classroom.school}`, { error: 'Erro ao excluir turma.' });
     }
   },
 
@@ -86,7 +86,7 @@ module.exports = {
       const userSchools = await School.find({ manager: currentUser });
       const schoolIds = userSchools.map((school) => school._id);
       const schoolsClassrooms = await Classroom.find({ school: { $in: schoolIds } }).populate(['grade', 'school']);
-      
+
       const classroom = await Classroom.findById(req.params.id);
       const allTransports = await Transport.find({});
 
