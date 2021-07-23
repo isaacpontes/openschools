@@ -2,14 +2,12 @@
   "name": "openschools",
   "version": "0.0.1",
   "description": "A simple schools managing system.",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js",
+    "start": "node server.js",
+    "dev": "nodemon server.js",
     "webpack": "webpack --mode development",
-    "webpack-prod": "webpack --mode production",
-    "css-build": "node-sass --omit-source-map-url resources/sass/app.scss public/css/app.css",
-    "css-watch": "npm run css-build -- --watch"
+    "webpack-prod": "webpack --mode production"
   },
   "author": "Isaac Pontes",
   "repository": "https://github.com/isaacpontes/openschools",

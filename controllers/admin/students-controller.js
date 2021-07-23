@@ -1,5 +1,4 @@
 const dayjs = require('dayjs');
-const fs = require('fs');
 const PDFDocument = require('pdfkit');
 const classroomsService = require('../../services/classrooms-service');
 const schoolsService = require('../../services/schools-service');
@@ -108,94 +107,9 @@ module.exports = {
   // GET /admin/students/export-pdf
   exportPdf: async function (req, res) {
     const pdf = new PDFDocument({ bufferPages: true, size: 'A4' });
-
-    const marginLeft = 0 + 40;
-    const marginRight = pdf.page.width - 40;
-
-    const students = await studentsService.findAll({ path: 'school' });
-    const enrollmentX = 60;
-    const nameX = 140;
-    const phoneX = 320;
-    const schoolX = 422;
-
     pdf.pipe(res);
-
-    pdf.fontSize(14)
-      .moveDown(2)
-      .text('Listagem de Alunos', 60);
-    pdf.moveTo(marginLeft, 128).lineTo(marginRight, 128).stroke();
-    pdf.fontSize(11)
-      .font('Helvetica-Bold')
-      .text('Matrícula', enrollmentX, 140, { lineBreak: false, bold: true })
-      .text('Nome Completo', nameX, 140, { lineBreak: false })
-      .text('Telefone', phoneX, 140, { lineBreak: false })
-      .text('Escola', schoolX, 140, { lineBreak: false })
-      .font('Helvetica')
-      .moveTo(marginLeft, 160).lineTo(marginRight, 160).stroke()
-    ;
-
-    let rowY = 170;
-
-    pdf.on('pageAdded', () => {
-      pdf.fontSize(14)
-        .moveDown(2)
-        .text('Listagem de Alunos', 60);
-      pdf.moveTo(marginLeft, 128).lineTo(marginRight, 128).stroke();
-      pdf.fontSize(11)
-        .font('Helvetica-Bold')
-        .text('Matrícula', enrollmentX, 140, { lineBreak: false })
-        .text('Nome Completo', nameX, 140, { lineBreak: false })
-        .text('Telefone', phoneX, 140, { lineBreak: false })
-        .text('Escola', schoolX, 140, { lineBreak: false })
-        .font('Helvetica')
-        .moveTo(marginLeft, 160).lineTo(marginRight, 160).stroke()
-      ;
-      rowY = 170;
-    });
-
-    for (let i = 0; i < students.length; i++) {
-      const student = students[i];
-
-      // const enrollmentHeight = pdf.heightOfString(student.enrollment, { width: 80 });
-      // const nameHeight = pdf.heightOfString(`${student.firstName} ${student.lastName}`, { width: 180 });
-      // const phoneHeight = pdf.heightOfString(student.phone, { width: 102 });
-      // const schoolHeight = pdf.heightOfString(student.school.name, { width: 150 });
-
-      pdf.text(student.enrollment, enrollmentX, rowY, {
-          width: 80, height: 12
-        })
-        .text(`${student.firstName} ${student.lastName}`, nameX, rowY, {
-          width: 180, height: 12
-        })
-        .text(student.phone, phoneX, rowY, {
-          width: 102, height: 12
-        })
-        .text(student.school.name, schoolX, rowY, {
-          width: 150, height: 12
-        })
-      ;
-
-      // rowY += Math.max(enrollmentHeight, nameHeight, phoneHeight, schoolHeight) + 10;
-      rowY += 22;
-
-      if (rowY >= pdf.page.height - 82) {
-        pdf.addPage();
-      }
-    }
-    const range = pdf.bufferedPageRange();
-
-    for (let i = range.start; i <= (pdf._pageBufferStart + pdf._pageBuffer.length - 1); i++) {
-      pdf.switchToPage(i);
-      pdf.image('public/images/logo-300x300.png', (pdf.page.width - 48) / 2, 24, { fit: [48, 48] });
-      pdf.text('Prefeitura Municipal de São Fidélis', 0, 80, { align: 'center', width: pdf.page.width });
-      pdf.fontSize(8)
-        .text(`Página ${i + 1} | Gerado em ${dayjs(Date.now()).format('DD/MM/YYYY')}`, 90, pdf.page.height - 40, { lineBreak: false })
-        .fontSize(11)
-      ;
-    }
-
+    await studentsService.generatePdfList(pdf);
     pdf.end();
-
     return;
   }
 };
