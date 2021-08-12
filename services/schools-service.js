@@ -34,6 +34,17 @@ module.exports = {
     await School.findByIdAndUpdate(id, { name, inepCode, address, manager, updated: Date.now() });
   },
 
+  updateClassroom: async function (id, classroom) {
+    await School.findOneAndUpdate(
+      { '_id': id, 'classrooms._id': classroom._id },
+      { '$set': {
+        'classrooms.$.name': classroom.name,
+        'classrooms.$.grade': classroom.grade,
+        'classrooms.$.updated': classroom.updated
+      }}
+    );
+  },
+
   delete: async function (id) {
     await School.findByIdAndRemove(id);
   }

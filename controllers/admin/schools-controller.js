@@ -1,5 +1,4 @@
 const User = require('../../models/user');
-const classroomsService = require('../../services/classrooms-service');
 const schoolsService = require('../../services/schools-service');
 
 module.exports = {
@@ -47,8 +46,7 @@ module.exports = {
     const { id } = req.params;
     try {
       const school = await schoolsService.findById(id, { path: 'manager' });
-      const classrooms = await classroomsService.findBySchoolId(id, { path: 'grade' });
-      return res.render('admin/schools/show', { school, classrooms });
+      return res.render('admin/schools/show', { school });
     } catch (error) {
       return res.render('pages/error', { error });
     }

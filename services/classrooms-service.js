@@ -1,4 +1,5 @@
 const Classroom = require('../models/classroom');
+const schoolsService = require('./schools-service');
 
 module.exports = {
   create: function (name, grade, school) {
@@ -42,17 +43,35 @@ module.exports = {
     return classroom;
   },
 
-  save: async function (name, grade, school) {
-    const classroom = this.create(name, grade, school);
+  save: async function (name, grade, schoolId) {
+    // Save on Classroom
+    const classroom = this.create(name, grade, schoolId);
     await classroom.save();
+
+    // Save on School
+    const school = await schoolsService.findById(schoolId);
+    school.classrooms.push(classroom);
+    await school.save();
+
     return classroom;
   },
 
   update: async function (id, name, grade, school) {
-    await Classroom.findByIdAndUpdate(id, { name, grade, school, updated: Date.now() });
+    // Update on Classroom
+    const classroom = await Classroom.findByIdAndUpdate(id, { name, grade, updated: Date.now() }, { new: true });
+    
+    // Update on School
+    await schoolsService.updateClassroom(school, classroom);
   },
 
   delete: async function (id) {
-    await Classroom.findByIdAndRemove(id);
+    // Remove from Classroom
+    const classroom = await Classroom.findByIdAndRemove(id);
+
+    // Remove from School
+    const school = await schoolsService.findById(classroom.school);
+    const classroomToRemove = school.classrooms.indexOf(classroom._id);
+    school.classrooms.splice(classroomToRemove, 1);
+    await school.save();
   }
 }
