@@ -4,81 +4,84 @@
     <div class="container">
       <div class="card">
         <div class="card-content">
-          <h1 class="title">Turma: <%= classroom.name %>
-          </h1>
+          <div class="is-flex is-align-items-center is-justify-content-space-between">
+            <h1 class="title mb-0">
+              <%= classroom.name %>
+            </h1>
+            <div class="buttons">
+              <a href="/admin/classrooms/<%= classroom._id %>/edit" class="button is-link">
+                Editar Turma
+              </a>
+              <a href="/admin/classrooms" class="button">
+                Todas as Turmas
+              </a>
+            </div>
+          </div>
 
           <hr>
+          
+          <%- include('../../partials/messages') %>
 
           <div class="columns">
-            <div class="column is-half">
-              <div class="field">
-                <h4 class="title is-4">Ano Escolar</h4>
-                <h6 class="subtitle">
+            <div class="column is-5">
+              <div class="field mb-6">
+                <h4 class="title is-5">Ano Escolar</h4>
+                <h6 class="subtitle is-3">
                   <%= classroom.grade.name %>
                 </h6>
               </div>
-            </div>
-            <div class="column is-half">
+
               <div class="field">
-                <h4 class="title is-4">Escola</h4>
-                <h6 class="subtitle">
+                <h4 class="title is-5">Escola</h4>
+                <h6 class="subtitle is-3">
                   <%= classroom.school.name %>
                 </h6>
               </div>
             </div>
-          </div>
-        </div>
+            
+            <div class="column is-7">
+              <div class="is-flex is-align-items-center is-justify-content-space-between mb-5">
+                <h4 class="title is-5 mb-0">Estudantes</h4>
+                <a href="/admin/students/new" class="button is-link">Novo Estudante</a>
+              </div>
 
-        <div class="card-content">
-          <hr>
-          <div class="columns">
-            <div class="column is-four-fifths">
-              <h4 class="title is-4">Alunos</h4>
+              <div class="table-container">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Matrícula</th>
+                      <th>Nome</th>
+                      <th>Sobrenome</th>
+                      <th>Telefone</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% students.forEach(student=> { %>
+                      <tr>
+                        <td>
+                          <%= student.enrollment %>
+                        </td>
+                        <td>
+                          <%= student.firstName %>
+                        </td>
+                        <td>
+                          <%= student.lastName %>
+                        </td>
+                        <td>
+                          <%= student.phone %>
+                        </td>
+                        <td>
+                          <a href="/admin/students/<%= student._id %>" class="has-text-weight-bold">
+                            Exibir
+                          </a>
+                        </td>
+                      </tr>
+                      <% }) %>
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="card-content">
-          <%- include('../../partials/messages') %>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Matrícula</th>
-                  <th>Nome</th>
-                  <th>Sobrenome</th>
-                  <th>Telefone</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% students.forEach(student=> { %>
-                  <tr>
-                    <td>
-                      <%= student.enrollment %>
-                    </td>
-                    <td>
-                      <%= student.firstName %>
-                    </td>
-                    <td>
-                      <%= student.lastName %>
-                    </td>
-                    <td>
-                      <%= student.phone %>
-                    </td>
-                    <td>
-                      <a href="/admin/students/<%= student._id %>">Exibir</a>
-                    </td>
-                  </tr>
-                  <% }) %>
-              </tbody>
-            </table>
-        </div>
-
-        <div class="card-content">
-          <div class="buttons">
-            <a href="/admin/classrooms/<%= classroom._id %>/edit" class="button is-link">
-              Editar Turma
-            </a>
-            <a href="/admin/classrooms" class="button">Voltar</a>
           </div>
         </div>
       </div>

@@ -1,6 +1,9 @@
 const Classroom = require('../../models/classroom');
 const Grade = require('../../models/grade');
 const School = require('../../models/school');
+const classroomsService = require('../../services/classrooms-service');
+const gradesService = require('../../services/grades-service');
+const schoolsService = require('../../services/schools-service');
 
 module.exports = {
   // Render a list of all schools belonging to current user
@@ -9,7 +12,7 @@ module.exports = {
     const currentUser = req.user._id;
 
     try {
-      const schools = await School.find({ manager: currentUser });
+      const schools = await schoolsService.findByManager(currentUser);
       return res.status(200).render('schools/index', { schools });
     } catch (error) {
       return res.status(400).render('pages/error', { error });
@@ -19,11 +22,11 @@ module.exports = {
   // Render a single school
   // GET /schools/:id
   show: async function (req, res) {
-    try {
-      const school = await School.findById(req.params.id).populate('manager');
-      const classrooms = await Classroom.find({ school: school._id }).populate('grade');
+    const { id } = req.params;
 
-      return res.status(200).render('schools/show', { school, classrooms });
+    try {
+      const school = await schoolsService.findById(id, { path: 'manager' });
+      return res.status(200).render('schools/show', { school });
     } catch (error) {
       return res.status(400).render('pages/error', { error });
     }
@@ -32,12 +35,11 @@ module.exports = {
   // Render the new classroom form
   // GET /schools/:id/addClassroom
   addClassroom: async function (req, res) {
-    const classroom = new Classroom();
+    const classroom = classroomsService.create();
     classroom.school = req.params.id;
 
     try {
-      const grades = await Grade.find({});
-
+      const grades = await gradesService.findAll();
       return res.status(200).render('classrooms/new', { classroom, grades });
     } catch (error) {
       return res.status(400).render('pages/error', { error });

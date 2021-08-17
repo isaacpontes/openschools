@@ -6,73 +6,78 @@
       <div class="card-content">
         <div class="is-flex is-align-items-center is-justify-content-space-between">
           <h1 class="title mb-0"><%= school.name %></h1>
-          <a href="/manager/schools" class="button">Voltar</a>
+          <a href="/manager/schools" class="button">
+            Voltar para Minhas Escolas
+          </a>
         </div>
+
         <hr>
-        <div class="columns">
-          <div class="column is-two-quarters">
-            <div class="field">
-              <h4 class="title is-4">Endereço</h4>
-              <h5 class="subtitle"><%= school.address %></h5>
-            </div>
-          </div>
-          <div class="column is-one-quarter">
-            <div class="field">
-              <h4 class="title is-4">Código do INEP</h4>
-              <h5 class="subtitle"><%= school.inepCode %></h5>
-            </div>
-          </div>
-          <div class="column is-one-quarter">
-            <div class="field">
-              <h4 class="title is-4">Gestor</h4>
-              <h5 class="subtitle"><%= school.manager.name %></h5>
-            </div>
-          </div>
-        </div>
-        <hr>
-        <div class="is-flex is-align-items-center is-justify-content-space-between mb-4">
-          <h4 class="title is-4 mb-0">Lista de Turmas</h4>
-          <a href="/manager/schools/<%= school._id %>/add-classroom" class="button is-link">Nova Turma</a>
-        </div>
 
         <%- include('../partials/messages') %>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Ano</th>
-              <th colspan="3">Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% classrooms.forEach(classroom => { %>
-              <tr>
-                <td>
-                  <%= classroom.name %>
-                </td>
-                <td>
-                  <%= classroom.grade.name %>
-                </td>
-                <td>
-                  <a href="/manager/classrooms/<%= classroom._id %>">Exibir</a>
-                </td>
-                <td>
-                  <a href="/manager/classrooms/<%= classroom._id %>/edit">Editar</a>
-                </td>
-                <td>
-                  <a
-                    class="has-text-danger modal-toggler"
-                    data-target="deleteModalClassroom_<%= classroom._id %>"
-                  >
-                    Excluir
-                  </a>
-                </td>
-              </tr>
 
-              <%- include('../partials/_delete-modal', { name: 'Classroom', _id: classroom._id, url: `/manager/classrooms/${classroom._id}?_method=delete` }) %>
-            <% }) %>
-          </tbody>
-        </table>
+        <div class="columns">
+          <div class="column is-8">
+            <div class="field mb-6">
+              <h4 class="title is-5">Endereço</h4>
+              <h6 class="subtitle is-3">
+                <%= school.address %>
+              </h6>
+            </div>
+
+            <div class="columns">
+              <div class="column is-one-half">
+                <div class="field">
+                  <h4 class="title is-5">Código do INEP</h4>
+                  <h6 class="subtitle is-3">
+                    <%= school.inepCode %>
+                  </h6>
+                </div>
+              </div>
+              <div class="column is-one-half">
+                <div class="field">
+                  <h4 class="title is-5">Gestor</h4>
+                  <h6 class="subtitle is-3">
+                    <a href="/users/<%= school.manager._id %>" class="has-text-dark">
+                      <%= school.manager.name %>
+                    </a>
+                  </h6>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="column is-4">
+            <div class="is-flex is-align-items-center is-justify-content-space-between mb-5">
+              <h4 class="title is-5 mb-0">Turmas</h4>
+              <a href="/manager/classrooms/new" class="button is-link">Nova Turma</a>
+            </div>
+
+            <div class="table-container">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% school.classrooms.forEach(classroom=> { %>
+                    <tr>
+                      <td>
+                        <%= classroom.name %>
+                      </td>
+                      <td>
+                        <a href="/manager/classrooms/<%= classroom._id %>" class="has-text-weight-bold">
+                          Exibir
+                        </a>
+                      </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -4,7 +4,14 @@
   <div class="container">
     <div class="card">
       <div class="card-content">
-        <h1 class="title is-4">Nova Turma</h1>
+        <div class="is-flex is-align-items-center is-justify-content-space-between">
+          <h1 class="title mb-0">
+            Nova Turma
+          </h1>
+          <a href="/manager/schools/<%= classroom.school %>" class="button">
+            Voltar para Escola
+          </a>
+        </div>
         <hr>
         <%- include('_form', { url: '/manager/classrooms?_method=post' }) %> 
       </div>

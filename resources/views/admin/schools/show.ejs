@@ -4,85 +4,91 @@
     <div class="container">
       <div class="card">
         <div class="card-content">
-          <h1 class="title">Escola: <%= school.name %>
-          </h1>
+          <div class="is-flex is-align-items-center is-justify-content-space-between">
+            <h1 class="title mb-0">
+              <%= school.name %>
+            </h1>
+            <div class="buttons">
+              <a href="/admin/schools/<%= school._id %>/edit" class="button is-link">
+                Editar Escola
+              </a>
+              <a href="/admin/schools" class="button">
+                Todas as Escolas
+              </a>
+            </div>
+          </div>
+
           <hr>
+
+          <%- include('../../partials/messages') %>
+          
           <div class="columns">
             <div class="column is-two-quarters">
-              <div class="field">
-                <h4 class="title is-4">Endereço</h4>
-                <h6 class="subtitle">
+              <div class="field mb-6">
+                <h4 class="title is-5">Endereço</h4>
+                <h6 class="subtitle is-3">
                   <%= school.address %>
                 </h6>
               </div>
-            </div>
-            <div class="column is-one-quarter">
-              <div class="field">
-                <h4 class="title is-4">Código do INEP</h4>
-                <h6 class="subtitle">
-                  <%= school.inepCode %>
-                </h6>
-              </div>
-            </div>
-            <div class="column is-one-quarter">
-              <div class="field">
-                <h4 class="title is-4">Gestor</h4>
-                <h6 class="subtitle">
-                  <a href="/users/<%= school.manager._id %>" class="has-text-dark">
-                    <%= school.manager.name %>
-                  </a>
-                </h6>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div class="card-content">
-          <hr>
-          <div class="is-flex is-align-items-center is-justify-content-space-between">
-            <h1 class="title is-4 mb-0">Lista de Turmas</h1>
-            <a href="/admin/classrooms/new" class="button is-link">Nova Turma</a>
+              <div class="columns">
+                <div class="column is-one-half">
+                  <div class="field">
+                    <h4 class="title is-5">Código do INEP</h4>
+                    <h6 class="subtitle is-3">
+                      <%= school.inepCode %>
+                    </h6>
+                  </div>
+                </div>
+                <div class="column is-one-half">
+                  <div class="field">
+                    <h4 class="title is-5">Gestor</h4>
+                    <h6 class="subtitle is-3">
+                      <a href="/users/<%= school.manager._id %>" class="has-text-dark">
+                        <%= school.manager.name %>
+                      </a>
+                    </h6>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="column is-two-quarter">
+              <div class="is-flex is-align-items-center is-justify-content-space-between mb-5">
+                <h4 class="title is-5 mb-0">Turmas</h4>
+                <a href="/admin/classrooms/new" class="button is-link">Nova Turma</a>
+              </div>
+
+              <div class="table-container">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Nome</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% school.classrooms.forEach(classroom=> { %>
+                      <tr>
+                        <td>
+                          <%= classroom.name %>
+                        </td>
+                        <td>
+                          <a href="/admin/classrooms/<%= classroom._id %>" class="has-text-weight-bold">
+                            Exibir
+                          </a>
+                        </td>
+                      </tr>
+                      <% }) %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="card-content">
-          <%- include('../../partials/messages') %>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Nome</th>
-                  <th>Ano Escolar</th>
-                  <th colspan="2">Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% school.classrooms.forEach(classroom=> { %>
-                  <tr>
-                    <td>
-                      <%= classroom.name %>
-                    </td>
-                    <td>
-                      <%= classroom.grade.name %>
-                    </td>
-                    <td>
-                      <a href="/admin/classrooms/<%= classroom._id %>">Exibir</a>
-                    </td>
-                    <td>
-                      <a href="/admin/classrooms/<%= classroom._id %>/edit">Editar</a>
-                    </td>
-                    <td>
-                      <a href="/admin/classrooms/<%= classroom._id %>?_method=delete"
-                        class="has-text-danger">Excluir</a>
-                    </td>
-                  </tr>
-                  <% }) %>
-              </tbody>
-            </table>
         </div>
 
         <div class="card-content">
           <div class="buttons">
-            <a href="/admin/schools/<%= school._id %>/edit" class="button is-link">Editar Escola</a>
-            <a href="/admin/schools" class="button">Voltar</a>
           </div>
         </div>
       </div>

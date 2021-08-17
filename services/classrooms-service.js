@@ -43,25 +43,29 @@ module.exports = {
     return classroom;
   },
 
-  save: async function (name, grade, schoolId) {
+  findAllInSchools: async function (schoolIds) {
+    const schoolsClassrooms = await Classroom.find({ school: { $in: schoolIds } }).populate(['grade', 'school']);
+    return schoolsClassrooms;
+  },
+
+  save: async function (classroom) {
     // Save on Classroom
-    const classroom = this.create(name, grade, schoolId);
     await classroom.save();
 
     // Save on School
-    const school = await schoolsService.findById(schoolId);
+    const school = await schoolsService.findById(classroom.school);
     school.classrooms.push(classroom);
     await school.save();
 
     return classroom;
   },
 
-  update: async function (id, name, grade, school) {
+  update: async function (id, name, grade) {
     // Update on Classroom
     const classroom = await Classroom.findByIdAndUpdate(id, { name, grade, updated: Date.now() }, { new: true });
     
     // Update on School
-    await schoolsService.updateClassroom(school, classroom);
+    await schoolsService.updateClassroom(classroom);
   },
 
   delete: async function (id) {

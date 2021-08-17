@@ -19,8 +19,10 @@ module.exports = {
   // POST /classrooms
   save: async function (req, res) {
     const { name, grade, school } = req.body.classroom;
+    const classroom = classroomsService.create(name, grade, school);
+
     try {
-      await classroomsService.save(name, grade, school);
+      await classroomsService.save(classroom);
       req.flash('success', 'Turma salva com sucesso.');
       return res.redirect('/admin/classrooms');
     } catch (error) {
@@ -74,8 +76,9 @@ module.exports = {
   update: async function (req, res) {
     const { name, grade, school } = req.body.classroom;
     const { id } = req.params;
+
     try {
-      await classroomsService.update(id, name, grade, school);
+      await classroomsService.update(id, name, grade);
       req.flash('success', 'Turma atualizada com sucesso.');
       return res.redirect('/admin/classrooms');
     } catch (error) {

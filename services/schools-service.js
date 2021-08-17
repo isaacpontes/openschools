@@ -15,6 +15,11 @@ module.exports = {
     return schools;
   },
 
+  findByManager: async function (managerId) {
+    const schools = await School.find({ manager: managerId });
+    return schools;
+  },
+
   findById: async function (id, populateOptions) {
     if (typeof populateOptions === 'undefined') {
       const school = await School.findById(id);
@@ -34,9 +39,9 @@ module.exports = {
     await School.findByIdAndUpdate(id, { name, inepCode, address, manager, updated: Date.now() });
   },
 
-  updateClassroom: async function (id, classroom) {
+  updateClassroom: async function (classroom) {
     await School.findOneAndUpdate(
-      { '_id': id, 'classrooms._id': classroom._id },
+      { '_id': classroom.school, 'classrooms._id': classroom._id },
       { '$set': {
         'classrooms.$.name': classroom.name,
         'classrooms.$.grade': classroom.grade,
