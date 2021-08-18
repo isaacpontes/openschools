@@ -3,7 +3,7 @@
 <form action="<%= url %>" method="POST">
 
   <div class="columns">
-    <div class="column is-half">
+    <div class="column is-4">
       <div class="field">
         <label class="label" for="firstName">Nome</label>
         <div class="control">
@@ -15,7 +15,7 @@
             placeholder="Insira o nome"
             value="<%= typeof student.firstName != 'undefined' ? student.firstName : '' %>"
             autocomplete="off"
-    
+            autofocus
           />
           <% if (student.errors && student.errors.hasOwnProperty('firstName')) { %>
             <p class="is-danger help"><%= student.errors.firstName %></p>
@@ -23,7 +23,8 @@
         </div>
       </div>
     </div>
-    <div class="column is-half">
+
+    <div class="column is-4">
       <div class="field">
         <label class="label" for="lastName">Sobrenome</label>
         <div class="control">
@@ -42,10 +43,8 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="columns">
-    <div class="column is-one-half">
+    <div class="column is-4">
       <div class="field">
         <label class="label" for="enrollment">Matrícula</label>
         <div class="control">
@@ -64,8 +63,10 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="column is-one-half">
+  <div class="columns">
+    <div class="column is-4">
       <div class="field">
         <label for="school" class="label">Escola</label>
         <div class="control">
@@ -85,29 +86,31 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="field">
-    <label for="classroom" class="label">Turma</label>
-    <div class="control">
-      <div class="select is-fullwidth">
-        <select name="student[classroom]" id="classroom" autofocus>
-          <option>Escolha uma turma...</option>
-          <% schoolsClassrooms.forEach(classroom => { %>
-            <option
-              value="<%= classroom._id %>"
-              <%= classroom._id.equals(student.classroom) ? 'selected' : '' %>
-            >
-              <%= `${classroom.name} | ${classroom.school.name}` %>
-            </option>
-          <% }) %>
-        </select>
+    <div class="column is-8">
+      <div class="field">
+        <label for="classroom" class="label">Turma</label>
+        <div class="control">
+          <div class="select is-fullwidth">
+            <select name="student[classroom]" id="classroom" autofocus>
+              <option>Escolha uma turma...</option>
+              <% schoolsClassrooms.forEach(classroom => { %>
+                <option
+                  value="<%= classroom._id %>"
+                  <%= classroom._id.equals(student.classroom) ? 'selected' : '' %>
+                >
+                  <%= `${classroom.name} | ${classroom.school.name}` %>
+                </option>
+              <% }) %>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="columns">
-    <div class="column is-half">
+    <div class="column is-4">
       <div class="field">
         <label class="label" for="gender">Gênero</label>
         <div class="control mt-2">
@@ -123,7 +126,7 @@
       </div>
     </div>
 
-    <div class="column is-half">
+    <div class="column is-4">
       <label class="label" for="phone">Telefone</label>
       <div class="control">
         <input

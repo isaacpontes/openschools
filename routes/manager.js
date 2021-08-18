@@ -17,7 +17,7 @@ router.get('/classrooms/:id', classroomsController.show);
 router.get('/classrooms/:id/edit', classroomsController.edit);
 router.put('/classrooms/:id', classroomsController.update);
 router.delete('/classrooms/:id', classroomsController.delete);
-router.get('/classrooms/:id/addStudent', classroomsController.addStudent);
+router.get('/classrooms/:id/add-student', classroomsController.addStudent);
 
 router.get('/schools', schoolController.index);
 router.get('/schools/:id', schoolController.show);
