@@ -12,6 +12,7 @@ router.get('/', (req, res) => {
   return res.render('pages/home');
 });
 
+router.get('/classrooms', classroomsController.index);
 router.post('/classrooms', classroomsController.save);
 router.get('/classrooms/:id', classroomsController.show);
 router.get('/classrooms/:id/edit', classroomsController.edit);

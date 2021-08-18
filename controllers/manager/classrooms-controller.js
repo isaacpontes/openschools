@@ -5,6 +5,21 @@ const studentsService = require('../../services/students-service');
 const transportsService = require('../../services/transports-service');
 
 module.exports = {
+  // Render a list of all user's classrooms
+  // GET /manager/classrooms
+  index: async function (req, res) {
+    const currentUser = req.user._id;
+
+    try {
+      const userSchools = await schoolsService.findByManager(currentUser);
+      const schoolIds = userSchools.map((school) => school._id);
+      const classrooms = await classroomsService.findAllInSchools(schoolIds);
+      return res.render('classrooms/index', { classrooms });
+    } catch (error) {
+      return res.render('pages/error', { error });
+    }
+  },
+
   // Save a new classroom to the database
   // POST /classrooms
   save: async function (req, res) {
