@@ -62,7 +62,13 @@ module.exports = {
 
   update: async function (id, name, grade) {
     // Update on Classroom
-    const classroom = await Classroom.findByIdAndUpdate(id, { name, grade, updated: Date.now() }, { new: true });
+    const classroom = await Classroom.findByIdAndUpdate(id, {
+      name,
+      grade,
+      updated: Date.now()
+    }, {
+      new: true
+    });
     
     // Update on School
     await schoolsService.updateClassroom(classroom);

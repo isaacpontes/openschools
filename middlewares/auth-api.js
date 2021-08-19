@@ -22,4 +22,18 @@ const ensureAuth = (req, res, next) => {
     })
 };
 
-module.exports = ensureAuth;
+const ensureAdmin = (req, res, next) => {
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ message: 'Você não tem permissão para acessar este recurso.' });
+  }
+  return next();
+}
+
+const ensureManager = (req, res, next) => {
+  if (req.user.role !== 'manager') {
+    return res.status(403).json({ message: 'Você não tem permissão para acessar este recurso.' });
+  }
+  return next();
+}
+
+module.exports = { ensureAuth, ensureAdmin, ensureManager };

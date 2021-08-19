@@ -55,6 +55,6 @@ app.use(morgan('dev'));
 app.use('/', require('./routes/index'));
 
 // API routes
-app.use('/api/v1', require('./routes/api/v1'));
+app.use('/api', require('./routes/api'));
 
 module.exports = { app };

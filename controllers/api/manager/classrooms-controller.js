@@ -1,18 +1,20 @@
 const Classroom = require('../../../models/classroom');
 const Student = require('../../../models/student');
+const classroomsService = require('../../../services/classrooms-service');
+const studentsService = require('../../../services/students-service');
 
 module.exports = {
   // Save a new classroom to the database
-  // POST /api/v1/classrooms
+  // POST /api/manager/classrooms
   save: async function (req, res) {
-    const { name, code, school } = req.body;
-    const classroom = new Classroom({ name, code, school });
+    const { name, grade, school } = req.body;
+    const classroom = classroomsService.create(name, grade, school);
   
     try {
-      await classroom.save();
+      await classroomsService.save(classroom);
       return res.status(201).json(classroom);
     } catch (error) {
-      return res.status(400).json({ message: 'Erro ao salvar turma.' });
+      return res.status(400).json({ message: 'Erro ao salvar turma.', error });
     }
   },
 
@@ -22,8 +24,7 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      const classroom = await Classroom.findById(id).populate('school');
-
+      const classroom = await classroomsService.findById(id);
       return res.status(200).json(classroom);
     } catch (error) {
       return res.status(400).json({ message: 'Erro ao retornar turma.' })
@@ -34,19 +35,15 @@ module.exports = {
   // PATCH /api/v1/classrooms/:id
   update: async function (req, res) {
     const { id } = req.params;
-    const { name, code } = req.body;
+    const { name, grade } = req.body;
 
     try {
-      const classroom = await Classroom.findById(id);
+      if (typeof name === 'undefined' || typeof grade === 'undefined') {
+        throw new Error('Nome e Ano Escolar são obrigatórios');
+      }
 
-      if (name) classroom.name = name;
-      if (code) classroom.code = code;
-
-      classroom.updated = Date.now();
-
-      await classroom.save();
-  
-      return res.json(classroom);
+      await classroomsService.update(id, name, grade);
+      return res.status(204).json({ message: 'OK' });
     } catch (error) {
       return res.status(400).json({ message: 'Erro ao atualizar turma.' });
     }
@@ -58,11 +55,10 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      await Classroom.findByIdAndRemove(id);
+      await classroomsService.delete(id);
 
       return res.status(204).json({ message: 'OK' });
     } catch (error) {
-      console.log(error);
       return res.status(400).json({ message: 'Erro ao excluir turma.' });
     }
   },
@@ -73,7 +69,7 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      const students = await Student.find({ classroom: id });
+      const students = await studentsService.findByClassroomId(id);
       
       return res.status(200).json(students);
     } catch (error) {

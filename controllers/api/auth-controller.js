@@ -1,5 +1,5 @@
-const User = require("../../../models/user");
-const { signIn } = require("../../../services/jwt");
+const User = require("../../models/user");
+const { signIn } = require("../../services/jwt");
 
 module.exports = {
   // Authenticates the user returning a JWT
@@ -10,12 +10,14 @@ module.exports = {
     try {
       const user = await User.findOne({ email });
 
-      if (!user)
+      if (!user) {
         return res.status(401).json({ message: 'Email inválido ou não registrado.'});
+      }
 
       user.checkPassword(password, (err, same) => {
-        if (!same) 
+        if (!same) {
           return res.status(401).json({ error: 'Email ou senha incorretos.'});
+        }
 
         const payload = { email };
         const token = signIn(payload, '1d');
