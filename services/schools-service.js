@@ -1,8 +1,20 @@
 const School = require('../models/school');
 
 module.exports = {
-  create: function () {
+  create: function (name, inepCode, address, manager) {
     const school = new School();
+    if (typeof name !== 'undefined') {
+      school.name = name;
+    }
+    if (typeof inepCode !== 'undefined') {
+      school.inepCode = inepCode;
+    }
+    if (typeof address !== 'undefined') {
+      school.address = address;
+    }
+    if (typeof manager !== 'undefined') {
+      school.manager = manager;
+    }
     return school;
   },
 
@@ -29,8 +41,7 @@ module.exports = {
     return school;
   },
 
-  save: async function (name, inepCode, address, manager) {
-    const school = new School({ name, inepCode, address, manager });
+  save: async function (school) {
     await school.save();
     return school;
   },
