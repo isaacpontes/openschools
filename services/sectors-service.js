@@ -3,7 +3,7 @@ const Sector = require('../models/sector');
 module.exports = {
   create: function (name) {
     const sector = new Sector();
-    if (typeof name === 'undefined') {
+    if (typeof name !== 'undefined') {
       sector.name = name;
     }
     return sector;
@@ -14,13 +14,12 @@ module.exports = {
     return sectors;
   },
 
-  findOne: async function (id) {
+  findById: async function (id) {
     const sector = await Sector.findById(id);
     return sector;
   },
 
-  save: async function (name) {
-    const sector = this.create(name);
+  save: async function (sector) {
     await sector.save();
     return sector;
   },

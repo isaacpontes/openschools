@@ -16,8 +16,10 @@ module.exports = {
   // POST /sectors
   save: async function (req, res) {
     const { name } = req.body.sector;
+    const sector = sectorsService.create(name);
+
     try {
-      await sectorsService.save(name);
+      await sectorsService.save(sector);
       req.flash('success', 'Setor salvo com sucesso.');
       return res.redirect('/admin/sectors');
     } catch (error) {
@@ -38,7 +40,7 @@ module.exports = {
   edit: async function (req, res) {
     const { id } = req.params;
     try {
-      const sector = await sectorsService.findOne(id);
+      const sector = await sectorsService.findById(id);
       return res.render('admin/sectors/edit', { sector });
     } catch (error) {
       return res.render('pages/error', { error });
