@@ -67,6 +67,11 @@ module.exports = {
     return students;
   },
 
+  findAllInClassrooms: async function (classroomsList) {
+    const students = await Student.find({ classroom: { $in: classroomsList } });
+    return students;
+  },
+
   findById: async function (id, populateOptions) {
     if (typeof populateOptions === 'undefined') {
       const student = await Student.findById(id);

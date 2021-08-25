@@ -1,22 +1,35 @@
-const Student = require('../../../models/student');
+const schoolsService = require('../../../services/schools-service');
+const studentsService = require('../../../services/students-service');
 
 module.exports = {
+  // Find all students from the manager's schools
+  // GET /api/manager/students
+  index: async function (req, res) {
+    const manager = req.user._id;
+
+    try {
+      const managerSchools = await schoolsService.findByManager(manager);
+      const managerClassrooms = [];
+      managerSchools.forEach((school) => {
+        const schoolClassrooms = school.classrooms.map((classroom) => classroom._id);
+        managerClassrooms.push(...schoolClassrooms);
+      });
+      const managerStudents = await studentsService.findAllInClassrooms(managerClassrooms);
+      
+      return res.status(200).json(managerStudents);
+    } catch (error) {
+      return res.status(400).json({ message: 'Erro ao retornar estudantes.', error: error.message });
+    }
+  },
+
   // Save a new student to the database
-  // POST /api/v1/students
+  // POST /api/manager/students
   save: async function (req, res) {
-    const {
-      enrollment, firstName, lastName, gender, phone, address, birthday, birthPlace,
-      fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info,
-      transport, school, classroom
-    } = req.body;
-    const student = new Student({
-      enrollment, firstName, lastName, gender, phone, address, birthday,
-      birthPlace, fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info,
-      transport, school, classroom
-    });
+    const { enrollment, firstName, lastName, gender, phone, address, birthday, birthPlace, fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info, transport, school, classroom } = req.body;
+    const student = studentsService.create(enrollment, firstName, lastName, gender, phone, address, birthday, birthPlace, fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info, transport, school, classroom);
   
     try {
-      await student.save();
+      await studentsService.save(student);
   
       return res.status(201).json(student);
     } catch (error) {
@@ -25,12 +38,13 @@ module.exports = {
   },
 
   // Return a single student
-  // GET /students/:id
+  // GET /api/manager/students/:id
   findOne: async function (req, res) {
     const { id } = req.params;
   
     try {
-      const student = await Student.findById(id).populate(['school', 'classroom', 'transport']);
+      const student = await studentsService.findById(id, ['school', 'classroom', 'transport']);
+
       return res.status(200).json(student);
     } catch (error) {
       return res.status(400).json({ message: 'Erro ao retornar aluno.' });
@@ -38,17 +52,13 @@ module.exports = {
   },
 
   // Update a student in the database
-  // PUT /students/:id
+  // PUT /api/manager/students/:id
   update: async function (req, res) {
     const { id } = req.params;
-    const {
-      enrollment, firstName, lastName, gender, phone, address, birthday, birthPlace,
-      fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info,
-      transport, school, classroom
-    } = req.body;
+    const { enrollment, firstName, lastName, gender, phone, address, birthday, birthPlace, fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info, transport, school, classroom } = req.body;
   
     try {
-      const student = await Student.findById(id);
+      const student = await studentsService.findById(id);
 
       if (enrollment) student.enrollment = enrollment;
       if (firstName) student.firstName = firstName;
@@ -59,6 +69,7 @@ module.exports = {
       if (birthday) student.birthday = birthday;
       if (birthPlace) student.birthPlace = birthPlace;
       if (fatherName) student.fatherName = fatherName;
+      if (fatherOcupation) student.fatherOcupation = fatherOcupation;
       if (motherName) student.motherName = motherName;
       if (motherOcupation) student.motherOcupation = motherOcupation;
       if (bloodType) student.bloodType = bloodType;
@@ -69,10 +80,9 @@ module.exports = {
       if (classroom) student.classroom = classroom;
       student.updated = Date.now();
 
-      // console.log(student);
-      await student.save();
+      await studentsService.save(student);
   
-      return res.json(student);
+      return res.status(200).json(student);
     } catch (error) {
       return res.status(400).json({
         message: 'Erro ao atualizar aluno.',
@@ -82,12 +92,12 @@ module.exports = {
   },
 
   // Delete student from database
-  // DELETE /students/:id
+  // DELETE /api/manager/students/:id
   delete: async function (req, res) {
     const { id } = req.params;
 
     try {
-      await Student.findByIdAndRemove(id);
+      await studentsService.delete(id);
   
       return res.status(204).json({ message: 'OK' });
     } catch (error) {

@@ -16,6 +16,7 @@ router.put('/classrooms/:id', classroomsController.update);
 router.delete('/classrooms/:id', classroomsController.delete);
 router.get('/classrooms/:id/students', classroomsController.findClassroomStudents);
 
+router.get('/students', studentsController.index);
 router.post('/students', studentsController.save);
 router.get('/students/:id', studentsController.findOne);
 router.put('/students/:id', studentsController.update);
