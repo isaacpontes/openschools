@@ -1,4 +1,5 @@
 const express = require('express');
+const classroomsController = require('../../controllers/api/admin/classrooms-controller');
 const schoolsController = require('../../controllers/api/admin/schools-controller');
 const sectorsController = require('../../controllers/api/admin/sectors-controller');
 
@@ -16,5 +17,10 @@ router.post('/schools', schoolsController.save);
 router.put('/schools/:id', schoolsController.update);
 router.delete('/schools/:id', schoolsController.delete);
 
+router.get('/classrooms', classroomsController.findAll);
+router.get('/classrooms/:id', classroomsController.findById);
+router.post('/classrooms', classroomsController.save);
+router.put('/classrooms/:id', classroomsController.update);
+router.delete('/classrooms/:id', classroomsController.delete);
 
 module.exports = router;
