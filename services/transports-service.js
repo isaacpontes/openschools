@@ -1,8 +1,17 @@
 const Transport = require('../models/transport');
 
 module.exports = {
-  create: function () {
+  create: function (name, driver, info) {
     const transport = new Transport();
+    if (typeof name !== 'undefined') {
+      transport.name = name;
+    }
+    if (typeof driver !== 'undefined') {
+      transport.driver = driver;
+    }
+    if (typeof info !== 'undefined') {
+      transport.info = info;
+    }
     return transport;
   },
 
@@ -16,8 +25,7 @@ module.exports = {
     return transport;
   },
 
-  save: async function (name, driver, info) {
-    const transport = new Transport({ name, driver, info });
+  save: async function (transport) {
     await transport.save();
     return transport;
   },
