@@ -1,5 +1,6 @@
 const express = require('express');
 const classroomsController = require('../../controllers/api/admin/classrooms-controller');
+const employeesController = require('../../controllers/api/admin/employees-controller');
 const gradesController = require('../../controllers/api/admin/grades-controller');
 const schoolsController = require('../../controllers/api/admin/schools-controller');
 const sectorsController = require('../../controllers/api/admin/sectors-controller');
@@ -12,6 +13,12 @@ router.get('/sectors/:id', sectorsController.findById);
 router.post('/sectors', sectorsController.save);
 router.put('/sectors/:id', sectorsController.update);
 router.delete('/sectors/:id', sectorsController.delete);
+
+router.get('/employees', employeesController.findAll);
+router.get('/employees/:id', employeesController.findById);
+router.post('/employees', employeesController.save);
+router.put('/employees/:id', employeesController.update);
+router.delete('/employees/:id', employeesController.delete);
 
 router.get('/grades', gradesController.findAll);
 router.post('/grades', gradesController.save);

@@ -10,7 +10,7 @@ const employeeSchema = new mongoose.Schema({
     enum: ['Efetivo', 'Comissionado', 'Contratado', 'Cedido', 'Permutado'],
     required: true
   },
-  birthday: { type: String, required: true },
+  birthday: { type: Date, required: true },
   cpf: { type: String, required: true },
   rg: { type: String, required: true },
   ctps: { type: String, required: true },

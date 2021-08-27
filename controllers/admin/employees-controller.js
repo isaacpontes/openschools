@@ -24,9 +24,13 @@ module.exports = {
       email, situation, admissionDate, formation, complementaryFormation, workload, fundeb,
       originSector, currentSector, school, classroom, shift, info
     } = req.body.employee;
+
     const birthday = dayjs(req.body.employee.birthday);
+
+    const employee = await employeesService.create(name, enrollment, position, role, bond, birthday, cpf, rg, ctps, electorTitle, pis, address, phone, email, situation, admissionDate, formation, complementaryFormation, workload, fundeb, originSector, currentSector, school, classroom, shift, info);
+
     try {
-      await employeesService.save(name, enrollment, position, role, bond, birthday, cpf, rg, ctps, electorTitle, pis, address, phone, email, situation, admissionDate, formation, complementaryFormation, workload, fundeb, originSector, currentSector, school, classroom, shift, info);
+      await employeesService.save(employee);
       req.flash('success', 'Funcionário salvo com sucesso.');
       return res.redirect('/admin/employees');
     } catch (error) {
