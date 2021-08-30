@@ -17,9 +17,10 @@ module.exports = {
   // POST /admin/schools
   save: async function (req, res) {
     const { name, inepCode, address, manager } = req.body.school;
+    const school = schoolsService.create(name, inepCode, address, manager);
 
     try {
-      await schoolsService.save(name, inepCode, address, manager);
+      await schoolsService.save(school);
       req.flash('success', 'Escola salva com sucesso.');
       return res.status(201).redirect('/admin/schools');
     } catch (error) {
