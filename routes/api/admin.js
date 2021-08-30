@@ -6,6 +6,7 @@ const schoolsController = require('../../controllers/api/admin/schools-controlle
 const sectorsController = require('../../controllers/api/admin/sectors-controller');
 const studentsController = require('../../controllers/api/admin/students-controller');
 const transportsController = require('../../controllers/api/admin/transports-controller');
+const usersController = require('../../controllers/api/admin/users-controller');
 
 const router = express.Router();
 
@@ -49,5 +50,11 @@ router.get('/students/:id', studentsController.findById);
 router.post('/students', studentsController.save);
 router.put('/students/:id', studentsController.update);
 router.delete('/students/:id', studentsController.delete);
+
+router.get('/users', usersController.findAll);
+router.get('/users/:id', usersController.findById);
+router.post('/users', usersController.save);
+router.put('/users/:id', usersController.update);
+router.delete('/users/:id', usersController.delete);
 
 module.exports = router;
