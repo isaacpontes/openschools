@@ -1,10 +1,13 @@
 const express = require('express');
 
-const authController = require('../../controllers/api/auth-controller');
+const AuthController = require('../../controllers/api/AuthController');
 const { ensureAuth, ensureAdmin, ensureManager } = require('../../middlewares/auth-api');
+const usersService = require('../../services/users-service');
 
 const adminRouter = require('./admin');
 const managerRouter = require('./manager');
+
+const authController = new AuthController(usersService);
 
 const router = express.Router();
 

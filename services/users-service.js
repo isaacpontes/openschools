@@ -21,6 +21,11 @@ module.exports = {
     return user;
   },
 
+  findByEmail: async function (email) {
+    const user = await User.findOne({ email });
+    return user;
+  },
+
   delete: async function (id) {
     await User.findByIdAndRemove(id);
   }

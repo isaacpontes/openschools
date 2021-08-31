@@ -43,6 +43,13 @@ module.exports = {
     return classroom;
   },
 
+  findByUserId: async function (userId) {
+    const userSchools = await schoolsService.findByManager(userId);
+    const schoolIds = userSchools.map((school) => school._id);
+    const classrooms = await this.findAllInSchools(schoolIds);
+    return classrooms;
+  },
+
   findAllInSchools: async function (schoolIds) {
     const schoolsClassrooms = await Classroom.find({ school: { $in: schoolIds } }).populate(['grade', 'school']);
     return schoolsClassrooms;

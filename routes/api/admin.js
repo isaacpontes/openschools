@@ -1,12 +1,31 @@
-const express = require('express');
-const classroomsController = require('../../controllers/api/admin/classrooms-controller');
-const employeesController = require('../../controllers/api/admin/employees-controller');
-const gradesController = require('../../controllers/api/admin/grades-controller');
-const schoolsController = require('../../controllers/api/admin/schools-controller');
-const sectorsController = require('../../controllers/api/admin/sectors-controller');
-const studentsController = require('../../controllers/api/admin/students-controller');
-const transportsController = require('../../controllers/api/admin/transports-controller');
-const usersController = require('../../controllers/api/admin/users-controller');
+const express = require( "express");
+const classroomsService = require( "../../services/classrooms-service");
+const employeesService = require( "../../services/employees-service");
+const gradesService = require( "../../services/grades-service");
+const schoolsService = require( "../../services/schools-service");
+const sectorsService = require( "../../services/sectors-service");
+const studentsService = require( "../../services/students-service");
+const TransportsService = require( "../../services/TransportsService");
+const usersService = require( "../../services/users-service");
+const ClassroomsController = require( "../../controllers/api/admin/ClassroomsController");
+const EmployeesController = require( "../../controllers/api/admin/EmployeesController");
+const GradesController = require( "../../controllers/api/admin/GradesController");
+const SchoolsController = require( "../../controllers/api/admin/SchoolsController");
+const SectorsController = require( "../../controllers/api/admin/SectorsController");
+const StudentsController = require( "../../controllers/api/admin/StudentsController");
+const TransportsController = require( "../../controllers/api/admin/TransportsController");
+const UsersController = require( "../../controllers/api/admin/UsersController");
+
+
+const transportsService = new TransportsService();
+const classroomsController = new ClassroomsController(classroomsService, studentsService);
+const employeesController = new EmployeesController(employeesService);
+const gradesController = new GradesController(gradesService);
+const schoolsController = new SchoolsController(schoolsService);
+const sectorsController = new SectorsController(sectorsService);
+const studentsController = new StudentsController(studentsService);
+const transportsController = new TransportsController(transportsService);
+const usersController = new UsersController(usersService);
 
 const router = express.Router();
 

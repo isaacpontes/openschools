@@ -5,10 +5,15 @@ const dashboardController = require('../controllers/admin/dashboard-controller')
 const employeesController = require('../controllers/admin/employees-controller');
 const schoolController = require('../controllers/admin/schools-controller');
 const sectorsController = require('../controllers/admin/sectors-controller');
-const studentsController = require('../controllers/admin/students-controller');
-const transportsController = require('../controllers/admin/transports-controller');
+const StudentsController = require('../controllers/admin/StudentsController');
+const TransportsService = require('../services/TransportsService');
+const TransportsController = require('../controllers/admin/TransportsController');
 const usersController = require('../controllers/admin/users-controller');
 const gradesController = require('../controllers/admin/grades-controller');
+
+const transportsService = new TransportsService();
+const studentsController = new StudentsController(transportsService);
+const transportsController = new TransportsController(transportsService);
 
 const router = express.Router();
 
@@ -52,7 +57,7 @@ router.delete('/sectors/:id', sectorsController.delete);
 
 router.get('/students', studentsController.index);
 router.post('/students', studentsController.save);
-router.get('/students/new', studentsController.new);
+router.get('/students/new', studentsController.create);
 router.get('/students/export-pdf', studentsController.exportPdf);
 router.get('/students/:id', studentsController.show);
 router.get('/students/:id/edit', studentsController.edit);
@@ -61,7 +66,7 @@ router.delete('/students/:id', studentsController.delete);
 
 router.get('/transports', transportsController.index);
 router.post('/transports', transportsController.save);
-router.get('/transports/new', transportsController.new);
+router.get('/transports/new', transportsController.create);
 router.get('/transports/:id/edit', transportsController.edit);
 router.put('/transports/:id', transportsController.update);
 router.delete('/transports/:id', transportsController.delete);

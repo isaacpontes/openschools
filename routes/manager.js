@@ -1,8 +1,15 @@
 const express = require('express');
 
-const classroomsController = require('../controllers/manager/classrooms-controller');
-const schoolController = require('../controllers/manager/schools-controller');
-const studentsController = require('../controllers/manager/students-controller');
+const classroomsService = require('../services/classrooms-service');
+const schoolsService = require('../services/schools-service');
+const studentsService = require('../services/students-service');
+const ClassroomsController = require('../controllers/manager/ClassroomsController');
+const StudentsController = require('../controllers/manager/StudentsController');
+const SchoolController = require('../controllers/manager/SchoolsController');
+
+const classroomsController = new ClassroomsController(classroomsService);
+const schoolsController = new SchoolController(schoolsService);
+const studentsController = new StudentsController(studentsService);
 
 const router = express.Router({ mergeParams: true });
 
@@ -20,9 +27,9 @@ router.put('/classrooms/:id', classroomsController.update);
 router.delete('/classrooms/:id', classroomsController.delete);
 router.get('/classrooms/:id/add-student', classroomsController.addStudent);
 
-router.get('/schools', schoolController.index);
-router.get('/schools/:id', schoolController.show);
-router.get('/schools/:id/add-classroom', schoolController.addClassroom);
+router.get('/schools', schoolsController.index);
+router.get('/schools/:id', schoolsController.show);
+router.get('/schools/:id/add-classroom', schoolsController.addClassroom);
 
 router.post('/students', studentsController.save);
 router.get('/students/:id', studentsController.show);
