@@ -1,13 +1,13 @@
 class TransportsController {
-  constructor (transportsService) {
-    this.transportsService = transportsService;
+  constructor (service) {
+    this.service = service;
   }
 
   // Render a list of all transports
   // GET /transports
-  async index(req, res) {
+  index = async (req, res) => {
     try {
-      const transports = await this.transportsService.findAll();
+      const transports = await this.service.findAll();
       res.render('admin/transports/index', { transports });
     } catch (error) {
       res.render('pages/error', { error });
@@ -16,24 +16,24 @@ class TransportsController {
 
   // Save a new transport to the database
   // POST /transports
-  async save(req, res) {
+  save = async (req, res) => {
     const { name, driver, info } = req.body.transport;
     try {
-      await this.transportsService.save(name, driver, info);
+      await this.service.save(name, driver, info);
       req.flash('success', 'Transporte salvo com sucesso.');
       return res.redirect('/admin/transports');
     } catch (error) {
       req.flash('error', 'Erro ao salvar transporte.');
-      return res.redirect('admin/transports/new');
+      return res.redirect('admin/transports/create');
     }
   }
 
-  // Render the new transport form
-  // GET /transports/new
+  // Render the create transport form
+  // GET /transports/create
   create(req, res) {
     try {
-      const transport = this.transportsService.create();
-      return res.render('admin/transports/new', { transport });
+      const transport = this.service.create();
+      return res.render('admin/transports/create', { transport });
     } catch (error) {
       return res.render('pages/error', { error });
     }
@@ -41,10 +41,10 @@ class TransportsController {
 
   // Render transport edit form
   // GET /transports/:id/edit
-  async edit(req, res) {
+  edit = async (req, res) => {
     const id = req.params.id;
     try {
-      const transport = await this.transportsService.findOne(id);
+      const transport = await this.service.findOne(id);
       return res.render('admin/transports/edit', { transport });
     } catch (error) {
       return res.render('pages/error', { error });
@@ -53,25 +53,27 @@ class TransportsController {
 
   // Update a transport in the database
   // PUT /transports/:id
-  async update(req, res) {
-    const id = req.params.id;
+  update = async (req, res) => {
+    const { id } = req.params;
     const { name, driver, info } = req.body.transport;
+
     try {
-      await this.transportsService.updateOne(id, name, driver, info);
+      await this.service.updateOne(id, name, driver, info);
       req.flash('success', 'Transporte atualizado com sucesso.');
       return res.redirect('/admin/transports');
     } catch (error) {
       req.flash('error', 'Erro ao atualizar transporte.');
-      return res.redirect('admin/transports/new');
+      return res.redirect(`/admin/transports/${id}/edit`);
     }
   }
 
   // Delete transport from database
   // DELETE /transports/:id
-  async delete(req, res) {
-    const id = req.params.id;
+  delete = async (req, res) => {
+    const { id } = req.params;
+
     try {
-      await this.transportsService.deleteOne(id);
+      await this.service.deleteOne(id);
       req.flash('success', 'Transporte excluído com sucesso.');
       return res.redirect('/admin/transports');
     } catch (error) {

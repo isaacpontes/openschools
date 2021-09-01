@@ -1,97 +1,102 @@
-const User = require('../../models/user');
-const schoolsService = require('../../services/schools-service');
+const usersService = require('../../services/users-service');
 
-module.exports = {
+class SchoolsController {
+  constructor (service) {
+    this.service = service;
+  }
+  
   // Render a list of all schools
   // GET /admin/schools
-  index: async function (req, res) {
+  index = async (req, res) => {
     try {
-      const schools = await schoolsService.findAll({ path: 'manager'});
+      const schools = await this.service.findAll({ path: 'manager'});
       return res.status(200).render('admin/schools/index', { schools });
     } catch (error) {
       return res.status(400).render('pages/error', { error });
     }
-  },
+  }
 
   // Save a new school to the database
   // POST /admin/schools
-  save: async function (req, res) {
+  save = async (req, res) => {
     const { name, inepCode, address, manager } = req.body.school;
-    const school = schoolsService.create(name, inepCode, address, manager);
+    const school = this.service.create(name, inepCode, address, manager);
 
     try {
-      await schoolsService.save(school);
+      await this.service.save(school);
       req.flash('success', 'Escola salva com sucesso.');
-      return res.status(201).redirect('/admin/schools');
+      return res.redirect('/admin/schools');
     } catch (error) {
       req.flash('error', 'Erro ao salvar escola.');
-      return res.status(400).redirect('admin/schools/new');
+      return res.redirect('/admin/schools/create');
     }
-  },
+  }
 
-  // Render the new school form
-  // GET /admin/schools/new
-  new: async function (req, res) {
+  // Render the create school form
+  // GET /admin/schools/create
+  create = async (req, res) => {
     try {
-      const school = schoolsService.create();
-      const allManagers = await User.find({ role: 'manager' });
-      return res.render('admin/schools/new', { school, allManagers });
+      const school = this.service.create();
+      const allManagers = await usersService.findAllManagers();
+      return res.render('admin/schools/create', { school, allManagers });
     } catch (error) {
       return res.render('pages/error', { error });
     }
-  },
+  }
 
   // Render a single school
   // GET /admin/schools/:id
-  show: async function (req, res) {
+  show = async (req, res) => {
     const { id } = req.params;
     try {
-      const school = await schoolsService.findById(id, { path: 'manager' });
+      const school = await this.service.findById(id, { path: 'manager' });
       return res.render('admin/schools/show', { school });
     } catch (error) {
       return res.render('pages/error', { error });
     }
-  },
+  }
 
   // Render the edit school form
   // GET /admin/schools/:id/edit
-  edit: async function (req, res) {
+  edit = async (req, res) => {
     const { id } = req.params;
     try {
-      const school = await schoolsService.findById(id);
-      const allManagers = await User.find({ role: 'manager' });
+      const school = await this.service.findById(id);
+      const allManagers = await usersService.findAllManagers();
       return res.render('admin/schools/edit', { school, allManagers });
     } catch (error) {
       return res.render('pages/error', { error });
     }
-  },
+  }
 
   // Updates a school in the database
   // PUT /admin/schools/:id
-  update: async function (req, res) {
+  update = async (req, res) => {
     const { id } = req.params;
     const { name, inepCode, address, manager } = req.body.school;
     try {
-      await schoolsService.update(id, name, inepCode, address, manager);
+      await this.service.update(id, name, inepCode, address, manager);
       req.flash('success', 'Escola atualizada com sucesso.');
-      return res.status(200).redirect('/admin/schools');
+      return res.redirect('/admin/schools');
     } catch (error) {
       req.flash('error', 'Erro ao atualizar escola.');
-      return res.status(500).render('admin/schools/edit');
+      return res.redirect(`/admin/schools/${id}/edit`);
     }
-  },
+  }
 
   // Delete a school from the database
   // DELETE /admin/schools/:id
-  delete: async function (req, res) {
+  delete = async (req, res) => {
     const { id } = req.params;
     try {
-      await schoolsService.delete(id);
+      await this.service.delete(id);
       req.flash('success', 'Escola excluída com sucesso.');
-      return res.status(204).redirect('/admin/schools');
+      return res.redirect('/admin/schools');
     } catch (error) {
       req.flash('error', 'Erro ao excluir escola.');
-      return res.status(400).redirect('admin/schools/index');
+      return res.redirect('/admin/schools');
     }
   }
-};
+}
+
+module.exports = SchoolsController;

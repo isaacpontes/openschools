@@ -1,20 +1,21 @@
-const Employee = require("../../models/employee");
-const School = require("../../models/school");
-const Student = require("../../models/student");
-const Sector = require("../../models/sector");
-const Grade = require("../../models/grade");
+const employeesService = require("../../services/employees-service");
+const schoolsService = require("../../services/schools-service");
+const gradesService = require("../../services/grades-service");
+const studentsService = require("../../services/students-service");
+const sectorsService = require("../../services/sectors-service");
 
-module.exports = {
+class DashboardController {
   // Render a list of all employees
   // GET /employees
-  index: async function (req, res) {
+  index = async (req, res) => {
 
     try {
-      const schools = await School.find({});
-      const grades = await Grade.find({});
-      const students = await Student.find({}).populate('classroom');
-      const employees = await Employee.find({});
-      const sectors = await Sector.find({});
+      const schools = await schoolsService.findAll();
+      const grades = await gradesService.findAll();
+      const students = await studentsService.findAll({ path: 'classroom' });
+      const employees = await employeesService.findAll();
+      const sectors = await sectorsService.findAll();
+
       const schoolsCount = schools.length;
       const studentsCount = students.length;
       const employeesCount = employees.length;
@@ -70,5 +71,7 @@ module.exports = {
     } catch (error) {
       return res.render('pages/error', { error });
     }
-  },
+  }
 }
+
+module.exports = DashboardController;

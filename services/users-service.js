@@ -11,6 +11,11 @@ module.exports = {
     return users;
   },
 
+  findAllManagers: async function () {
+    const users = await User.find({ role: 'manager' });
+    return users;
+  },
+
   save: async function (user) {
     await user.save();
     return user;
