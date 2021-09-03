@@ -1,10 +1,11 @@
+const Controller = require('../Controller');
 const employeesService = require("../../services/employees-service");
 const schoolsService = require("../../services/schools-service");
 const gradesService = require("../../services/grades-service");
 const studentsService = require("../../services/students-service");
 const sectorsService = require("../../services/sectors-service");
 
-class DashboardController {
+class DashboardController extends Controller {
   // Render a list of all employees
   // GET /employees
   index = async (req, res) => {

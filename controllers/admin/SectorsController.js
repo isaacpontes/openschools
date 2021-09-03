@@ -1,8 +1,6 @@
-class SectorsController {
-  constructor (service) {
-    this.service = service;
-  }
+const Controller = require('../Controller');
 
+class SectorsController extends Controller {
   // Render a list of all sectors
   // GET /sectors
   index = async (req, res) => {

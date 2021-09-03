@@ -1,12 +1,9 @@
+const Controller = require('../Controller');
 const gradesService = require('../../services/grades-service');
 const schoolsService = require('../../services/schools-service');
 const studentsService = require('../../services/students-service');
 
-class ClassroomsController {
-  constructor (service) {
-    this.service = service;
-  }
-
+class ClassroomsController extends Controller {
   // Render a list of all classrooms
   // GET /admin/classrooms
   index = async (req, res) => {

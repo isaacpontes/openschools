@@ -1,14 +1,11 @@
-const dayjs = require('dayjs');
-const PDFDocument = require('pdfkit');
+const Controller = require('../Controller');
 const classroomsService = require('../../services/classrooms-service');
 const schoolsService = require('../../services/schools-service');
 const TransportsService = require('../../services/TransportsService');
+const dayjs = require('dayjs');
+const PDFDocument = require('pdfkit');
 
-class StudentsController {
-  constructor (service) {
-    this.service = service;
-  }
-
+class StudentsController extends Controller {
   // Render a list of all students
   // GET /admin/students
   index = async (req, res) => {

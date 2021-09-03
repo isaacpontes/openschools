@@ -1,8 +1,6 @@
-class TransportsController {
-  constructor (service) {
-    this.service = service;
-  }
+const Controller = require("../Controller");
 
+class TransportsController extends Controller {
   // Render a list of all transports
   // GET /transports
   index = async (req, res) => {

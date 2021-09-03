@@ -1,8 +1,6 @@
-class UsersController {
-  constructor (service) {
-    this.service = service;
-  }
+const Controller = require("../Controller");
 
+class UsersController extends Controller {
   // Render a list of all users
   // GET /admin/users
   index = async (req, res) => {

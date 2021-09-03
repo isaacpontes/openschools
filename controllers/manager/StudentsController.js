@@ -1,13 +1,10 @@
-const dayjs = require('dayjs');
+const Controller = require('../Controller');
 const classroomsService = require('../../services/classrooms-service');
 const schoolsService = require('../../services/schools-service');
 const TransportsService = require('../../services/TransportsService');
+const dayjs = require('dayjs');
 
-class StudentsController {
-  constructor (service) {
-    this.service = service;
-  }
-
+class StudentsController extends Controller {
   // Save a new student to the database
   // POST /students
   save = async (req, res) => {

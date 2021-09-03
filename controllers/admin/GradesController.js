@@ -1,8 +1,6 @@
-class GradesController {
-  constructor (service) {
-    this.service = service;
-  }
+const Controller = require('../Controller');
 
+class GradesController extends Controller {
   // Render a list of all grades
   // GET /grades
   index = async (req, res) => {
