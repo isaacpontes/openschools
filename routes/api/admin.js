@@ -6,7 +6,7 @@ const schoolsService = require( "../../services/schools-service");
 const sectorsService = require( "../../services/sectors-service");
 const studentsService = require( "../../services/students-service");
 const TransportsService = require( "../../services/TransportsService");
-const usersService = require( "../../services/users-service");
+const UsersService = require( "../../services/UsersService");
 const ClassroomsController = require( "../../controllers/api/admin/ClassroomsController");
 const EmployeesController = require( "../../controllers/api/admin/EmployeesController");
 const GradesController = require( "../../controllers/api/admin/GradesController");
@@ -18,6 +18,8 @@ const UsersController = require( "../../controllers/api/admin/UsersController");
 
 
 const transportsService = new TransportsService();
+const usersService = new UsersService();
+
 const classroomsController = new ClassroomsController(classroomsService, studentsService);
 const employeesController = new EmployeesController(employeesService);
 const gradesController = new GradesController(gradesService);

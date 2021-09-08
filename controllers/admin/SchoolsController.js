@@ -1,5 +1,5 @@
 const Controller = require('../Controller');
-const usersService = require('../../services/users-service');
+const UsersService = require('../../services/UsersService');
 
 class SchoolsController extends Controller {
   // Render a list of all schools
@@ -34,7 +34,11 @@ class SchoolsController extends Controller {
   create = async (req, res) => {
     try {
       const school = this.service.create();
+
+      const usersService = new UsersService();
+
       const allManagers = await usersService.findAllManagers();
+
       return res.render('admin/schools/create', { school, allManagers });
     } catch (error) {
       return res.render('pages/error', { error });
@@ -59,7 +63,11 @@ class SchoolsController extends Controller {
     const { id } = req.params;
     try {
       const school = await this.service.findById(id);
+
+      const usersService = new UsersService();
+
       const allManagers = await usersService.findAllManagers();
+
       return res.render('admin/schools/edit', { school, allManagers });
     } catch (error) {
       return res.render('pages/error', { error });

@@ -1,37 +1,39 @@
 const User = require('../models/user');
 
-module.exports = {
-  create: function (name, role, email, password) {
+class UsersService {
+  create = (name, role, email, password) => {
     const user = new User({ name, role, email, password });
     return user;
-  },
+  }
 
-  findAll: async function () {
+  findAll = async () => {
     const users = await User.find({});
     return users;
-  },
+  }
 
-  findAllManagers: async function () {
+  findAllManagers = async () => {
     const users = await User.find({ role: 'manager' });
     return users;
-  },
+  }
 
-  save: async function (user) {
+  save = async (user) => {
     await user.save();
     return user;
-  },
+  }
 
-  findById: async function (id) {
+  findById = async (id) => {
     const user = await User.findById(id);
     return user;
-  },
+  }
 
-  findByEmail: async function (email) {
+  findByEmail = async (email) => {
     const user = await User.findOne({ email });
     return user;
-  },
+  }
 
-  delete: async function (id) {
+  delete = async (id) => {
     await User.findByIdAndRemove(id);
   }
 }
+
+module.exports = UsersService;
