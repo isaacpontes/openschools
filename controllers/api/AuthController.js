@@ -1,4 +1,4 @@
-const { signIn } = require("../../services/jwt");
+const JwtService = require("../../services/JwtService");
 
 class AuthController {
   constructor (service) {
@@ -23,9 +23,12 @@ class AuthController {
         }
 
         const payload = { email };
-        const token = signIn(payload, '1d');
 
-        return res.status(200).json({ authenticated: true, token });
+        const jwt = new JwtService({ payload });
+
+        jwt.signIn('1d');
+
+        return res.status(200).json({ authenticated: true, token: jwt.token });
       });
     } catch (error) {
       return res.status(400).json({ message: 'Ocorreu um erro durante a autenticação.' });
