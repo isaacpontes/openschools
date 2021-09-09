@@ -1,8 +1,8 @@
 const Controller = require('../Controller');
 const dayjs = require('dayjs');
-const sectorsService = require('../../services/sectors-service');
-const schoolsService = require('../../services/schools-service');
-const classroomsService = require('../../services/classrooms-service');
+const SectorsService = require('../../services/SectorsService');
+const SchoolsService = require('../../services/SchoolsService');
+const ClassroomsService = require('../../services/ClassroomsService');
 
 class EmployeesController extends Controller {
   // Render a list of all employees
@@ -45,6 +45,11 @@ class EmployeesController extends Controller {
   // GET /admin/employees/create
   create = async (req, res) => {
     const employee = this.service.create();
+
+    const classroomsService = new ClassroomsService();
+    const schoolsService = new SchoolsService();
+    const sectorsService = new SectorsService();
+
     try {
       const allSectors = await sectorsService.findAll();
       const allSchools = await schoolsService.findAll();
@@ -74,6 +79,10 @@ class EmployeesController extends Controller {
   // GET /admin/employees/:id/edit
   edit = async (req, res) => {
     const { id } = req.params;
+
+    const classroomsService = new ClassroomsService();
+    const schoolsService = new SchoolsService();
+    const sectorsService = new SectorsService();
 
     try {
       const employee = await this.service.findOne(id);

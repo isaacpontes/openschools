@@ -1,34 +1,36 @@
-const Sector = require('../models/sector');
+const Sector = require('../models/Sector');
 
-module.exports = {
-  create: function (name) {
+class SectorsService {
+  create = (name) => {
     const sector = new Sector();
     if (typeof name !== 'undefined') {
       sector.name = name;
     }
     return sector;
-  },
+  }
 
-  findAll: async function () {
+  findAll = async () => {
     const sectors = await Sector.find({});
     return sectors;
-  },
+  }
 
-  findById: async function (id) {
+  findById = async (id) => {
     const sector = await Sector.findById(id);
     return sector;
-  },
+  }
 
-  save: async function (sector) {
+  save = async (sector) => {
     await sector.save();
     return sector;
-  },
+  }
 
-  updateOne: async function (id, name) {
+  updateOne = async (id, name) => {
     await Sector.findByIdAndUpdate(id, { name, updated: Date.now() });
-  },
+  }
 
-  deleteOne: async function (id) {
+  deleteOne = async (id) => {
     await Sector.findByIdAndRemove(id);
   }
 }
+
+module.exports = SectorsService;

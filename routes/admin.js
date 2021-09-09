@@ -1,13 +1,14 @@
 const express = require('express');
 
-const classroomsService = require('../services/classrooms-service');
-const employeesService = require('../services/employees-service');
-const gradesService = require('../services/grades-service');
-const schoolsService = require('../services/schools-service');
-const sectorsService = require('../services/sectors-service');
-const studentsService = require('../services/students-service');
+const ClassroomsService = require('../services/ClassroomsService');
+const EmployeesService = require('../services/EmployeesService');
+const GradesService = require('../services/GradesService');
+const SchoolsService = require('../services/SchoolsService');
+const SectorsService = require('../services/SectorsService');
+const StudentsService = require('../services/StudentsService');
 const TransportsService = require('../services/TransportsService');
 const UsersService = require( '../services/UsersService');
+
 const ClassroomsController = require('../controllers/admin/ClassroomsController');
 const DashboardController = require('../controllers/admin/DashboardController');
 const EmployeesController = require('../controllers/admin/EmployeesController');
@@ -18,6 +19,12 @@ const StudentsController = require('../controllers/admin/StudentsController');
 const TransportsController = require('../controllers/admin/TransportsController');
 const UsersController = require('../controllers/admin/UsersController');
 
+const classroomsService = new ClassroomsService();
+const employeesService = new EmployeesService();
+const gradesService = new GradesService();
+const schoolsService = new SchoolsService();
+const sectorsService = new SectorsService();
+const studentsService = new StudentsService();
 const transportsService = new TransportsService();
 const usersService = new UsersService();
 

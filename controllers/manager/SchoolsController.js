@@ -1,5 +1,5 @@
 const Controller = require('../Controller');
-const gradesService = require("../../services/grades-service");
+const GradesService = require("../../services/GradesService");
 
 class SchoolsController extends Controller {
   // Render a list of all schools belonging to current user
@@ -32,6 +32,8 @@ class SchoolsController extends Controller {
   // GET /schools/:id/add-classroom
   addClassroom = async (req, res) => {
     const schoolId = req.params.id;
+
+    const gradesService = new GradesService();
 
     try {
       const grades = await gradesService.findAll();

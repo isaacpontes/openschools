@@ -1,6 +1,6 @@
 const Controller = require("../Controller");
-const gradesService = require("../../services/grades-service");
-const studentsService = require("../../services/students-service");
+const GradesService = require("../../services/GradesService");
+const StudentsService = require("../../services/StudentsService");
 const TransportsService = require("../../services/TransportsService");
 
 class ClassroomsController extends Controller {
@@ -38,8 +38,11 @@ class ClassroomsController extends Controller {
   show = async (req, res) => {
     const { id } = req.params;
 
+    const studentsService = new StudentsService();
+
     try {
       const classroom = await this.service.findById(id, { path: 'grade' });
+
       const students = await studentsService.findByClassroomId(id)
 
       return res.status(200).render('manager/classrooms/show', { classroom, students });
@@ -52,6 +55,8 @@ class ClassroomsController extends Controller {
   // GET /classrooms/:id/edit
   edit = async (req, res) => {
     const { id } = req.params;
+
+    const gradesService = new GradesService();
 
     try {
       const classroom = await this.service.findById(id);

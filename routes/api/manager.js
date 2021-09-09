@@ -1,13 +1,16 @@
 const express = require('express');
-const classroomsService = require( "../../services/classrooms-service");
-const schoolsService = require( "../../services/schools-service");
-const studentsService = require( "../../services/students-service");
+const ClassroomsService = require( "../../services/ClassroomsService");
+const SchoolsService = require( "../../services/SchoolsService");
+const StudentsService = require( "../../services/StudentsService");
 const ClassroomsController = require( "../../controllers/api/manager/ClassroomsController");
 const SchoolsController = require( "../../controllers/api/manager/SchoolsController");
 const StudentsController = require( "../../controllers/api/manager/StudentsController");
 const TransportsService = require('../../services/TransportsService');
 const TransportsController = require('../../controllers/api/manager/TransportsController');
 
+const classroomsService = new ClassroomsService();
+const schoolsService = new SchoolsService();
+const studentsService = new StudentsService();
 const transportsService = new TransportsService();
 
 const classroomsController = new ClassroomsController(classroomsService, studentsService);

@@ -1,8 +1,8 @@
 const dayjs = require('dayjs');
-const Student = require('../models/student');
+const Student = require('../models/Student');
 
-module.exports = {
-  create: function (enrollment, firstName, lastName, gender, phone, address, birthday, birthPlace, fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info, transport, school, classroom) {
+class StudentsService {
+  create = (enrollment, firstName, lastName, gender, phone, address, birthday, birthPlace, fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info, transport, school, classroom) => {
     const student = new Student();
     if (typeof enrollment !== 'undefined') {
       student.enrollment = enrollment;
@@ -56,50 +56,50 @@ module.exports = {
       student.classroom = classroom;
     }
     return student;
-  },
+  }
 
-  findAll: async function (populateOptions) {
+  findAll = async (populateOptions) => {
     if (typeof populateOptions === 'undefined') {
       const students = await Student.find({});
       return students;
     }
     const students = await Student.find({}).populate(populateOptions);
     return students;
-  },
+  }
 
-  findAllInClassrooms: async function (classroomsList) {
+  findAllInClassrooms = async (classroomsList) => {
     const students = await Student.find({ classroom: { $in: classroomsList } });
     return students;
-  },
+  }
 
-  findById: async function (id, populateOptions) {
+  findById = async (id, populateOptions) => {
     if (typeof populateOptions === 'undefined') {
       const student = await Student.findById(id);
       return student;
     }
     const student = await Student.findById(id).populate(populateOptions);
     return student;
-  },
+  }
 
-  findByClassroomId: async function (classroomId) {
+  findByClassroomId = async (classroomId) => {
     const students = await Student.find({ classroom: classroomId });
     return students;
-  },
+  }
 
-  save: async function (student) {
+  save = async (student) => {
     await student.save();
     return student;
-  },
+  }
 
-  update: async function (id, enrollment, firstName, lastName, gender, phone, address, birthday, birthPlace, fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info, transport, school, classroom) {
+  update = async (id, enrollment, firstName, lastName, gender, phone, address, birthday, birthPlace, fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info, transport, school, classroom) => {
     await Student.findByIdAndUpdate(id, { enrollment, firstName, lastName, gender, phone, address, birthday, birthPlace, fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info, transport, school, classroom, updated: Date.now() });
-  },
+  }
 
-  delete: async function (id) {
+  delete = async (id) => {
     await Student.findByIdAndRemove(id);
-  },
+  }
 
-  generatePdfList: async function (pdf) {
+  generatePdfList = async (pdf) => {
     const students = await this.findAll({ path: 'school' });
 
     const marginLeft = 0 + 40;
@@ -177,3 +177,5 @@ module.exports = {
     }
   }
 }
+
+module.exports = StudentsService;

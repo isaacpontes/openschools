@@ -1,8 +1,8 @@
-const Employee = require('../models/employee');
+const Employee = require('../models/Employee');
 const mongoose = require('mongoose');
 
-module.exports = {
-  create: function (name, enrollment, position, role, bond, birthday, cpf, rg, ctps, electorTitle, pis, address, phone, email, situation, admissionDate, formation, complementaryFormation, workload, fundeb, originSector, currentSector, school, classroom, shift, info) {
+class EmployeesService {
+  create = (name, enrollment, position, role, bond, birthday, cpf, rg, ctps, electorTitle, pis, address, phone, email, situation, admissionDate, formation, complementaryFormation, workload, fundeb, originSector, currentSector, school, classroom, shift, info) => {
     const employee = new Employee();
 
     if (typeof name !== 'undefined') employee.name = name;
@@ -33,27 +33,27 @@ module.exports = {
     if (typeof info !== 'undefined') employee.info = info;
 
     return employee;
-  },
+  }
 
-  findAll: async function (populate = false, options = {}) {
+  findAll = async (populate = false, options = {}) => {
     if (populate === false) {
       const employees = await Employee.find({});
       return employees;
     }
     const employees = await Employee.find({}).populate(options);
     return employees;
-  },
+  }
 
-  findOne: async function (id, populate = false, options = {}) {
+  findOne = async (id, populate = false, options = {}) => {
     if (populate === false) {
       const employees = await Employee.findById(id);
       return employees;
     }
     const employees = await Employee.findById(id).populate(options);
     return employees;
-  },
+  }
 
-  save: async function (employee) {
+  save = async (employee) => {
     if (typeof employee.currentSector === 'undefined' && mongoose.isValidObjectId(employee.originSector)) {
       employee.currentSector = employee.originSector;
     }
@@ -67,9 +67,9 @@ module.exports = {
 
     await employee.save();
     return employee;
-  },
+  }
 
-  update: async function (id, name, enrollment, position, role, bond, birthday, cpf, rg, ctps, electorTitle, pis, address, phone, email, situation, admissionDate, formation, complementaryFormation, workload, fundeb, originSector, currentSector, school, classroom, shift, info) {
+  update = async (id, name, enrollment, position, role, bond, birthday, cpf, rg, ctps, electorTitle, pis, address, phone, email, situation, admissionDate, formation, complementaryFormation, workload, fundeb, originSector, currentSector, school, classroom, shift, info) => {
     
     
     await Employee.findByIdAndUpdate(id, { 
@@ -101,9 +101,11 @@ module.exports = {
       info,
       updated: Date.now()
     });
-  },
+  }
 
-  delete: async function (id) {
+  delete = async (id) => {
     await Employee.findByIdAndRemove(id);
   }
 }
+
+module.exports = EmployeesService;

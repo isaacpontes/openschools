@@ -1,7 +1,7 @@
 const Controller = require('../Controller');
-const gradesService = require('../../services/grades-service');
-const schoolsService = require('../../services/schools-service');
-const studentsService = require('../../services/students-service');
+const GradesService = require('../../services/GradesService');
+const SchoolsService = require('../../services/SchoolsService');
+const StudentsService = require('../../services/StudentsService');
 
 class ClassroomsController extends Controller {
   // Render a list of all classrooms
@@ -37,6 +37,10 @@ class ClassroomsController extends Controller {
   // GET /admin/classrooms/create
   create = async (req, res) => {
     const classroom = this.service.create();
+
+    const schoolsService = new SchoolsService();
+    const gradesService = new GradesService();
+
     try {
       const schools = await schoolsService.findAll();
       const grades = await gradesService.findAll();
@@ -51,6 +55,9 @@ class ClassroomsController extends Controller {
   // GET /admin/classrooms/:id
   show = async (req, res) => {
     const { id } = req.params;
+
+    const studentsService = new StudentsService();
+
     try {
       const classroom = await this.service.findById(id, ['grade', 'school']);
       const students = await studentsService.findByClassroomId(classroom._id);
@@ -65,6 +72,10 @@ class ClassroomsController extends Controller {
   // GET /admin/classrooms/:id/edit
   edit = async (req, res) => {
     const { id } = req.params;
+
+    const schoolsService = new SchoolsService();
+    const gradesService = new GradesService();
+
     try {
       const classroom = await this.service.findById(id);
       const schools = await schoolsService.findAll();

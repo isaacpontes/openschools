@@ -1,34 +1,35 @@
-const Grade = require('../models/grade');
+const Grade = require('../models/Grade');
 
-module.exports = {
-  create: function (name) {
+class GradesService {
+  create = (name) => {
     const grade = new Grade();
     if (typeof name !== 'undefined') {
       grade.name = name;
     }
     return grade;
-  },
+  }
 
-  findAll: async function () {
+  findAll = async () => {
     const grades = await Grade.find({});
     return grades;
-  },
+  }
 
-  findOne: async function (id) {
+  findOne = async (id) => {
     const grade = await Grade.findById(id);
     return grade;
-  },
+  }
 
-  save: async function (grade) {
+  save = async (grade) => {
     await grade.save();
     return grade;
-  },
+  }
 
-  updateOne: async function (id, name) {
+  updateOne = async (id, name) => {
     await Grade.findByIdAndUpdate(id, { name, updated: Date.now() });
-  },
+  }
 
-  deleteOne: async function (id) {
+  deleteOne = async (id) => {
     await Grade.findByIdAndRemove(id);
   }
 }
+module.exports = GradesService;

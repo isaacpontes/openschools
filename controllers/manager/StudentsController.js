@@ -1,6 +1,6 @@
 const Controller = require('../Controller');
-const classroomsService = require('../../services/classrooms-service');
-const schoolsService = require('../../services/schools-service');
+const ClassroomsService = require('../../services/ClassroomsService');
+const SchoolsService = require('../../services/SchoolsService');
 const TransportsService = require('../../services/TransportsService');
 const dayjs = require('dayjs');
 
@@ -40,6 +40,9 @@ class StudentsController extends Controller {
   edit = async (req, res) => {
     const { id } = req.params;
     const currentUser = req.user._id;
+
+    const classroomsService = new ClassroomsService();
+    const schoolsService = new SchoolsService();
 
     try {
       const userSchools = await schoolsService.findByManager(currentUser);

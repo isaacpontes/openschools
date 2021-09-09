@@ -1,11 +1,15 @@
 const express = require('express');
 
-const classroomsService = require('../services/classrooms-service');
-const schoolsService = require('../services/schools-service');
-const studentsService = require('../services/students-service');
+const ClassroomsService = require('../services/ClassroomsService');
+const SchoolsService = require('../services/SchoolsService');
+const StudentsService = require('../services/StudentsService');
 const ClassroomsController = require('../controllers/manager/ClassroomsController');
 const StudentsController = require('../controllers/manager/StudentsController');
 const SchoolController = require('../controllers/manager/SchoolsController');
+
+const classroomsService = new ClassroomsService();
+const schoolsService = new SchoolsService();
+const studentsService = new StudentsService();
 
 const classroomsController = new ClassroomsController(classroomsService);
 const schoolsController = new SchoolController(schoolsService);

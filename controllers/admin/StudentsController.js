@@ -1,6 +1,6 @@
 const Controller = require('../Controller');
-const classroomsService = require('../../services/classrooms-service');
-const schoolsService = require('../../services/schools-service');
+const ClassroomsService = require('../../services/ClassroomsService');
+const SchoolsService = require('../../services/SchoolsService');
 const TransportsService = require('../../services/TransportsService');
 const dayjs = require('dayjs');
 const PDFDocument = require('pdfkit');
@@ -40,6 +40,10 @@ class StudentsController extends Controller {
   // GET /admin/students/create
   create = async (req, res) => {
     const student = this.service.create();
+
+    const classroomsService = new ClassroomsService();
+    const schoolsService = new SchoolsService();
+
     try {
       const allSchools = await schoolsService.findAll();
       const allClasses = await classroomsService.findAll({ path: 'school' });
@@ -68,12 +72,16 @@ class StudentsController extends Controller {
   // GET /admin/students/:id/edit
   edit = async (req, res) => {
     const { id } = req.params;
+
+    const classroomsService = new ClassroomsService();
+    const schoolsService = new SchoolsService();
+    const transportsService = new TransportsService();
+
     try {
       const student = await this.service.findById(id);
 
       const allSchools = await schoolsService.findAll();
       const allClasses = await classroomsService.findAll({ path: 'school' });
-      const transportsService = new TransportsService();
       const allTransports = await transportsService.findAll();
 
       return res.render('admin/students/edit', { student, allSchools, allClasses, allTransports, dayjs });
