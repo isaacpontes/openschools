@@ -65,6 +65,7 @@ class ClassroomsService {
     await classroom.save();
 
     // Save on School
+    const schoolsService = new SchoolsService();
     const school = await schoolsService.findById(classroom.school);
     school.classrooms.push(classroom);
     await school.save();
@@ -83,6 +84,7 @@ class ClassroomsService {
     });
     
     // Update on School
+    const schoolsService = new SchoolsService();
     await schoolsService.updateClassroom(classroom);
   }
 
@@ -91,6 +93,7 @@ class ClassroomsService {
     const classroom = await Classroom.findByIdAndRemove(id);
 
     // Remove from School
+    const schoolsService = new SchoolsService();
     const school = await schoolsService.findById(classroom.school);
     const classroomToRemove = school.classrooms.indexOf(classroom._id);
     school.classrooms.splice(classroomToRemove, 1);

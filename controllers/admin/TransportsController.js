@@ -16,19 +16,21 @@ class TransportsController extends Controller {
   // POST /transports
   save = async (req, res) => {
     const { name, driver, info } = req.body.transport;
+    const transport = this.service.create(name, driver, info);
+
     try {
-      await this.service.save(name, driver, info);
+      await this.service.save(transport);
       req.flash('success', 'Transporte salvo com sucesso.');
       return res.redirect('/admin/transports');
     } catch (error) {
       req.flash('error', 'Erro ao salvar transporte.');
-      return res.redirect('admin/transports/create');
+      return res.redirect('/admin/transports/create');
     }
   }
 
   // Render the create transport form
   // GET /transports/create
-  create(req, res) {
+  create = (req, res) => {
     try {
       const transport = this.service.create();
       return res.render('admin/transports/create', { transport });
