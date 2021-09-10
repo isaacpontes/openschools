@@ -1,9 +1,22 @@
 const express = require('express');
+const ClassroomsService = require( "../../services/ClassroomsService");
+const SchoolsService = require( "../../services/SchoolsService");
+const StudentsService = require( "../../services/StudentsService");
+const ClassroomsController = require( "../../controllers/api/manager/ClassroomsController");
+const SchoolsController = require( "../../controllers/api/manager/SchoolsController");
+const StudentsController = require( "../../controllers/api/manager/StudentsController");
+const TransportsService = require('../../services/TransportsService');
+const TransportsController = require('../../controllers/api/manager/TransportsController');
 
-const classroomsController = require('../../controllers/api/manager/classrooms-controller');
-const schoolsController = require('../../controllers/api/manager/schools-controller');
-const studentsController = require('../../controllers/api/manager/students-controller');
-const transportsController = require('../../controllers/api/manager/transports-controller');
+const classroomsService = new ClassroomsService();
+const schoolsService = new SchoolsService();
+const studentsService = new StudentsService();
+const transportsService = new TransportsService();
+
+const classroomsController = new ClassroomsController(classroomsService, studentsService);
+const schoolsController = new SchoolsController(schoolsService);
+const studentsController = new StudentsController(studentsService, schoolsService);
+const transportsController = new TransportsController(transportsService);
 
 const router = express.Router();
 

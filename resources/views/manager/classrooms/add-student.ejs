@@ -1,0 +1,317 @@
+<%- include('../../layouts/header') %>
+
+<section class="section">
+  <div class="container">
+    <div class="card">
+      <div class="card-content">
+        <div class="is-flex is-align-items-center is-justify-content-space-between">
+          <h1 class="title mb-0">Novo Estudante</h1>
+          <div class="buttons">
+            <a href="/manager/classrooms/<%= classroom._id %>" class="button">
+              Voltar para Turma
+            </a>
+          </div>
+        </div>
+        <hr>
+
+        <%- include('../../partials/messages') %>
+
+        <form action="/manager/students?_method=post" method="POST">
+
+          <div class="columns">
+            <div class="column is-4">
+              <!-- First Name -->
+              <div class="field">
+                <label class="label" for="firstName">Nome</label>
+                <div class="control">
+                  <input
+                    class="input"
+                    type="text"
+                    name="student[firstName]"
+                    id="firstName"
+                    placeholder="Ex.: João"
+                    autocomplete="off"
+                    autofocus
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="column is-4">
+              <!-- Last Name -->
+              <div class="field">
+                <label class="label" for="lastName">Sobrenome</label>
+                <div class="control">
+                  <input
+                    class="input"
+                    type="text"
+                    name="student[lastName]"
+                    id="lastName"
+                    placeholder="Ex.: Oliveira da Silva"
+                    autocomplete="off"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="column is-4">
+              <!-- Enrollment -->
+              <div class="field">
+                <label class="label" for="enrollment">Matrícula</label>
+                <div class="control">
+                  <input
+                    class="input"
+                    type="text"
+                    name="student[enrollment]"
+                    id="enrollment"
+                    placeholder="Insira o nome"
+                    autocomplete="off"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- School -->
+          <input type="hidden" name="student[school]" value="<%= classroom.school %>">
+          <!-- Classroom -->
+          <input type="hidden" name="student[classroom]" value="<%= classroom._id %>">
+
+          <div class="columns">
+            <div class="column is-4">
+              <!-- Gender -->
+              <div class="field">
+                <label class="label" for="gender">Gênero</label>
+                <div class="control mt-2">
+                  <label class="radio mt-1 ml-2">
+                    <input type="radio" name="student[gender]" value="male" >
+                    Masculino
+                  </label>
+                  <label class="radio mt-1">
+                    <input type="radio" name="student[gender]" value="female" >
+                    Feminino
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="column is-4">
+              <!-- Phone -->
+              <div class="field">
+                <label class="label" for="phone">Telefone</label>
+                <div class="control">
+                  <input
+                    class="input"
+                    type="tel"
+                    name="student[phone]"
+                    id="phone"
+                    placeholder="Insira um telefone"
+                    autocomplete="off"
+                    required
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Address -->
+          <div class="field">
+            <label for="address" class="label">Endereço</label>
+            <div class="control">
+              <input
+                class="input"
+                type="text"
+                name="student[address]"
+                id="address"
+                placeholder="Insira o endereço"
+                autocomplete="off"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="columns">
+            <div class="column is-one-third">
+              <!-- Birthday -->
+              <div class="field">
+                <label for="birthday" class="label">Data de Nascimento</label>
+                <div class="control">
+                  <input
+                    class="input"
+                    type="date"
+                    name="student[birthday]"
+                    id="birthday"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="column is-two-thirds">
+              <!-- Birth Place -->
+              <div class="field">
+                <label for="birthPlace" class="label">Local de Nascimento</label>
+                <div class="control">
+                  <input
+                    class="input"
+                    type="text"
+                    name="student[birthPlace]"
+                    id="birthPlace"
+                    placeholder="Insira o endereço"
+                    autocomplete="off"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="columns">
+            <div class="column is-half">
+              <!-- Father's Name -->
+              <div class="field">
+                <label class="label" for="fatherName">Nome do Pai</label>
+                <div class="control">
+                  <input
+                    class="input"
+                    type="text"
+                    name="student[fatherName]"
+                    id="fatherName"
+                    placeholder="Insira o nome do pai"
+                    autocomplete="off"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="column is-half">
+              <!-- Father's Ocupation -->
+              <div class="field">
+                <label class="label" for="fatherOcupation">Ocupação do Pai</label>
+                <div class="control">
+                  <input
+                    class="input"
+                    type="text"
+                    name="student[fatherOcupation]"
+                    id="fatherOcupation"
+                    placeholder="Insira a ocupação do pai"
+                    autocomplete="off"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="columns">
+            <div class="column is-half">
+              <!-- Mother's Name -->
+              <div class="field">
+                <label class="label" for="motherName">Nome da Mãe</label>
+                <div class="control">
+                  <input
+                    class="input"
+                    type="text"
+                    name="student[motherName]"
+                    id="motherName"
+                    placeholder="Insira o nome da mãe"
+                    autocomplete="off"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="column is-half">
+              <!-- Mother's Ocupation -->
+              <div class="field">
+                <label class="label" for="motherOcupation">Ocupação da Mãe</label>
+                <div class="control">
+                  <input
+                    class="input"
+                    type="text"
+                    name="student[motherOcupation]"
+                    id="motherOcupation"
+                    placeholder="Insira a ocupação da mãe"
+                    autocomplete="off"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="columns">
+            <div class="column is-one-half">
+              <!-- Blood Type -->
+              <div class="field">
+                <label for="bloodType" class="label">Tipo Sanguíneo</label>
+                <div class="control">
+                  <div class="select is-fullwidth">
+                    <select name="student[bloodType]" id="bloodType" required>
+                      <option selected disabled>Selecione um tipo</option>
+                      <option value="A+">A+</option>
+                      <option value="A-">A-</option>
+                      <option value="B+">B+</option>
+                      <option value="B-">B-</option>
+                      <option value="AB+">AB+</option>
+                      <option value="AB-">AB-</option>
+                      <option value="O+">O+</option>
+                      <option value="O-">O-</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="column is-one-half">
+              <!-- Transport -->
+              <div class="field">
+                <label for="transport" class="label">Transporte</label>
+                <div class="control">
+                  <div class="select is-fullwidth">
+                    <select name="student[transport]" id="transport">
+                      <option selected>Escolha um transporte...</option>
+                      <% allTransports.forEach(transport => { %>
+                        <option value="<%= transport._id %>" >
+                          <%= transport.name %>
+                        </option>
+                      <% }) %>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Additional Information -->
+          <div class="field">
+            <label for="info" class="label">Informações Adicionais</label>
+            <div class="control">
+              <textarea
+                class="textarea"
+                type="text"
+                name="student[info]"
+                id="info"
+                placeholder="Insira outras informações adicionais"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="control">
+              <button class="button is-success" type="submit">Salvar</button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('../../layouts/footer') %>

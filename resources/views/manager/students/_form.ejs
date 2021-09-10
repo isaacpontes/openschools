@@ -1,0 +1,379 @@
+<%- include('../../partials/messages') %>
+
+<form action="<%= url %>" method="POST">
+
+  <div class="columns">
+    <div class="column is-4">
+      <div class="field">
+        <label class="label" for="firstName">Nome</label>
+        <div class="control">
+          <input
+            class="input"
+            type="text"
+            name="student[firstName]"
+            id="firstName"
+            placeholder="Insira o nome"
+            value="<%= typeof student.firstName != 'undefined' ? student.firstName : '' %>"
+            autocomplete="off"
+            autofocus
+          />
+          <% if (student.errors && student.errors.hasOwnProperty('firstName')) { %>
+            <p class="is-danger help"><%= student.errors.firstName %></p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+
+    <div class="column is-4">
+      <div class="field">
+        <label class="label" for="lastName">Sobrenome</label>
+        <div class="control">
+          <input
+            class="input"
+            type="text"
+            name="student[lastName]"
+            id="lastName"
+            placeholder="Insira o sobrenome"
+            value="<%= typeof student.lastName != 'undefined' ? student.lastName : '' %>"
+            autocomplete="off"
+          />
+          <% if (student.errors && student.errors.hasOwnProperty('lastName')) { %>
+            <p class="is-danger help"><%= student.errors.lastName %></p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+
+    <div class="column is-4">
+      <div class="field">
+        <label class="label" for="enrollment">Matrícula</label>
+        <div class="control">
+          <input
+            class="input"
+            type="text"
+            name="student[enrollment]"
+            id="enrollment"
+            placeholder="Insira o nome"
+            value="<%= typeof student.enrollment != 'undefined' ? student.enrollment : '' %>"
+            autocomplete="off"
+          />
+          <% if (student.errors && student.errors.hasOwnProperty('enrollment')) { %>
+            <p class="is-danger help"><%= student.errors.enrollment %></p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="columns">
+    <div class="column is-4">
+      <div class="field">
+        <label for="school" class="label">Escola</label>
+        <div class="control">
+          <div class="select is-fullwidth">
+            <select name="student[school]" id="school" autofocus>
+              <option>Escolha uma escola...</option>
+              <% userSchools.forEach(school => { %>
+                <option
+                  value="<%= school._id %>"
+                  <%= school._id.equals(student.school) ? 'selected' : '' %>
+                >
+                  <%= school.name %>
+                </option>
+              <% }) %>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="column is-8">
+      <div class="field">
+        <label for="classroom" class="label">Turma</label>
+        <div class="control">
+          <div class="select is-fullwidth">
+            <select name="student[classroom]" id="classroom" autofocus>
+              <option>Escolha uma turma...</option>
+              <% schoolsClassrooms.forEach(classroom => { %>
+                <option
+                  value="<%= classroom._id %>"
+                  <%= classroom._id.equals(student.classroom) ? 'selected' : '' %>
+                >
+                  <%= `${classroom.name} | ${classroom.school.name}` %>
+                </option>
+              <% }) %>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="columns">
+    <div class="column is-4">
+      <div class="field">
+        <label class="label" for="gender">Gênero</label>
+        <div class="control mt-2">
+          <label class="radio mt-1 ml-2">
+            <input type="radio" name="student[gender]" value="male" <%= student.gender === 'male' ? 'checked' : '' %> >
+            Masculino
+          </label>
+          <label class="radio mt-1">
+            <input type="radio" name="student[gender]" value="female" <%= student.gender === 'female' ? 'checked' : '' %> >
+            Feminino
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="column is-4">
+      <label class="label" for="phone">Telefone</label>
+      <div class="control">
+        <input
+          class="input"
+          type="tel"
+          name="student[phone]"
+          id="phone"
+          placeholder="Insira um telefone"
+          value="<%= typeof student.phone != 'undefined' ? student.phone : '' %>"
+          autocomplete="off"
+        >
+        <% if (student.errors && student.errors.hasOwnProperty('phone')) { %>
+          <p class="is-danger help"><%= student.errors.phone %></p>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="address" class="label">Endereço</label>
+    <div class="control">
+      <input
+        class="input"
+        type="text"
+        name="student[address]"
+        id="address"
+        placeholder="Insira o endereço"
+        value="<%= typeof student.address != 'undefined' ? student.address : '' %>"
+        autocomplete="off"
+      />
+      <% if (student.errors && student.errors.hasOwnProperty('address')) { %>
+        <p class="is-danger help"><%= student.errors.address %></p>
+      <% } %>
+    </div>
+  </div>
+
+  <div class="columns">
+    <div class="column is-one-third">
+      <div class="field">
+        <label for="birthday" class="label">Data de Nascimento</label>
+        <div class="control">
+          <input
+            class="input"
+            type="date"
+            name="student[birthday]"
+            id="birthday"
+            value="<%= typeof student.birthday != 'undefined' ? dayjs(student.birthday).format('YYYY-MM-DD') : '' %>"
+          />
+          <% if (student.errors && student.errors.hasOwnProperty('birthday')) { %>
+            <p class="is-danger help"><%= student.errors.birthday %></p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+
+    <div class="column is-two-thirds">
+      <div class="field">
+        <label for="birthPlace" class="label">Local de Nascimento</label>
+        <div class="control">
+          <input
+            class="input"
+            type="text"
+            name="student[birthPlace]"
+            id="birthPlace"
+            placeholder="Insira o endereço"
+            value="<%= typeof student.birthPlace != 'undefined' ? student.birthPlace : '' %>"
+            autocomplete="off"
+          />
+          <% if (student.errors && student.errors.hasOwnProperty('birthPlace')) { %>
+            <p class="is-danger help"><%= student.errors.birthPlace %></p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="columns">
+    <div class="column is-half">
+      <div class="field">
+        <label class="label" for="fatherName">Nome do Pai</label>
+        <div class="control">
+          <input
+            class="input"
+            type="text"
+            name="student[fatherName]"
+            id="fatherName"
+            placeholder="Insira o nome do pai"
+            value="<%= typeof student.fatherName != 'undefined' ? student.fatherName : '' %>"
+            autocomplete="off"
+    
+          />
+          <% if (student.errors && student.errors.hasOwnProperty('fatherName')) { %>
+            <p class="is-danger help"><%= student.errors.fatherName %></p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+
+    <div class="column is-half">
+      <div class="field">
+        <label class="label" for="fatherOcupation">Ocupação do Pai</label>
+        <div class="control">
+          <input
+            class="input"
+            type="text"
+            name="student[fatherOcupation]"
+            id="fatherOcupation"
+            placeholder="Insira a ocupação do pai"
+            value="<%= typeof student.fatherOcupation != 'undefined' ? student.fatherOcupation : '' %>"
+            autocomplete="off"
+          />
+          <% if (student.errors && student.errors.hasOwnProperty('fatherOcupation')) { %>
+            <p class="is-danger help"><%= student.errors.fatherOcupation %></p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="columns">
+    <div class="column is-half">
+      <div class="field">
+        <label class="label" for="motherName">Nome da Mãe</label>
+        <div class="control">
+          <input
+            class="input"
+            type="text"
+            name="student[motherName]"
+            id="motherName"
+            placeholder="Insira o nome da mãe"
+            value="<%= typeof student.motherName != 'undefined' ? student.motherName : '' %>"
+            autocomplete="off"
+    
+          />
+          <% if (student.errors && student.errors.hasOwnProperty('motherName')) { %>
+            <p class="is-danger help"><%= student.errors.motherName %></p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+
+    <div class="column is-half">
+      <div class="field">
+        <label class="label" for="motherOcupation">Ocupação da Mãe</label>
+        <div class="control">
+          <input
+            class="input"
+            type="text"
+            name="student[motherOcupation]"
+            id="motherOcupation"
+            placeholder="Insira a ocupação da mãe"
+            value="<%= typeof student.motherOcupation != 'undefined' ? student.motherOcupation : '' %>"
+            autocomplete="off"
+          />
+          <% if (student.errors && student.errors.hasOwnProperty('motherOcupation')) { %>
+            <p class="is-danger help"><%= student.errors.motherOcupation %></p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="columns">
+    <div class="column is-one-half">
+      <div class="field">
+        <label for="bloodType" class="label">Tipo Sanguíneo</label>
+        <div class="control">
+          <div class="select is-fullwidth">
+            <select name="student[bloodType]" id="bloodType">
+              <option>Selecione um tipo</option>
+              <option value="A+" <%= student.bloodType === 'A+' ? 'selected' : '' %>>
+                A+
+              </option>
+              <option value="A-" <%= student.bloodType === 'A-' ? 'selected' : '' %>>
+                A-
+              </option>
+              <option value="B+" <%= student.bloodType === 'B+' ? 'selected' : '' %>>
+                B+
+              </option>
+              <option value="B-" <%= student.bloodType === 'B-' ? 'selected' : '' %>>
+                B-
+              </option>
+              <option value="AB+" <%= student.bloodType === 'AB+' ? 'selected' : '' %>>
+                AB+
+              </option>
+              <option value="AB-" <%= student.bloodType === 'AB-' ? 'selected' : '' %>>
+                AB-
+              </option>
+              <option value="O+" <%= student.bloodType === 'O+' ? 'selected' : '' %>>
+                O+
+              </option>
+              <option value="O-" <%= student.bloodType === 'O-' ? 'selected' : '' %>>
+                O-
+              </option>
+            </select>
+          </div>
+          <% if (student.errors && student.errors.hasOwnProperty('bloodType')) { %>
+            <p class="is-danger help"><%= student.errors.bloodType %></p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+
+    <div class="column is-one-half">
+      <div class="field">
+        <label for="transport" class="label">Transporte</label>
+        <div class="control">
+          <div class="select is-fullwidth">
+            <select name="student[transport]" id="transport">
+              <option>Escolha um transporte...</option>
+              <% allTransports.forEach(transport => { %>
+                
+                <option
+                  value="<%= transport._id %>"
+                  <%= transport._id.equals(student.transport) ? 'selected' : '' %>
+                >
+                  <%= transport.name %>
+                </option>
+              <% }) %>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="info" class="label">Informações Adicionais</label>
+    <div class="control">
+      <textarea
+        class="textarea"
+        type="text"
+        name="student[info]"
+        id="info"
+        placeholder="Insira outras informações adicionais"
+      ><%= typeof student.info != 'undefined' ? student.info : '' %></textarea>
+
+      <% if (student.errors && student.errors.hasOwnProperty('info')) { %>
+        <p class="is-danger help"><%= student.errors.info %></p>
+      <% } %>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="control">
+      <button class="button is-success" type="submit">Salvar</button>
+    </div>
+  </div>
+
+</form>

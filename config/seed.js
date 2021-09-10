@@ -1,5 +1,5 @@
 const readline = require('readline');
-const User = require('../models/user');
+const User = require('../models/User');
 
 const rl = readline.createInterface({
   input: process.stdin,

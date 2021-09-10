@@ -1,0 +1,24 @@
+<%- include('../../layouts/header') %>
+
+<section class="section">
+  <div class="container">
+    <div class="card">
+      <div class="card-content">
+        <div class="is-flex is-align-items-center is-justify-content-space-between">
+          <h1 class="title mb-0">
+            Editar Turma - <%= classroom.name %>
+          </h1>
+          <div class="buttons">
+            <a href="/manager/classrooms/<%= classroom._id %>" class="button">
+              Voltar para Turma
+            </a>
+          </div>
+        </div>
+        <hr>
+        <%- include('_form', { url: `/manager/classrooms/${classroom._id}?_method=put`, classroom: classroom }) %> 
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('../../layouts/footer') %>

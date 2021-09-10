@@ -1,0 +1,35 @@
+<%- include('../../layouts/header') %>
+
+<section class="section">
+  <div class="container">
+
+    <%- include('../../partials/messages') %>
+
+    <div class="columns is-multiline">
+      <% classrooms.forEach(classroom => { %>
+        <div class="column is-one-third">
+          <div class="card">
+            <div class="card-content">
+              <h3 class="title">
+                <a href="/manager/classrooms/<%= classroom._id %>" class="has-text-dark"><%= classroom.name %></a>
+              </h3>
+              <h5 class="subtitle">
+                Escola: <%= classroom.school.name %>
+              </h5>
+            </div>
+            <footer class="card-footer">
+              <a href="/manager/classrooms/<%= classroom._id %>" class="card-footer-item has-text-weight-bold">
+                Ver Turma
+              </a>
+              <a href="/manager/classrooms/<%= classroom._id %>/add-student" class="card-footer-item has-text-weight-bold">
+                Novo Aluno
+              </a>
+            </footer>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<%- include('../../layouts/footer') %>
