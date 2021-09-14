@@ -1,36 +1,68 @@
 const mongoose = require('mongoose');
-const seedAdmin = require('./seed');
+const { Sequelize } = require('sequelize');
+const User = require('../models/User');
+const seedAdmin = require('../database/seedAdmin');
+const UsersService = require('../services/UsersService');
 
 class Database {
-  constructor ({ host, port, name, username, password }, connection) {
+  constructor ({ dialect, host, port, name, user, password, options }, connection) {
+    this.dialect = dialect;
     this.host = host;
     this.port = port;
     this.name = name;
-    this.username = username;
+    this.user = user;
     this.password = password;
+    this.options = options;
     this.connection = connection;
   }
 
   async connect() {
-    const connectionString = `mongodb://${this.username}:${this.password}@${this.host}:${this.port}/${this.name}`;
+    const connString = `${this.dialect}://${this.user}:${this.password}@${this.host}:${this.port}/${this.name}`;
 
     try {
-      const mongo = await mongoose.connect(connectionString, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true,
-        useFindAndModify: false,
-      });
-
-      this.connection = mongo.connection;
-      console.log('Successfully connected to MongoDB.');
-
-      seedAdmin(mongo.connection.collections.users);
-
+      this.connection = new Sequelize(connString, this.options);
+      await this.connection.authenticate();
+      console.log('Successfully connected to PostgreSQL');
     } catch (error) {
       console.log(error);
-    }    
+    }
   }
+
+  initSequelize() {
+    User.init(this.connection);
+  }
+
+  createFirstAdminUser() {
+    const usersService = new UsersService();
+
+    usersService.countAdminUsers().then(count => {
+      if (count > 0) {
+        console.log('It looks like you already have a registered Admin user.');
+      } else {
+        console.log('It looks like your users table is empty.');
+        seedAdmin(usersService);
+      }
+    });
+  }
+
+  // async connectMongo() {
+  //   const connectionString = `mongodb://${this.username}:${this.password}@${this.host}:${this.port}/${this.name}`;
+
+  //   try {
+  //     const mongo = await mongoose.connect(connectionString, {
+  //       useNewUrlParser: true,
+  //       useUnifiedTopology: true,
+  //       useCreateIndex: true,
+  //       useFindAndModify: false,
+  //     });
+
+  //     this.connection = mongo.connection;
+  //     console.log('Successfully connected to MongoDB.');
+
+  //   } catch (error) {
+  //     console.log(error);
+  //   }    
+  // }
 }
 
 module.exports = Database;
