@@ -43,13 +43,13 @@
                         <%= employee.currentSector.name %>
                       </td>
                       <td>
-                        <a href="/admin/employees/<%= employee._id %>">Exibir</a>
+                        <a href="/admin/employees/<%= employee.id %>">Exibir</a>
                       </td>
                       <td>
-                        <a href="/admin/employees/<%= employee._id %>/edit">Editar</a>
+                        <a href="/admin/employees/<%= employee.id %>/edit">Editar</a>
                       </td>
                       <td>
-                        <a class="has-text-danger modal-toggler" data-target="deleteModalEmployee_<%= employee._id %>">
+                        <a class="has-text-danger modal-toggler" data-target="deleteModalEmployee_<%= employee.id %>">
                           Excluir
                         </a>
                       </td>

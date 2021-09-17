@@ -1,56 +1,43 @@
+const { QueryTypes } = require('sequelize');
 const Classroom = require('../models/Classroom');
 const SchoolsService = require('./SchoolsService');
 
 class ClassroomsService {
-  create = (name, grade, school) => {
-    const classroom = new Classroom();
-    if (typeof name !== 'undefined') {
-      classroom.name = name;
-    }
-    if (typeof grade !== 'undefined') {
-      classroom.grade = grade;
-    }
-    if (typeof school !== 'undefined') {
-      classroom.school = school;
-    }
+  create = (name, grade_id, school_id) => {
+    const classroom = Classroom.build({ name, grade_id, school_id });
     return classroom;
   }
 
-  findAll = async (populateOptions) => {
-    if (typeof populateOptions === 'undefined') {
-      const classrooms = await Classroom.find({});
-      return classrooms;
-    }
-    const classrooms = await Classroom.find({}).populate(populateOptions);
+  findAll = async () => {
+    const classrooms = await Classroom.findAll();
     return classrooms;
   }
 
-  findById = async (id, populateOptions) => {
-    if (typeof populateOptions === 'undefined') {
-      const classroom = await Classroom.findById(id);
-      return classroom;
-    }
-    const classroom = await Classroom.findById(id).populate(populateOptions);
+  findById = async (id) => {
+    const classroom = await Classroom.findByPk(id);
     return classroom;
   }
 
-  findBySchoolId = async (schoolId, populateOptions) => {
-    if (typeof populateOptions === 'undefined') {
-      const classroom = await Classroom.find({ school: schoolId });
-      return classroom;
-    }
-    const classroom = await Classroom.find({ school: schoolId }).populate(populateOptions);
-    return classroom;
+  findBySchoolId = async (school_id) => {
+    const classrooms = await Classroom.findAll({ where: { school_id } });
+    return classrooms;
   }
 
   findByUserId = async (userId) => {
-    const schoolsService = new SchoolsService();
+    // const schoolsService = new SchoolsService();
+    // const userSchools = await schoolsService.findByManager(userId);
 
-    const userSchools = await schoolsService.findByManager(userId);
+    // const schoolIds = userSchools.map((school) => school._id);
 
-    const schoolIds = userSchools.map((school) => school._id);
+    // const classrooms = await this.findAllInSchools(schoolIds);
 
-    const classrooms = await this.findAllInSchools(schoolIds);
+    const classrooms = await Classroom.sequelize.query(
+      'SELECT * FROM "classrooms" AS "Classroom", "schools" AS "School" WHERE "Classroom"."school_id" = "School"."id" AND "School"."user_id" = :userId',
+      {
+        replacements: { userId },
+        type: QueryTypes.SELECT
+      }
+    );
 
     return classrooms;
   }
@@ -63,41 +50,25 @@ class ClassroomsService {
   save = async (classroom) => {
     // Save on Classroom
     await classroom.save();
-
-    // Save on School
-    const schoolsService = new SchoolsService();
-    const school = await schoolsService.findById(classroom.school);
-    school.classrooms.push(classroom);
-    await school.save();
-
     return classroom;
   }
 
-  update = async (id, name, grade) => {
+  update = async (id, name, grade_id) => {
     // Update on Classroom
-    const classroom = await Classroom.findByIdAndUpdate(id, {
-      name,
-      grade,
-      updated: Date.now()
-    }, {
-      new: true
-    });
-    
-    // Update on School
-    const schoolsService = new SchoolsService();
-    await schoolsService.updateClassroom(classroom);
+    await Classroom.update({ name, grade_id }, { where: { id } });
+    // const classroom = await Classroom.findByIdAndUpdate(id, {
+    //   name,
+    //   grade,
+    //   updated: Date.now()
+    // }, {
+    //   new: true
+    // });
   }
 
   delete = async (id) => {
     // Remove from Classroom
-    const classroom = await Classroom.findByIdAndRemove(id);
-
-    // Remove from School
-    const schoolsService = new SchoolsService();
-    const school = await schoolsService.findById(classroom.school);
-    const classroomToRemove = school.classrooms.indexOf(classroom._id);
-    school.classrooms.splice(classroomToRemove, 1);
-    await school.save();
+    await Classroom.destroy({ where: { id } });
+    // const classroom = await Classroom.findByIdAndRemove(id);
   }
 }
 

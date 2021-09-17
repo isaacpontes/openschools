@@ -12,7 +12,7 @@ class UsersService {
   }
 
   findAllManagers = async () => {
-    const users = await User.find({ where: { role: 'manager' }});
+    const users = await User.findAll({ where: { role: 'manager' }});
     return users;
   }
 

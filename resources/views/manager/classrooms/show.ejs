@@ -8,7 +8,7 @@
           <h1 class="title mb-0"><%= classroom.name %></h1>
           <div class="buttons">
             <a
-              href="/manager/classrooms/<%= classroom._id %>/edit"
+              href="/manager/classrooms/<%= classroom.id %>/edit"
               class="button is-link"
             >
               Editar Turma
@@ -25,7 +25,7 @@
           <h4 class="title is-5 mb-0">
             Alunos
           </h4>
-          <a href="/manager/classrooms/<%= classroom._id %>/add-student" class="button is-link">Novo Aluno</a>
+          <a href="/manager/classrooms/<%= classroom.id %>/add-student" class="button is-link">Novo Aluno</a>
         </div>
 
         <%- include('../../partials/messages') %>
@@ -57,7 +57,7 @@
                     <%= student.phone %>
                   </td>
                   <td>
-                    <a href="/manager/students/<%= student._id %>" class="has-text-weight-bold">
+                    <a href="/manager/students/<%= student.id %>" class="has-text-weight-bold">
                       Exibir
                     </a>
                   </td>
@@ -72,7 +72,7 @@
         
         <a
           class="button is-danger modal-toggler"
-          data-target="deleteModalClassroom_<%= classroom._id %>"
+          data-target="deleteModalClassroom_<%= classroom.id %>"
         >
           Excluir
         </a>

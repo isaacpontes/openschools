@@ -2,20 +2,17 @@ const Grade = require('../models/Grade');
 
 class GradesService {
   create = (name) => {
-    const grade = new Grade();
-    if (typeof name !== 'undefined') {
-      grade.name = name;
-    }
+    const grade = Grade.build({ name });
     return grade;
   }
 
   findAll = async () => {
-    const grades = await Grade.find({});
+    const grades = await Grade.findAll();
     return grades;
   }
 
   findOne = async (id) => {
-    const grade = await Grade.findById(id);
+    const grade = await Grade.findByPk(id);
     return grade;
   }
 
@@ -25,11 +22,12 @@ class GradesService {
   }
 
   updateOne = async (id, name) => {
-    await Grade.findByIdAndUpdate(id, { name, updated: Date.now() });
+    await Grade.update({ name }, { where: { id } });
   }
 
   deleteOne = async (id) => {
-    await Grade.findByIdAndRemove(id);
+    await Grade.destroy({ where: { id } });
   }
 }
+
 module.exports = GradesService;

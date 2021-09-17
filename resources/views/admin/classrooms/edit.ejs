@@ -1,76 +1,15 @@
 <%- include('../../layouts/header') %>
 
-  <section class="section">
-    <div class="container">
-      <div class="card">
-        <div class="card-content">
-          <h1 class="title is-4">Editar Turma | <%= classroom.name %>
-          </h1>
-          <hr>
-
-          <%- include('../../partials/messages') %>
-
-          <form action="/admin/classrooms/<%= classroom._id %>?_method=put" method="POST">
-
-            <div class="columns">
-              <div class="column is-one-half">
-                <div class="field">
-                  <label class="label" for="name">Nome</label>
-                  <div class="control">
-                    <input
-                      class="input"
-                      type="text"
-                      name="classroom[name]"
-                      id="name"
-                      placeholder="Ex.: 7º Ano do Ensino Fundamental (Manhã)"
-                      value="<%= typeof classroom.name != 'undefined' ? classroom.name : '' %>"
-                      autofocus
-                      autocomplete="off"
-              
-                    />
-                    <% if (classroom.errors && classroom.errors.hasOwnProperty('name')) { %>
-                      <p class="is-danger help"><%= classroom.errors.name %></p>
-                    <% } %>
-                  </div>
-                </div>
-              </div>
-
-              <div class="column is-one-half">
-                <div class="field">
-                  <label for="grade" class="label">Ano Escolar</label>
-                  <div class="control">
-                    <div class="select is-fullwidth">
-                      <select name="classroom[grade]" id="grade">
-                        <option disabled selected>Escolha um ano...</option>
-                        <% grades.forEach(grade => { %>
-                          <option
-                            value="<%= grade._id %>"
-                            <%= grade._id.equals(classroom.grade) ? 'selected' : '' %>
-                          >
-                            <%= grade.name %>
-                          </option>
-                        <% }) %>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <input type="hidden" name="classroom[school]" value="<%= classroom.school %>">
-
-            <div class="field">
-              <div class="control">
-                <button class="button is-success" type="submit">Salvar</button>
-                <a href="/admin/classrooms" class="button">Voltar</a>
-              </div>
-            </div>
-
-          </form>
-
-        </div>
+<section class="section">
+  <div class="container">
+    <div class="card">
+      <div class="card-content">
+        <h1 class="title is-4">Nova Turma</h1>
+        <hr>
+        <%- include('_form', { url: '/admin/classrooms?_method=put' , classroom }) %>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <%- include('../../layouts/footer') %>
+<%- include('../../layouts/footer') %>

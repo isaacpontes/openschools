@@ -9,13 +9,13 @@
             Editar Turma - <%= classroom.name %>
           </h1>
           <div class="buttons">
-            <a href="/manager/classrooms/<%= classroom._id %>" class="button">
+            <a href="/manager/classrooms/<%= classroom.id %>" class="button">
               Voltar para Turma
             </a>
           </div>
         </div>
         <hr>
-        <%- include('_form', { url: `/manager/classrooms/${classroom._id}?_method=put`, classroom: classroom }) %> 
+        <%- include('_form', { url: `/manager/classrooms/${classroom._id}?_method=put`, classroom }) %> 
       </div>
     </div>
   </div>

@@ -7,7 +7,7 @@ class ClassroomsController extends Controller {
   // Render a list of all user's classrooms
   // GET /manager/classrooms
   index = async (req, res) => {
-    const currentUser = req.user._id;
+    const currentUser = req.user.id;
 
     try {
       const classrooms = await this.service.findByUserId(currentUser);
@@ -21,8 +21,8 @@ class ClassroomsController extends Controller {
   // Save a new classroom to the database
   // POST /classrooms
   save = async (req, res) => {
-    const { name, grade, school } = req.body.classroom;
-    const classroom = this.service.create(name, grade, school);
+    const { name, grade_id, school_id } = req.body.classroom;
+    const classroom = this.service.create(name, grade_id, school_id);
 
     try {
       await this.service.save(classroom);
@@ -41,7 +41,7 @@ class ClassroomsController extends Controller {
     const studentsService = new StudentsService();
 
     try {
-      const classroom = await this.service.findById(id, { path: 'grade' });
+      const classroom = await this.service.findById(id);
 
       const students = await studentsService.findByClassroomId(id)
 
@@ -71,13 +71,13 @@ class ClassroomsController extends Controller {
   // Update a classroom in the database
   // PUT /classrooms/:id
   update = async (req, res) => {
-    const { name, grade, school } = req.body.classroom;
+    const { name, grade_id, school_id } = req.body.classroom;
     const { id } = req.params;
 
     try {
-      await this.service.update(id, name, grade);
+      await this.service.update(id, name, grade_id);
       req.flash('success', 'Turma atualizada com sucesso.');
-      return res.redirect(`/manager/schools/${school}`);
+      return res.redirect(`/manager/schools/${school_id}`);
     } catch (error) {
       return res.redirect(`/manager/classrooms/${id}/edit`, { error: 'Erro ao atualizar turma.' });
     }
@@ -88,14 +88,13 @@ class ClassroomsController extends Controller {
   delete = async (req, res) => {
     const { id } = req.params;
     const classroom = await this.service.findById(id);
-    const schoolId = classroom.school;
 
     try {
       await this.service.delete(id);
       req.flash('success', 'Turma excluída com sucesso.');
-      return res.redirect(`/manager/schools/${schoolId}`);
+      return res.redirect(`/manager/schools/${classroom.school_id}`);
     } catch (error) {
-      return res.redirect(`/manager/schools/${schoolId}`, { error: 'Erro ao excluir turma.' });
+      return res.redirect(`/manager/schools/${classroom.school_id}`, { error: 'Erro ao excluir turma.' });
     }
   }
 

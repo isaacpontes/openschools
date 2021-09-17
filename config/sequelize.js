@@ -1,26 +1,26 @@
 module.exports = {
   development: {
-    dialect: process.env.DB_DIALECT,
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
+    username: "openschools",
+    password: "openschools",
     database: "openschools_development",
-    username: process.env.DB_USER,
-    password: process.env.DB_PASS,
+    host: "127.0.0.1",
+    port: "5432",
+    dialect: "postgres"
   },
   test: {
-    dialect: process.env.DB_DIALECT,
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
+    username: "root",
+    password: null,
     database: "openschools_test",
-    username: process.env.DB_USER,
-    password: process.env.DB_PASS,
+    host: "127.0.0.1",
+    port: "5432",
+    dialect: "postgres"
   },
   production: {
-    dialect: process.env.DB_DIALECT,
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
+    username: "root",
+    password: null,
     database: "openschools_production",
-    username: process.env.DB_USER,
-    password: process.env.DB_PASS,
+    host: "127.0.0.1",
+    port: "5432",
+    dialect: "postgres"
   }
 }

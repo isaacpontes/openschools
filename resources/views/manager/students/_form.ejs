@@ -75,7 +75,7 @@
               <option>Escolha uma escola...</option>
               <% userSchools.forEach(school => { %>
                 <option
-                  value="<%= school._id %>"
+                  value="<%= school.id %>"
                   <%= school._id.equals(student.school) ? 'selected' : '' %>
                 >
                   <%= school.name %>
@@ -96,7 +96,7 @@
               <option>Escolha uma turma...</option>
               <% schoolsClassrooms.forEach(classroom => { %>
                 <option
-                  value="<%= classroom._id %>"
+                  value="<%= classroom.id %>"
                   <%= classroom._id.equals(student.classroom) ? 'selected' : '' %>
                 >
                   <%= `${classroom.name} | ${classroom.school.name}` %>
@@ -340,7 +340,7 @@
               <% allTransports.forEach(transport => { %>
                 
                 <option
-                  value="<%= transport._id %>"
+                  value="<%= transport.id %>"
                   <%= transport._id.equals(student.transport) ? 'selected' : '' %>
                 >
                   <%= transport.name %>

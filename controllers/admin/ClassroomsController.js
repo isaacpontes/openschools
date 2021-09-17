@@ -8,7 +8,7 @@ class ClassroomsController extends Controller {
   // GET /admin/classrooms
   index = async (req, res) => {
     try {
-      const classrooms = await this.service.findAll(['grade', 'school']);
+      const classrooms = await this.service.findAll();
 
       return res.render('admin/classrooms/index', { classrooms });
     } catch (error) {
@@ -19,8 +19,8 @@ class ClassroomsController extends Controller {
   // Save a new classroom to the database
   // POST /classrooms
   save = async (req, res) => {
-    const { name, grade, school } = req.body.classroom;
-    const classroom = this.service.create(name, grade, school);
+    const { name, grade_id, school_id } = req.body.classroom;
+    const classroom = this.service.create(name, grade_id, school_id);
 
     try {
       await this.service.save(classroom);
@@ -59,8 +59,8 @@ class ClassroomsController extends Controller {
     const studentsService = new StudentsService();
 
     try {
-      const classroom = await this.service.findById(id, ['grade', 'school']);
-      const students = await studentsService.findByClassroomId(classroom._id);
+      const classroom = await this.service.findById(id);
+      const students = await studentsService.findByClassroomId(classroom.id);
 
       return res.render('admin/classrooms/show', { classroom, students });
     } catch (error) {
@@ -90,11 +90,20 @@ class ClassroomsController extends Controller {
   // Update a classroom in the database
   // PUT /admin/classrooms/:id
   update = async (req, res) => {
-    const { name, grade } = req.body.classroom;
+    const { name, grade_id } = req.body.classroom;
     const { id } = req.params;
 
     try {
-      await this.service.update(id, name, grade);
+      const classroom = await this.service.findById(id);
+      
+      if (name) {
+        classroom.name = name;
+      }
+      if (grade_id) {
+        classroom.grade_id = grade_id;
+      }
+
+      await this.service.save(classroom);
 
       req.flash('success', 'Turma atualizada com sucesso.');
       return res.redirect('/admin/classrooms');

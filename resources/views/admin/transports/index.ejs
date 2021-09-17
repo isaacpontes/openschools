@@ -30,22 +30,22 @@
                       <%= transport.driver %>
                     </td>
                     <td>
-                      <a class="modal-toggler" data-target="showTransport_<%= transport._id %>">
+                      <a class="modal-toggler" data-target="showTransport_<%= transport.id %>">
                         Exibir
                       </a>
                     </td>
                     <td>
-                      <a href="/admin/transports/<%= transport._id %>/edit">Editar</a>
+                      <a href="/admin/transports/<%= transport.id %>/edit">Editar</a>
                     </td>
                     <td>
-                      <a class="has-text-danger modal-toggler" data-target="deleteModalTransport_<%= transport._id %>">
+                      <a class="has-text-danger modal-toggler" data-target="deleteModalTransport_<%= transport.id %>">
                         Excluir
                       </a>
                     </td>
                   </tr>
 
-                  <div id="showTransport_<%= transport._id %>" class="modal">
-                    <div class="modal-background modal-toggler" data-target="showTransport_<%= transport._id %>"></div>
+                  <div id="showTransport_<%= transport.id %>" class="modal">
+                    <div class="modal-background modal-toggler" data-target="showTransport_<%= transport.id %>"></div>
                     <div class="modal-content">
                       <div class="card">
                         <div class="card-content">
@@ -71,9 +71,9 @@
                           </div>
 
                           <div class="buttons">
-                            <a href="/admin/transports/<%= transport._id %>/edit" class="button is-link">Editar</a>
+                            <a href="/admin/transports/<%= transport.id %>/edit" class="button is-link">Editar</a>
                             <button class="button modal-toggler" type="button"
-                              data-target="showTransport_<%= transport._id %>">
+                              data-target="showTransport_<%= transport.id %>">
                               Fechar
                             </button>
                           </div>
@@ -82,11 +82,11 @@
                       </form>
                     </div>
                     <button class="modal-close is-large modal-toggler" aria-label="close"
-                      data-target="showTransport_<%= transport._id %>"></button>
+                      data-target="showTransport_<%= transport.id %>"></button>
                   </div>
 
-                  <%- include('../../partials/_delete-modal', { name: 'Transport' , _id: transport._id, url:
-                    `/admin/transports/${transport._id}?_method=delete` }) %>
+                  <%- include('../../partials/_delete-modal', { name: 'Transport' , id: transport.id, url:
+                    `/admin/transports/${transport.id}?_method=delete` }) %>
                     <% }) %>
               </tbody>
             </table>

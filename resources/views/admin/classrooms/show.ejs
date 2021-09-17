@@ -9,7 +9,7 @@
               <%= classroom.name %>
             </h1>
             <div class="buttons">
-              <a href="/admin/classrooms/<%= classroom._id %>/edit" class="button is-link">
+              <a href="/admin/classrooms/<%= classroom.id %>/edit" class="button is-link">
                 Editar Turma
               </a>
               <a href="/admin/classrooms" class="button">
@@ -72,7 +72,7 @@
                           <%= student.phone %>
                         </td>
                         <td>
-                          <a href="/admin/students/<%= student._id %>" class="has-text-weight-bold">
+                          <a href="/admin/students/<%= student.id %>" class="has-text-weight-bold">
                             Exibir
                           </a>
                         </td>

@@ -7,7 +7,7 @@
           <h1 class="title is-4">Editar Transporte | <%= transport.name %>
           </h1>
           <hr>
-          <%- include('_form', { url: `/admin/transports/${transport._id}?_method=put`, transport: transport }) %>
+          <%- include('_form', { url: `/admin/transports/${transport.id}?_method=put`, transport }) %>
         </div>
       </div>
     </div>

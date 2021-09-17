@@ -7,7 +7,7 @@
         <div class="is-flex is-align-items-center is-justify-content-space-between">
           <h1 class="title mb-0">Novo Estudante</h1>
           <div class="buttons">
-            <a href="/manager/classrooms/<%= classroom._id %>" class="button">
+            <a href="/manager/classrooms/<%= classroom.id %>" class="button">
               Voltar para Turma
             </a>
           </div>
@@ -76,9 +76,9 @@
           </div>
 
           <!-- School -->
-          <input type="hidden" name="student[school]" value="<%= classroom.school %>">
+          <input type="hidden" name="student[school]" value="<%= classroom.school_id %>">
           <!-- Classroom -->
-          <input type="hidden" name="student[classroom]" value="<%= classroom._id %>">
+          <input type="hidden" name="student[classroom]" value="<%= classroom.id %>">
 
           <div class="columns">
             <div class="column is-4">
@@ -277,7 +277,7 @@
                     <select name="student[transport]" id="transport">
                       <option selected>Escolha um transporte...</option>
                       <% allTransports.forEach(transport => { %>
-                        <option value="<%= transport._id %>" >
+                        <option value="<%= transport.id %>" >
                           <%= transport.name %>
                         </option>
                       <% }) %>

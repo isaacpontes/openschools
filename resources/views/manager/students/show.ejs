@@ -8,12 +8,12 @@
           <h1 class="title mb-0"><%= student.firstName %></h1>
           <div class="buttons">
             <a
-              href="/manager/students/<%= student._id %>/edit"
+              href="/manager/students/<%= student.id %>/edit"
               class="button is-link"
             >
               Editar Estudante
             </a>
-            <a href="/manager/classrooms/<%= student.classroom._id %>" class="button">
+            <a href="/manager/classrooms/<%= student.classroom.id %>" class="button">
               Voltar para Turma
             </a>
           </div>
@@ -133,7 +133,7 @@
 
         <a
           class="button is-danger modal-toggler"
-          data-target="deleteModalStudent_<%= student._id %>"
+          data-target="deleteModalStudent_<%= student.id %>"
         >
           Excluir
         </a>

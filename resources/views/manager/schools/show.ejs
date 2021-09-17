@@ -29,7 +29,7 @@
                 <div class="field">
                   <h4 class="title is-5">Código do INEP</h4>
                   <h6 class="subtitle is-3">
-                    <%= school.inepCode %>
+                    <%= school.inep_code %>
                   </h6>
                 </div>
               </div>
@@ -37,8 +37,8 @@
                 <div class="field">
                   <h4 class="title is-5">Gestor</h4>
                   <h6 class="subtitle is-3">
-                    <a href="/users/<%= school.manager._id %>" class="has-text-dark">
-                      <%= school.manager.name %>
+                    <a href="/users/<%= school.user_id %>" class="has-text-dark">
+                      <%= school.manager %>
                     </a>
                   </h6>
                 </div>
@@ -51,7 +51,7 @@
               <h4 class="title is-5 mb-0">
                 Turmas
               </h4>
-              <a href="/manager/schools/<%= school._id %>/add-classroom" class="button is-link">
+              <a href="/manager/schools/<%= school.id %>/add-classroom" class="button is-link">
                 Nova Turma
               </a>
             </div>
@@ -71,7 +71,7 @@
                         <%= classroom.name %>
                       </td>
                       <td>
-                        <a href="/manager/classrooms/<%= classroom._id %>" class="has-text-weight-bold">
+                        <a href="/manager/classrooms/<%= classroom.id %>" class="has-text-weight-bold">
                           Exibir
                         </a>
                       </td>

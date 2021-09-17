@@ -1,21 +1,21 @@
-const mongoose = require('mongoose');
+'use strict';
 
-const classroomSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  created: { type: Date, default: Date.now },
-  updated: { type: Date, default: Date.now },
-  grade: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Grade',
-    required: true,
-  },
-  school: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'School',
-    required: true,
+const { Model, DataTypes } = require('sequelize');
+
+class Classroom extends Model {
+  static init(sequelize) {
+    super.init({
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false
+      }
+    }, { sequelize });
   }
-});
 
-const Classroom = mongoose.model('Classroom', classroomSchema);
+  static associate(models) {
+    this.belongsTo(models.Grade, { foreignKey: 'grade_id', as: 'grade' });
+    this.belongsTo(models.School, { foreignKey: 'school_id', as: 'school' });
+  }
+};
 
 module.exports = Classroom;

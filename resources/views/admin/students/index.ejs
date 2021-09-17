@@ -46,13 +46,13 @@
                         <%= student.school.name %>
                       </td>
                       <td>
-                        <a href="/admin/students/<%= student._id %>">Exibir</a>
+                        <a href="/admin/students/<%= student.id %>">Exibir</a>
                       </td>
                       <td>
-                        <a href="/admin/students/<%= student._id %>/edit">Editar</a>
+                        <a href="/admin/students/<%= student.id %>/edit">Editar</a>
                       </td>
                       <td>
-                        <a class="has-text-danger modal-toggler" data-target="deleteModalStudent_<%= student._id %>">
+                        <a class="has-text-danger modal-toggler" data-target="deleteModalStudent_<%= student.id %>">
                           Excluir
                         </a>
                       </td>

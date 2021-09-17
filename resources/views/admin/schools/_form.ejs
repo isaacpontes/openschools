@@ -18,29 +18,23 @@
             autocomplete="off"
             required
           />
-          <% if (school.errors && school.errors.hasOwnProperty('name')) { %>
-            <p class="is-danger help"><%= school.errors.name %></p>
-          <% } %>
         </div>
       </div>
     </div>
     <div class="column is-half">
       <div class="field">
-        <label class="label" for="inepCode">Código do INEP</label>
+        <label class="label" for="inep_code">Código do INEP</label>
         <div class="control">
           <input
             class="input"
             type="text"
-            name="school[inepCode]"
-            id="inepCode"
+            name="school[inep_code]"  
+            id="inep_code"
             placeholder="Ex.: 33012504"
-            value="<%= typeof school.inepCode != 'undefined' ? school.inepCode : '' %>"
+            value="<%= typeof school.inep_code != 'undefined' ? school.inep_code : '' %>"
             autocomplete="off"
             required
           />
-          <% if (school.errors && school.errors.hasOwnProperty('inepCode')) { %>
-            <p class="is-danger help"><%= school.errors.inepCode %></p>
-          <% } %>
         </div>
       </div>
     </div>
@@ -59,22 +53,19 @@
         autocomplete="off"
         required
       />
-      <% if (school.errors && school.errors.hasOwnProperty('address')) { %>
-        <p class="is-danger help"><%= school.errors.address %></p>
-      <% } %>
     </div>
   </div>
 
   <div class="field">
-    <label for="manager" class="label">Gestor</label>
+    <label for="user_id" class="label">Gestor</label>
     <div class="control">
       <div class="select">
-        <select name="school[manager]" id="manager" required>
+        <select name="school[user_id]" id="user_id" required>
           <option value="" disabled selected>Escolha um usuário gestor...</option>
           <% allManagers.forEach(manager => { %>
             <option
-              value="<%= manager._id %>"
-              <%= manager._id.equals(school.manager) ? 'selected' : '' %>
+              value="<%= manager.id %>"
+              <%= manager.id === school.user_id ? 'selected' : '' %>
             >
               <%= manager.name %>
             </option>

@@ -11,17 +11,17 @@
           <div class="card">
             <div class="card-content">
               <h3 class="title">
-                <a href="/manager/classrooms/<%= classroom._id %>" class="has-text-dark"><%= classroom.name %></a>
+                <a href="/manager/classrooms/<%= classroom.id %>" class="has-text-dark"><%= classroom.name %></a>
               </h3>
               <h5 class="subtitle">
-                Escola: <%= classroom.school.name %>
+                Escola: <%= classroom.school_id %>
               </h5>
             </div>
             <footer class="card-footer">
-              <a href="/manager/classrooms/<%= classroom._id %>" class="card-footer-item has-text-weight-bold">
+              <a href="/manager/classrooms/<%= classroom.id %>" class="card-footer-item has-text-weight-bold">
                 Ver Turma
               </a>
-              <a href="/manager/classrooms/<%= classroom._id %>/add-student" class="card-footer-item has-text-weight-bold">
+              <a href="/manager/classrooms/<%= classroom.id %>/add-student" class="card-footer-item has-text-weight-bold">
                 Novo Aluno
               </a>
             </footer>

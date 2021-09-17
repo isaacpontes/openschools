@@ -33,26 +33,26 @@
                     <td>
                       <% if (user.role==="admin" ) { %>
                         <span>Administrador</span>
-                        <% } else if (user.role==="manager" ) { %>
-                          <span>Gestor</span>
-                          <% } else if (user.role==="teacher" ) { %>
-                            <span>Professor</span>
-                            <% } else if (user.role==="student" ) { %>
-                              <span>Aluno</span>
-                              <% } %>
+                      <% } else if (user.role==="manager" ) { %>
+                        <span>Gestor</span>
+                      <% } else if (user.role==="teacher" ) { %>
+                        <span>Professor</span>
+                      <% } else if (user.role==="student" ) { %>
+                        <span>Aluno</span>
+                      <% } %>
                     </td>
                     <td>
-                      <a href="/admin/users/<%= user._id %>/edit">Editar</a>
+                      <a href="/admin/users/<%= user.id %>/edit">Editar</a>
                     </td>
                     <td>
-                      <a class="has-text-danger modal-toggler" data-target="deleteModalUser_<%= user._id %>">
+                      <a class="has-text-danger modal-toggler" data-target="deleteModalUser_<%= user.id %>">
                         Excluir
                       </a>
                     </td>
                   </tr>
 
-                  <%- include('../../partials/_delete-modal', { name: 'User' , _id: user._id, url:
-                    `/admin/users/${user._id}?_method=delete` }) %>
+                  <%- include('../../partials/_delete-modal', { name: 'User' , id: user.id, url:
+                    `/admin/users/${user.id}?_method=delete` }) %>
                     <% }) %>
               </tbody>
             </table>

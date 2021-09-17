@@ -66,16 +66,19 @@ class UsersController extends Controller {
   // PUT /admin/users/:id
   update = async (req, res) => {
     const { id } = req.params;
-    const { name, role, email, password, passwordConfirmation } = req.body.user;
+    const { name, role, email, password, password_confirmation } = req.body.user;
   
     try {
       const user = await this.service.findById(id);
   
-      if (name != '') user.name = name;
-      if (role != '') user.role = role;
-      if (email != '') user.email = email;
-      if (password != '') {
-        if (password !== passwordConfirmation) {
+      if (name) user.name = name;
+      if (role) user.role = role;
+      if (email) user.email = email;
+      if (password) {
+        if (!password_confirmation) {
+          throw new Error('A confirmação da senha é obrigatória.')
+        }
+        if (password !== password_confirmation) {
           throw new Error('As senhas não conferem.');
         }
         user.password = password;

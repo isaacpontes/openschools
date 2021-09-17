@@ -5,7 +5,7 @@ class SchoolsController extends Controller {
   // Render a list of all schools belonging to current user
   // GET /schools
   index = async (req, res) => {
-    const currentUser = req.user._id;
+    const currentUser = req.user.id;
 
     try {
       const schools = await this.service.findByManager(currentUser);
@@ -21,7 +21,7 @@ class SchoolsController extends Controller {
     const { id } = req.params;
 
     try {
-      const school = await this.service.findById(id, { path: 'manager' });
+      const school = await this.service.findByIdWithClassrooms(id);
       return res.status(200).render('manager/schools/show', { school });
     } catch (error) {
       return res.status(400).render('pages/error', { error });

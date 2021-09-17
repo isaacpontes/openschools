@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
 const { Sequelize } = require('sequelize');
-const User = require('../models/User');
 const seedAdmin = require('../database/seedAdmin');
 const UsersService = require('../services/UsersService');
+const User = require('../models/User');
+const School = require('../models/School');
+const Grade = require('../models/Grade');
+const Classroom = require('../models/Classroom');
+const Transport = require('../models/Transport');
 
 class Database {
   constructor ({ dialect, host, port, name, user, password, options }, connection) {
@@ -30,6 +34,13 @@ class Database {
 
   initSequelize() {
     User.init(this.connection);
+    School.init(this.connection);
+    Grade.init(this.connection);
+    Classroom.init(this.connection);
+    Transport.init(this.connection);
+
+    School.associate(this.connection.models);
+    Classroom.associate(this.connection.models);
   }
 
   createFirstAdminUser() {

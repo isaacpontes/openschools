@@ -1,43 +1,35 @@
+const Classroom = require('../models/Classroom');
 const School = require('../models/School');
 
 class SchoolsService {
-  create = (name, inepCode, address, manager) => {
-    const school = new School();
-    if (typeof name !== 'undefined') {
-      school.name = name;
-    }
-    if (typeof inepCode !== 'undefined') {
-      school.inepCode = inepCode;
-    }
-    if (typeof address !== 'undefined') {
-      school.address = address;
-    }
-    if (typeof manager !== 'undefined') {
-      school.manager = manager;
-    }
+  create = (name, inep_code, address, user_id) => {
+    const school = School.build({ name, inep_code, address, user_id });
     return school;
   }
 
-  findAll = async (populateOptions) => {
-    if (typeof populateOptions === 'undefined') {
-      const schools = await School.find({});
-      return schools;
-    }
-    const schools = await School.find({}).populate(populateOptions);
+  findAll = async () => {
+    const schools = await School.findAll();
     return schools;
   }
 
-  findByManager = async (managerId) => {
-    const schools = await School.find({ manager: managerId });
+  findByManager = async (user_id) => {
+    const schools = await School.findAll({ where: { user_id }});
     return schools;
   }
 
-  findById = async (id, populateOptions) => {
-    if (typeof populateOptions === 'undefined') {
-      const school = await School.findById(id);
-      return school;
-    }
-    const school = await School.findById(id).populate(populateOptions);
+  findById = async (id) => {
+    const school = await School.findByPk(id);
+    return school;
+  }
+
+  findByIdWithClassrooms = async (id) => {
+    const school = await School.findByPk(id, {
+      include: [
+        {
+          model: Classroom, as: 'classrooms'
+        }
+      ]
+    });
     return school;
   }
 
@@ -46,23 +38,12 @@ class SchoolsService {
     return school;
   }
 
-  update = async (id, name, inepCode, address, manager) => {
-    await School.findByIdAndUpdate(id, { name, inepCode, address, manager, updated: Date.now() });
-  }
-
-  updateClassroom = async (classroom) => {
-    await School.findOneAndUpdate(
-      { '_id': classroom.school, 'classrooms._id': classroom._id },
-      { '$set': {
-        'classrooms.$.name': classroom.name,
-        'classrooms.$.grade': classroom.grade,
-        'classrooms.$.updated': classroom.updated
-      }}
-    );
+  update = async (id, name, inep_code, address, user_id) => {
+    await School.update({ name, inep_code, address, user_id }, { where: { id } });
   }
 
   delete = async (id) => {
-    await School.findByIdAndRemove(id);
+    await School.destroy({ where: { id }});
   }
 }
 

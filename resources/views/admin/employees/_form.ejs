@@ -478,7 +478,7 @@
               <option value="" disabled selected>Escolha um setor...</option>
               <% allSectors.forEach(sector => { %>
                 <option
-                  value="<%= sector._id %>"
+                  value="<%= sector.id %>"
                   <%= sector._id.equals(employee.originSector) ? 'selected' : '' %>
                 >
                   <%= sector.name %>
@@ -499,7 +499,7 @@
               <option value="" disabled selected>Escolha um setor...</option>
               <% allSectors.forEach(sector => { %>
                 <option
-                  value="<%= sector._id %>"
+                  value="<%= sector.id %>"
                   <%= sector._id.equals(employee.currentSector) ? 'selected' : '' %>
                 >
                   <%= sector.name %>
@@ -522,7 +522,7 @@
               <option value="" selected>Escolha uma escola...</option>
               <% allSchools.forEach(school => { %>
                 <option
-                  value="<%= school._id %>"
+                  value="<%= school.id %>"
                   <%= school._id.equals(employee.school) ? 'selected' : '' %>
                 >
                   <%= school.name %>
@@ -568,7 +568,7 @@
           <option value="" selected>Escolha uma turma...</option>
           <% allClasses.forEach(classroom => { %>
             <option
-              value="<%= classroom._id %>"
+              value="<%= classroom.id %>"
               <%= classroom._id.equals(employee.classroom) ? 'selected' : '' %>
             >
               <%= `${classroom.name} | ${classroom.school.name}` %>

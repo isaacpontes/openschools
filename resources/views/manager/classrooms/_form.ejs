@@ -33,7 +33,7 @@
               <option disabled selected>Escolha um ano...</option>
               <% grades.forEach(grade => { %>
                 <option
-                  value="<%= grade._id %>"
+                  value="<%= grade.id %>"
                   <%= grade._id.equals(classroom.grade) ? 'selected' : '' %>
                 >
                   <%= grade.name %>

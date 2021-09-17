@@ -56,10 +56,6 @@
         id="info"
         placeholder="Insira outras informações adicionais"
       ><%= typeof transport.info != 'undefined' ? transport.info : '' %></textarea>
-
-      <% if (transport.errors && transport.errors.hasOwnProperty('info')) { %>
-        <p class="is-danger help"><%= transport.errors.info %></p>
-      <% } %>
     </div>
   </div>
 
