@@ -29,16 +29,18 @@ router.get('/classrooms/:id', classroomsController.show);
 router.get('/classrooms/:id/edit', classroomsController.edit);
 router.put('/classrooms/:id', classroomsController.update);
 router.delete('/classrooms/:id', classroomsController.delete);
-router.get('/classrooms/:id/add-student', classroomsController.addStudent);
 
 router.get('/schools', schoolsController.index);
 router.get('/schools/:id', schoolsController.show);
 router.get('/schools/:id/add-classroom', schoolsController.addClassroom);
 
+router.get('/students', studentsController.index);
 router.post('/students', studentsController.save);
+router.get('/students/create', studentsController.create);
 router.get('/students/:id', studentsController.show);
-router.get('/students/:id/edit', studentsController.edit);
-router.put('/students/:id', studentsController.update);
-router.delete('/students/:id', studentsController.delete);
+router.get('/students/:id/enroll', studentsController.enrollForm);
+router.post('/students/:id/enroll', studentsController.enroll);
+// router.get('/students/:id/edit', studentsController.edit);
+// router.put('/students/:id', studentsController.update);
 
 module.exports = router;

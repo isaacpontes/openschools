@@ -1,0 +1,29 @@
+'use strict';
+
+const { Model, DataTypes } = require('sequelize');
+
+class AcademicYear extends Model {
+  static init(sequelize) {
+    super.init({
+      year: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      }
+    }, { sequelize });
+  }
+
+  static associate(models) {
+    this.belongsToMany(models.Classroom, {
+      foreignKey: 'academic_year_id',
+      through: 'enrollments',
+      as: 'classrooms'
+    });
+    this.belongsToMany(models.Student, {
+      foreignKey: 'academic_year_id',
+      through: 'enrollments',
+      as: 'students'
+    });
+  }
+};
+
+module.exports = AcademicYear;

@@ -28,7 +28,7 @@
                   <% employees.forEach(employee=> { %>
                     <tr>
                       <td>
-                        <%= employee.enrollment %>
+                        <%= employee.employee_code %>
                       </td>
                       <td>
                         <%= employee.name %>
@@ -40,7 +40,7 @@
                         <%= employee.phone %>
                       </td>
                       <td>
-                        <%= employee.currentSector.name %>
+                        <%= employee.current_sector.name %>
                       </td>
                       <td>
                         <a href="/admin/employees/<%= employee.id %>">Exibir</a>
@@ -55,8 +55,8 @@
                       </td>
                     </tr>
 
-                    <%- include('../../partials/_delete-modal', { name: 'Employee' , _id: employee._id, url:
-                      `/admin/employees/${employee._id}?_method=delete` }) %>
+                    <%- include('../../partials/_delete-modal', { name: 'Employee' , id: employee.id, url:
+                      `/admin/employees/${employee.id}?_method=delete` }) %>
                       <% }) %>
                 </tbody>
               </table>

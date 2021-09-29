@@ -1,15 +1,15 @@
 <%- include('../../layouts/header') %>
 
-  <section class="section">
-    <div class="container">
-      <div class="card">
-        <div class="card-content">
-          <h1 class="title is-4">Novo Aluno</h1>
-          <hr>
-          <%- include('_form', { url: '/admin/students?_method=post' , student: student }) %>
-        </div>
+<section class="section">
+  <div class="container">
+    <div class="card">
+      <div class="card-content">
+        <h1 class="title is-4">Novo Estudante</h1>
+        <hr>
+        <%- include('_form', { url: '/admin/students?_method=post' , student }) %>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <%- include('../../layouts/footer') %>
+<%- include('../../layouts/footer') %>

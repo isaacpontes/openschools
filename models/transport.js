@@ -21,7 +21,7 @@ class Transport extends Model {
   }
 
   static associate(models) {
-    
+    this.hasMany(models.Student, { foreignKey: 'transport_id', as: 'transports' });
   }
 };
 

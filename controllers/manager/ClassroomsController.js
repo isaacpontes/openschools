@@ -27,9 +27,9 @@ class ClassroomsController extends Controller {
     try {
       await this.service.save(classroom);
       req.flash('success', 'Turma salva com sucesso.');
-      return res.redirect(`/manager/schools/${classroom.school}`);
+      return res.redirect(`/manager/schools/${classroom.school_id}`);
     } catch (error) {
-      return res.status(400).render('manager/classrooms/new', { classroom, error: 'Erro ao salvar turma.' });
+      return res.redirect(`/manager/schools/${school_id}/add-classroom`);
     }
   }
 
@@ -42,8 +42,7 @@ class ClassroomsController extends Controller {
 
     try {
       const classroom = await this.service.findById(id);
-
-      const students = await studentsService.findByClassroomId(id)
+      const students = await classroom.getStudents();
 
       return res.status(200).render('manager/classrooms/show', { classroom, students });
     } catch (error) {
@@ -79,7 +78,8 @@ class ClassroomsController extends Controller {
       req.flash('success', 'Turma atualizada com sucesso.');
       return res.redirect(`/manager/schools/${school_id}`);
     } catch (error) {
-      return res.redirect(`/manager/classrooms/${id}/edit`, { error: 'Erro ao atualizar turma.' });
+      req.flash('error', 'Erro ao atualizar turma.');
+      return res.redirect(`/manager/classrooms/${id}/edit`);
     }
   }
 
@@ -94,7 +94,8 @@ class ClassroomsController extends Controller {
       req.flash('success', 'Turma excluída com sucesso.');
       return res.redirect(`/manager/schools/${classroom.school_id}`);
     } catch (error) {
-      return res.redirect(`/manager/schools/${classroom.school_id}`, { error: 'Erro ao excluir turma.' });
+      req.flash('error', 'Erro ao excluir turma.')
+      return res.redirect(`/manager/classrooms/${classroom.id}`);
     }
   }
 

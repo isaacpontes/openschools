@@ -4,10 +4,10 @@
     <div class="container">
       <div class="card">
         <div class="card-content">
-          <h1 class="title is-4">Editar Aluno | <%= student.name %>
+          <h1 class="title is-4">Editar Estudante | <%= student.first_name %>
           </h1>
           <hr>
-          <%- include('_form', { url: `/admin/students/${student._id}?_method=put`, student: student }) %>
+          <%- include('_form', { url: `/admin/students/${student.id}?_method=put`, student }) %>
         </div>
       </div>
     </div>

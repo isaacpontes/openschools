@@ -1,110 +1,73 @@
 const Employee = require('../models/Employee');
-const mongoose = require('mongoose');
 
 class EmployeesService {
-  create = (name, enrollment, position, role, bond, birthday, cpf, rg, ctps, electorTitle, pis, address, phone, email, situation, admissionDate, formation, complementaryFormation, workload, fundeb, originSector, currentSector, school, classroom, shift, info) => {
-    const employee = new Employee();
+  create = ({ name, employee_code, position, role, bond, birthday, cpf, rg, ctps, elector_title, pis, address, phone, email, situation, admission_date, formation, complementary_formation, workload, fundeb, origin_sector_id, current_sector_id, shift, info }) => {
+    const employee = Employee.build();
 
-    if (typeof name !== 'undefined') employee.name = name;
-    if (typeof enrollment !== 'undefined') employee.enrollment = enrollment;
-    if (typeof position !== 'undefined') employee.position = position;
-    if (typeof role !== 'undefined') employee.role = role;
-    if (typeof bond !== 'undefined') employee.bond = bond;
-    if (typeof birthday !== 'undefined') employee.birthday = birthday;
-    if (typeof cpf !== 'undefined') employee.cpf = cpf;
-    if (typeof rg !== 'undefined') employee.rg = rg;
-    if (typeof ctps !== 'undefined') employee.ctps = ctps;
-    if (typeof electorTitle !== 'undefined') employee.electorTitle = electorTitle;
-    if (typeof pis !== 'undefined') employee.pis = pis;
-    if (typeof address !== 'undefined') employee.address = address;
-    if (typeof phone !== 'undefined') employee.phone = phone;
-    if (typeof email !== 'undefined') employee.email = email;
-    if (typeof situation !== 'undefined') employee.situation = situation;
-    if (typeof admissionDate !== 'undefined') employee.admissionDate = admissionDate;
-    if (typeof formation !== 'undefined') employee.formation = formation;
-    if (typeof complementaryFormation !== 'undefined') employee.complementaryFormation = complementaryFormation;
-    if (typeof workload !== 'undefined') employee.workload = workload;
-    if (typeof fundeb !== 'undefined') employee.fundeb = fundeb;
-    if (typeof originSector !== 'undefined') employee.originSector = originSector;
-    if (typeof currentSector !== 'undefined') employee.currentSector = currentSector;
-    if (typeof school !== 'undefined') employee.school = school;
-    if (typeof classroom !== 'undefined') employee.classroom = classroom;
-    if (typeof shift !== 'undefined') employee.shift = shift;
-    if (typeof info !== 'undefined') employee.info = info;
+    if (name) employee.name = name;
+    if (employee_code) employee.employee_code = employee_code;
+    if (address) employee.address = address;
+    if (phone) employee.phone = phone;
+    if (email) employee.email = email;
+    if (birthday) employee.birthday = birthday;
+    if (situation) employee.situation = situation;
+    if (position) employee.position = position;
+    if (role) employee.role = role;
+    if (bond) employee.bond = bond;
+    if (cpf) employee.cpf = cpf;
+    if (rg) employee.rg = rg;
+    if (ctps) employee.ctps = ctps;
+    if (elector_title) employee.elector_title = elector_title;
+    if (pis) employee.pis = pis;
+    if (fundeb) employee.fundeb = fundeb;
+    if (admission_date) employee.admission_date = admission_date;
+    if (formation) employee.formation = formation;
+    if (complementary_formation) employee.complementary_formation = complementary_formation;
+    if (workload) employee.workload = workload;
+    if (shift) employee.shift = shift;
+    if (info) employee.info = info;
+    if (origin_sector_id) employee.origin_sector_id = origin_sector_id;
+    if (current_sector_id) employee.current_sector_id = current_sector_id;
 
     return employee;
   }
 
-  findAll = async (populate = false, options = {}) => {
-    if (populate === false) {
-      const employees = await Employee.find({});
-      return employees;
-    }
-    const employees = await Employee.find({}).populate(options);
+  findAll = async () => {
+    const employees = await Employee.findAll();
     return employees;
   }
 
-  findOne = async (id, populate = false, options = {}) => {
-    if (populate === false) {
-      const employees = await Employee.findById(id);
-      return employees;
-    }
-    const employees = await Employee.findById(id).populate(options);
+  findAllWithSector = async () => {
+    const employees = await Employee.findAll({
+      include: [
+        { association: 'origin_sector' },
+        { association: 'current_sector' }
+      ]
+    });
+    return employees;
+  }
+
+  findOne = async (id) => {
+    const employees = await Employee.findByPk(id, {
+      include: [
+        { association: 'origin_sector' },
+        { association: 'current_sector' }
+      ]
+    });
     return employees;
   }
 
   save = async (employee) => {
-    if (typeof employee.currentSector === 'undefined' && mongoose.isValidObjectId(employee.originSector)) {
-      employee.currentSector = employee.originSector;
+    if (!employee.current_sector_id) {
+      employee.current_sector_id = employee.origin_sector_id;
     }
-
-    // if (mongoose.isValidObjectId(school)) {
-    //   employee.school = school;
-    // }
-    // if (mongoose.isValidObjectId(classroom)) {
-    //   employee.classroom = classroom;
-    // }
 
     await employee.save();
     return employee;
   }
 
-  update = async (id, name, enrollment, position, role, bond, birthday, cpf, rg, ctps, electorTitle, pis, address, phone, email, situation, admissionDate, formation, complementaryFormation, workload, fundeb, originSector, currentSector, school, classroom, shift, info) => {
-    
-    
-    await Employee.findByIdAndUpdate(id, { 
-      name, 
-      enrollment, 
-      position, 
-      role, 
-      bond, 
-      birthday, 
-      cpf, 
-      rg, 
-      ctps, 
-      electorTitle, 
-      pis, 
-      address, 
-      phone, 
-      email, 
-      situation, 
-      admissionDate, 
-      formation, 
-      complementaryFormation, 
-      workload, 
-      fundeb, 
-      originSector, 
-      currentSector, 
-      school, 
-      classroom, 
-      shift, 
-      info,
-      updated: Date.now()
-    });
-  }
-
   delete = async (id) => {
-    await Employee.findByIdAndRemove(id);
+    await Employee.destroy({ where: { id } });
   }
 }
 

@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const { Sequelize } = require('sequelize');
 const seedAdmin = require('../database/seedAdmin');
 const UsersService = require('../services/UsersService');
@@ -7,6 +6,11 @@ const School = require('../models/School');
 const Grade = require('../models/Grade');
 const Classroom = require('../models/Classroom');
 const Transport = require('../models/Transport');
+const Student = require('../models/Student');
+const AcademicYear = require('../models/AcademicYear');
+const Enrollment = require('../models/Enrollment');
+const Sector = require('../models/Sector');
+const Employee = require('../models/Employee');
 
 class Database {
   constructor ({ dialect, host, port, name, user, password, options }, connection) {
@@ -38,9 +42,22 @@ class Database {
     Grade.init(this.connection);
     Classroom.init(this.connection);
     Transport.init(this.connection);
+    AcademicYear.init(this.connection);
+    Student.init(this.connection);
+    Enrollment.init(this.connection);
+    Sector.init(this.connection);
+    Employee.init(this.connection);
 
+    User.associate(this.connection.models);
     School.associate(this.connection.models);
+    Grade.associate(this.connection.models);
     Classroom.associate(this.connection.models);
+    Transport.associate(this.connection.models);
+    AcademicYear.associate(this.connection.models);
+    Student.associate(this.connection.models);
+    Enrollment.associate(this.connection.models);
+    Sector.associate(this.connection.models);
+    Employee.associate(this.connection.models);
   }
 
   createFirstAdminUser() {
@@ -55,25 +72,6 @@ class Database {
       }
     });
   }
-
-  // async connectMongo() {
-  //   const connectionString = `mongodb://${this.username}:${this.password}@${this.host}:${this.port}/${this.name}`;
-
-  //   try {
-  //     const mongo = await mongoose.connect(connectionString, {
-  //       useNewUrlParser: true,
-  //       useUnifiedTopology: true,
-  //       useCreateIndex: true,
-  //       useFindAndModify: false,
-  //     });
-
-  //     this.connection = mongo.connection;
-  //     console.log('Successfully connected to MongoDB.');
-
-  //   } catch (error) {
-  //     console.log(error);
-  //   }    
-  // }
 }
 
 module.exports = Database;

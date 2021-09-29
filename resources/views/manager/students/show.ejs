@@ -5,16 +5,13 @@
     <div class="card">
       <div class="card-content">
         <div class="is-flex is-align-items-center is-justify-content-space-between">
-          <h1 class="title mb-0"><%= student.firstName %></h1>
+          <h1 class="title mb-0"><%= student.first_name %></h1>
           <div class="buttons">
-            <a
-              href="/manager/students/<%= student.id %>/edit"
-              class="button is-link"
-            >
-              Editar Estudante
+            <a href="/manager/students/<%= student.id %>/enroll" class="button is-link">
+              Matricular
             </a>
-            <a href="/manager/classrooms/<%= student.classroom.id %>" class="button">
-              Voltar para Turma
+            <a href="/manager/students" class="button">
+              Voltar
             </a>
           </div>
         </div>
@@ -22,29 +19,14 @@
         <div class="columns">
           <div class="column is-one-half">
             <div class="field">
-              <h4 class="title is-4">Matrícula</h4>
-              <h6 class="subtitle"><%= student.enrollment %></h6>
+              <h4 class="is-size-5">Matrícula</h4>
+              <h6 class="subtitle is-3"><%= student.student_code %></h6>
             </div>
           </div>
           <div class="column is-three-half">
             <div class="field">
-              <h4 class="title is-4">Nome Completo</h4>
-              <h6 class="subtitle"><%= student.firstName %> <%= student.lastName %></h6>
-            </div>
-          </div>
-        </div>
-
-        <div class="columns">
-          <div class="column is-half">
-            <div class="field">
-              <h4 class="title is-4">Escola</h4>
-              <h6 class="subtitle"><%= student.school.name %></h6>
-            </div>
-          </div>
-          <div class="column is-half">
-            <div class="field">
-              <h4 class="title is-4">Turma</h4>
-              <h6 class="subtitle"><%= student.classroom.name %></h6>
+              <h4 class="is-size-5">Nome Completo</h4>
+              <h6 class="subtitle is-3"><%= student.first_name %> <%= student.last_name %></h6>
             </div>
           </div>
         </div>
@@ -52,93 +34,87 @@
         <div class="columns">
           <div class="column is-one-half">
             <div class="field">
-              <h4 class="title is-4">Gênero</h4>
-              <h6 class="subtitle"><%= student.gender === 'male' ? 'Masculino' : 'Feminino' %></h6>
+              <h4 class="is-size-5">Gênero</h4>
+              <h6 class="subtitle is-3"><%= student.gender === 'male' ? 'Masculino' : 'Feminino' %></h6>
             </div>
           </div>
           <div class="column is-one-half">
             <div class="field">
-              <h4 class="title is-4">Telefone</h4>
-              <h6 class="subtitle"><%= student.phone %></h6>
+              <h4 class="is-size-5">Telefone</h4>
+              <h6 class="subtitle is-3"><%= student.phone %></h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="field mb-5">
+          <h4 class="is-size-5">Endereço</h4>
+          <h6 class="subtitle is-3"><%= student.address %></h6>
+        </div>
+
+        <div class="columns">
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="is-size-5">Data de Nascimento</h4>
+              <h6 class="subtitle is-3"><%= dayjs(student.birthday).format('DD/MM/YYYY') %></h6>
+            </div>
+          </div>
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="is-size-5">Local de Nascimento</h4>
+              <h6 class="subtitle is-3"><%= student.birth_place %></h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="is-size-5">Nome do Pai</h4>
+              <h6 class="subtitle is-3"><%= student.father_name %></h6>
+            </div>
+          </div>
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="is-size-5">Ocupação do Pai</h4>
+              <h6 class="subtitle is-3"><%= student.father_ocupation %></h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="is-size-5">Nome da Mãe</h4>
+              <h6 class="subtitle is-3"><%= student.mother_name %></h6>
+            </div>
+          </div>
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="is-size-5">Ocupação da Mãe</h4>
+              <h6 class="subtitle is-3"><%= student.mother_ocupation %></h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="is-size-5">Tipo Sanguíneo</h4>
+              <h6 class="subtitle is-3"><%= student.blood_type %></h6>
+            </div>
+          </div>
+          <div class="column is-one-half">
+            <div class="field">
+              <h4 class="is-size-5">Transporte</h4>
+              <h6 class="subtitle is-3"><%= student.transport.name %></h6>
             </div>
           </div>
         </div>
 
         <div class="field">
-          <h4 class="title is-4">Endereço</h4>
-          <h6 class="subtitle"><%= student.address %></h6>
+          <h4 class="is-size-5">Informações Adicionais</h4>
+          <h6 class="subtitle is-3"><%= student.info %></h6>
         </div>
-
-        <div class="columns">
-          <div class="column is-one-half">
-            <div class="field">
-              <h4 class="title is-4">Data de Nascimento</h4>
-              <h6 class="subtitle"><%= dayjs(student.birthday).format('DD/MM/YYYY') %></h6>
-            </div>
-          </div>
-          <div class="column is-one-half">
-            <div class="field">
-              <h4 class="title is-4">Local de Nascimento</h4>
-              <h6 class="subtitle"><%= student.birthPlace %></h6>
-            </div>
-          </div>
-        </div>
-
-        <div class="columns">
-          <div class="column is-one-half">
-            <div class="field">
-              <h4 class="title is-4">Nome do Pai</h4>
-              <h6 class="subtitle"><%= student.fatherName %></h6>
-            </div>
-          </div>
-          <div class="column is-one-half">
-            <div class="field">
-              <h4 class="title is-4">Ocupação do Pai</h4>
-              <h6 class="subtitle"><%= student.fatherOcupation %></h6>
-            </div>
-          </div>
-        </div>
-
-        <div class="columns">
-          <div class="column is-one-half">
-            <div class="field">
-              <h4 class="title is-4">Nome da Mãe</h4>
-              <h6 class="subtitle"><%= student.motherName %></h6>
-            </div>
-          </div>
-          <div class="column is-one-half">
-            <div class="field">
-              <h4 class="title is-4">Ocupação da Mãe</h4>
-              <h6 class="subtitle"><%= student.motherOcupation %></h6>
-            </div>
-          </div>
-        </div>
-
-        <div class="columns">
-          <div class="column is-one-half">
-            <div class="field">
-              <h4 class="title is-4">Tipo Sanguíneo</h4>
-              <h6 class="subtitle"><%= student.bloodType %></h6>
-            </div>
-          </div>
-          <div class="column is-one-half">
-            <div class="field">
-              <h4 class="title is-4">Transporte</h4>
-              <h6 class="subtitle"><%= student.transport.name %></h6>
-            </div>
-          </div>
-        </div>
-
-        <hr>
-
-        <a
-          class="button is-danger modal-toggler"
-          data-target="deleteModalStudent_<%= student.id %>"
-        >
-          Excluir
-        </a>
-
-        <%- include('../../partials/_delete-modal', { name: 'Student', _id: student._id, url: `/manager/students/${student._id}?_method=delete` }) %>
       </div>
     </div>
   </div>

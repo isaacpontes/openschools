@@ -35,8 +35,8 @@
                     </td>
                   </tr>
 
-                  <%- include('../../partials/_delete-modal', { name: 'Sector' , _id: sector._id, url:
-                    `/admin/sectors/${sector._id}?_method=delete` }) %>
+                  <%- include('../../partials/_delete-modal', { name: 'Sector' , id: sector.id, url:
+                    `/admin/sectors/${sector.id}?_method=delete` }) %>
                     <% }) %>
               </tbody>
             </table>

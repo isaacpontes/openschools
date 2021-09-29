@@ -42,7 +42,7 @@
             <div class="column is-7">
               <div class="is-flex is-align-items-center is-justify-content-space-between mb-5">
                 <h4 class="title is-5 mb-0">Estudantes</h4>
-                <a href="/admin/students/new" class="button is-link">Novo Estudante</a>
+                <!-- <a href="/admin/students/new" class="button is-link">Novo Estudante</a> -->
               </div>
 
               <div class="table-container">
@@ -60,13 +60,13 @@
                     <% students.forEach(student=> { %>
                       <tr>
                         <td>
-                          <%= student.enrollment %>
+                          <%= student.student_code %>
                         </td>
                         <td>
-                          <%= student.firstName %>
+                          <%= student.first_name %>
                         </td>
                         <td>
-                          <%= student.lastName %>
+                          <%= student.last_name %>
                         </td>
                         <td>
                           <%= student.phone %>

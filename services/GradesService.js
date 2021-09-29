@@ -1,3 +1,4 @@
+const { QueryTypes } = require('sequelize');
 const Grade = require('../models/Grade');
 
 class GradesService {
@@ -27,6 +28,29 @@ class GradesService {
 
   deleteOne = async (id) => {
     await Grade.destroy({ where: { id } });
+  }
+
+  getStudentsCountByGrade = async () => {
+    const grades = await Grade.sequelize.query(`
+      SELECT
+        "Grade".id,
+        "Grade".name,
+        COUNT("Enrollment".student_id) AS "count"
+      FROM
+        "grades" AS "Grade"
+        LEFT JOIN "classrooms" AS "Classroom"
+          ON "Classroom".grade_id = "Grade".id
+          LEFT JOIN "enrollments" AS "Enrollment"
+            ON "Enrollment".classroom_id = "Classroom".id
+      GROUP BY
+        "Grade".id;
+    `, {
+      type: QueryTypes.SELECT
+    });
+
+    const total = grades.reduce((accum, current) => accum + Number(current.count), 0);
+
+    return { quantities: grades, total };
   }
 }
 

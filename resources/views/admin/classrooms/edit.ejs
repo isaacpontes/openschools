@@ -6,7 +6,7 @@
       <div class="card-content">
         <h1 class="title is-4">Nova Turma</h1>
         <hr>
-        <%- include('_form', { url: '/admin/classrooms?_method=put' , classroom }) %>
+        <%- include('_form', { url: `/admin/classrooms/${classroom.id}?_method=put` , classroom }) %>
       </div>
     </div>
   </div>

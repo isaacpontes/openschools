@@ -20,8 +20,41 @@ class StudentsController {
   // Save a new student to the database
   // POST /api/admin/students
   save = async (req, res) => {
-    const { enrollment, firstName, lastName, gender, phone, address, birthday, birthPlace, fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info, transport, school, classroom } = req.body;
-    const student = this.service.create(enrollment, firstName, lastName, gender, phone, address, birthday, birthPlace, fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info, transport, school, classroom);
+    const {
+      student_code,
+      first_name,
+      last_name,
+      gender,
+      phone,
+      address,
+      birthday,
+      birth_place,
+      father_name,
+      father_ocupation,
+      mother_name,
+      mother_ocupation,
+      blood_type,
+      info,
+      transport_id
+    } = req.body;
+
+    const student = this.service.create({
+      student_code,
+      first_name,
+      last_name,
+      gender,
+      phone,
+      address,
+      birthday,
+      birth_place,
+      father_name,
+      father_ocupation,
+      mother_name,
+      mother_ocupation,
+      blood_type,
+      info,
+      transport_id
+    });
 
     try {
       await this.service.save(student);
@@ -55,28 +88,42 @@ class StudentsController {
   // PUT /api/admin/students/:id
   update = async (req, res) => {
     const { id } = req.params;
-    const { enrollment, firstName, lastName, gender, phone, address, birthday, birthPlace, fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info, transport, school, classroom } = req.body;
+    const {
+      student_code,
+      first_name,
+      last_name,
+      gender,
+      phone,
+      address,
+      birthday,
+      birth_place,
+      father_name,
+      father_ocupation,
+      mother_name,
+      mother_ocupation,
+      blood_type,
+      info,
+      transport_id
+    } = req.body;
 
     try {
       const student = await this.service.findById(id);
 
-      if (enrollment) student.enrollment = enrollment;
-      if (firstName) student.firstName = firstName;
-      if (lastName) student.lastName = lastName;
+      if (student_code) student.student_code = student_code;
+      if (first_name) student.first_name = first_name;
+      if (last_name) student.last_name = last_name;
       if (gender) student.gender = gender;
       if (phone) student.phone = phone;
       if (address) student.address = address;
       if (birthday) student.birthday = birthday;
-      if (birthPlace) student.birthPlace = birthPlace;
-      if (fatherName) student.fatherName = fatherName;
-      if (fatherOcupation) student.fatherOcupation = fatherOcupation;
-      if (motherName) student.motherName = motherName;
-      if (motherOcupation) student.motherOcupation = motherOcupation;
-      if (bloodType) student.bloodType = bloodType;
+      if (birth_place) student.birth_place = birth_place;
+      if (father_name) student.father_name = father_name;
+      if (father_ocupation) student.father_ocupation = father_ocupation;
+      if (mother_name) student.mother_name = mother_name;
+      if (mother_ocupation) student.mother_ocupation = mother_ocupation;
+      if (blood_type) student.blood_type = blood_type;
       if (info) student.info = info;
-      if (transport) student.transport = transport;
-      if (school) student.school = school;
-      if (classroom) student.classroom = classroom;
+      if (transport_id) student.transport_id = transport_id;
 
       await this.service.save(student);
 
@@ -93,6 +140,7 @@ class StudentsController {
   // DELETE /api/admin/students/:id
   delete = async (req, res) => {
     const { id } = req.params;
+
     try {
       await this.service.delete(id);
 

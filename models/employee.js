@@ -1,60 +1,123 @@
-const mongoose = require('mongoose');
+'use strict';
 
-const employeeSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  enrollment: { type: String, required: true },
-  position: { type: String, required: true },
-  role: { type: String, required: true },
-  bond: {
-    type: String,
-    enum: ['Efetivo', 'Comissionado', 'Contratado', 'Cedido', 'Permutado'],
-    required: true
-  },
-  birthday: { type: Date, required: true },
-  cpf: { type: String, required: true },
-  rg: { type: String, required: true },
-  ctps: { type: String, required: true },
-  electorTitle: { type: String, required: true },
-  pis: { type: String, required: true },
-  address: { type: String, required: true },
-  phone: { type: String, required: true },
-  email: { type: String, required: true },
-  situation: {
-    type: String,
-    enum: ['Ativo', 'Cedido', 'Extraclasse', 'Licenciado', 'Permutado', 'Professor Regente', 'Readaptado'],
-    required: true
-  },
-  admissionDate: { type: Date, required: true },
-  formation: { type: String, required: true },
-  complementaryFormation: { type: String },
-  workload: { type: String, required: true },
-  fundeb: { type: String, required: true },
-  originSector: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Sector',
-    required: true
-  },
-  currentSector: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Sector'
-  },
-  school: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'School'
-  },
-  classroom: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Classroom'
-  },
-  shift: {
-    type: String,
-    enum: ['Manhã', 'Tarde', 'Noite']
-  },
-  info: { type: String },
-  created: { type: Date, default: Date.now },
-  updated: { type: Date, default: Date.now }
-});
+const { Model, DataTypes } = require('sequelize');
 
-const Employee = mongoose.model('Employee', employeeSchema);
+class Employee extends Model {
+  static init(sequelize) {
+    super.init({
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      employee_code: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      address: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      phone: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isEmail: true
+        }
+      },
+      birthday: {
+        type: DataTypes.DATE,
+        allowNull: false
+      },
+      situation: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isIn: [[
+            'Ativo',
+            'Cedido',
+            'Extraclasse',
+            'Licenciado',
+            'Permutado',
+            'Professor Regente',
+            'Readaptado'
+          ]]
+        }
+      },
+      position: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      role: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      bond: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isIn: [['Efetivo', 'Comissionado', 'Contratado', 'Cedido', 'Permutado']]
+        }
+      },
+      cpf: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      rg: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      ctps: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      elector_title: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      pis: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      fundeb: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      admission_date: {
+        type: DataTypes.DATE,
+        allowNull: false
+      },
+      formation: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      complementary_formation: {
+        type: DataTypes.STRING,
+      },
+      workload: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      shift: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isIn: [['morning', 'afternoon', 'night']]
+        }
+      },
+      info: {
+        type: DataTypes.TEXT,
+      }
+    }, { sequelize });
+  }
+
+  static associate(models) {
+    this.belongsTo(models.Sector, { foreignKey: 'origin_sector_id', as: 'origin_sector' });
+    this.belongsTo(models.Sector, { foreignKey: 'current_sector_id', as: 'current_sector' });
+  }
+};
 
 module.exports = Employee;

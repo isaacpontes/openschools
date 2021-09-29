@@ -5,8 +5,10 @@
       <div class="card">
         <div class="card-content">
           <div class="is-flex is-align-items-center is-justify-content-space-between">
-            <h1 class="title size-4 mb-0">Lista de Turmas</h1>
-            <a href="/admin/classrooms/create" class="button is-link">Nova Turma</a>
+            <h1 class="title size-4 mb-0">Todas as Turmas</h1>
+            <div class="button-group">
+              <a href="/admin/classrooms/create" class="button is-link">Nova Turma</a>
+            </div>
           </div>
 
           <hr>
@@ -28,10 +30,10 @@
                       <%= classroom.name %>
                     </td>
                     <td>
-                      <%= classroom.grade_id %>
+                      <%= classroom.grade.name %>
                     </td>
                     <td>
-                      <%= classroom.school_id %>
+                      <%= classroom.school.name %>
                     </td>
                     <td>
                       <a href="/admin/classrooms/<%= classroom.id %>">Exibir</a>

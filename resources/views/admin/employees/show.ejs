@@ -12,242 +12,225 @@
             </div>
           </div>
           <hr>
-          <div class="columns">
+          <div class="columns mb-6">
             <div class="column is-one-one-half">
               <div class="field">
-                <h4 class="title is-4">Matrícula</h4>
-                <h6 class="subtitle">
-                  <%= employee.enrollment %>
+                <h4 class="title is-5">Matrícula</h4>
+                <h6 class="subtitle is-3">
+                  <%= employee.employee_code %>
                 </h6>
               </div>
             </div>
 
             <div class="column is-one-one-half">
               <div class="field">
-                <h4 class="title is-4">Nome</h4>
-                <h6 class="subtitle">
+                <h4 class="title is-5">Nome</h4>
+                <h6 class="subtitle is-3">
                   <%= employee.name %>
                 </h6>
               </div>
             </div>
           </div>
 
-          <div class="columns">
+          <div class="columns mb-6">
             <div class="column is-one-half">
               <div class="field">
-                <h4 class="title is-4">Cargo</h4>
-                <h6 class="subtitle">
+                <h4 class="title is-5">Cargo</h4>
+                <h6 class="subtitle is-3">
                   <%= employee.position %>
                 </h6>
               </div>
             </div>
             <div class="column is-one-half">
               <div class="field">
-                <h4 class="title is-4">Função</h4>
-                <h6 class="subtitle">
+                <h4 class="title is-5">Função</h4>
+                <h6 class="subtitle is-3">
                   <%= employee.role %>
                 </h6>
               </div>
             </div>
           </div>
 
-          <div class="columns">
+          <div class="columns mb-6">
             <div class="column is-one-half">
               <div class="field">
-                <h4 class="title is-4">Vínculo</h4>
-                <h6 class="subtitle">
+                <h4 class="title is-5">Vínculo</h4>
+                <h6 class="subtitle is-3">
                   <%= employee.bond %>
                 </h6>
               </div>
             </div>
             <div class="column is-one-half">
               <div class="field">
-                <h4 class="title is-4">Data de Nascimento</h4>
-                <h6 class="subtitle">
+                <h4 class="title is-5">Data de Nascimento</h4>
+                <h6 class="subtitle is-3">
                   <%= dayjs(employee.birthday).format('DD/MM/YYYY') %>
                 </h6>
               </div>
             </div>
           </div>
 
-          <div class="columns">
+          <div class="columns mb-6">
             <div class="column is-one-half">
               <div class="field">
-                <h4 class="title is-4">CPF</h4>
-                <h6 class="subtitle">
+                <h4 class="title is-5">CPF</h4>
+                <h6 class="subtitle is-3">
                   <%= employee.cpf %>
                 </h6>
               </div>
             </div>
             <div class="column is-one-half">
               <div class="field">
-                <h4 class="title is-4">RG</h4>
-                <h6 class="subtitle">
+                <h4 class="title is-5">RG</h4>
+                <h6 class="subtitle is-3">
                   <%= employee.rg %>
                 </h6>
               </div>
             </div>
           </div>
 
-          <div class="columns">
+          <div class="columns mb-6">
             <div class="column is-one-half">
               <div class="field">
-                <h4 class="title is-4">CTPS</h4>
-                <h6 class="subtitle">
+                <h4 class="title is-5">CTPS</h4>
+                <h6 class="subtitle is-3">
                   <%= employee.ctps %>
                 </h6>
               </div>
             </div>
             <div class="column is-one-half">
               <div class="field">
-                <h4 class="title is-4">Título de Eleitor</h4>
-                <h6 class="subtitle">
-                  <%= employee.electorTitle %>
+                <h4 class="title is-5">Título de Eleitor</h4>
+                <h6 class="subtitle is-3">
+                  <%= employee.elector_title %>
                 </h6>
               </div>
             </div>
           </div>
 
-          <div class="columns">
+          <div class="columns mb-6">
             <div class="column is-one-half">
               <div class="field">
-                <h4 class="title is-4">PIS</h4>
-                <h6 class="subtitle">
+                <h4 class="title is-5">PIS</h4>
+                <h6 class="subtitle is-3">
                   <%= employee.pis %>
                 </h6>
               </div>
             </div>
             <div class="column is-one-half">
               <div class="field">
-                <h4 class="title is-4">Fundeb</h4>
-                <h6 class="subtitle">
+                <h4 class="title is-5">Fundeb</h4>
+                <h6 class="subtitle is-3">
                   <%= employee.fundeb %>
                 </h6>
               </div>
             </div>
           </div>
 
-          <div class="field">
-            <h4 class="title is-4">Endereço</h4>
-            <h6 class="subtitle">
+          <div class="field mb-6">
+            <h4 class="title is-5">Endereço</h4>
+            <h6 class="subtitle is-3">
               <%= employee.address %>
             </h6>
           </div>
 
-          <div class="columns">
+          <div class="columns mb-6">
             <div class="column is-one-half">
               <div class="field">
-                <h4 class="title is-4">Telefone</h4>
-                <h6 class="subtitle">
+                <h4 class="title is-5">Telefone</h4>
+                <h6 class="subtitle is-3">
                   <%= employee.phone %>
                 </h6>
               </div>
             </div>
             <div class="column is-one-half">
               <div class="field">
-                <h4 class="title is-4">Email</h4>
-                <h6 class="subtitle">
+                <h4 class="title is-5">Email</h4>
+                <h6 class="subtitle is-3">
                   <%= employee.email %>
                 </h6>
               </div>
             </div>
           </div>
 
-          <div class="columns">
+          <div class="columns mb-6">
             <div class="column is-one-half">
               <div class="field">
-                <h4 class="title is-4">Formação</h4>
-                <h6 class="subtitle">
+                <h4 class="title is-5">Formação</h4>
+                <h6 class="subtitle is-3">
                   <%= employee.formation %>
                 </h6>
               </div>
             </div>
             <div class="column is-one-half">
               <div class="field">
-                <h4 class="title is-4">Formação Complementar</h4>
-                <h6 class="subtitle">
-                  <%= employee.complementaryFormation %>
+                <h4 class="title is-5">Formação Complementar</h4>
+                <h6 class="subtitle is-3">
+                  <%= employee.complementary_formation %>
                 </h6>
               </div>
             </div>
           </div>
 
-          <div class="columns">
+          <div class="columns mb-6">
             <div class="column is-one-third">
               <div class="field">
-                <h4 class="title is-4">Situação</h4>
-                <h6 class="subtitle">
+                <h4 class="title is-5">Situação</h4>
+                <h6 class="subtitle is-3">
                   <%= employee.situation %>
                 </h6>
               </div>
             </div>
             <div class="column is-one-third">
               <div class="field">
-                <h4 class="title is-4">Data de Admissão</h4>
-                <h6 class="subtitle">
-                  <%= dayjs(employee.admissionDate).format('DD/MM/YYYY') %>
+                <h4 class="title is-5">Data de Admissão</h4>
+                <h6 class="subtitle is-3">
+                  <%= dayjs(employee.admission_date).format('DD/MM/YYYY') %>
                 </h6>
               </div>
             </div>
             <div class="column is-one-third">
               <div class="field">
-                <h4 class="title is-4">Carga Horária</h4>
-                <h6 class="subtitle">
+                <h4 class="title is-5">Carga Horária</h4>
+                <h6 class="subtitle is-3">
                   <%= employee.workload %>
                 </h6>
               </div>
             </div>
           </div>
 
-          <div class="columns">
-            <div class="column is-one-half">
+          <div class="columns mb-6">
+            <div class="column is-one-third">
               <div class="field">
-                <h4 class="title is-4">Setor de Origem</h4>
-                <h6 class="subtitle">
-                  <%= typeof employee.originSector !=='undefined' ? employee.originSector.name : 'Não Definido' %>
-                </h6>
-              </div>
-            </div>
-            <div class="column is-one-half">
-              <div class="field">
-                <h4 class="title is-4">Setor Atual</h4>
-                <h6 class="subtitle">
-                  <%= typeof employee.currentSector !=='undefined' ? employee.currentSector.name : 'Não Definido' %>
-                </h6>
-              </div>
-            </div>
-          </div>
-
-          <div class="columns">
-            <div class="column is-one-half">
-              <div class="field">
-                <h4 class="title is-4">Escola</h4>
-                <h6 class="subtitle">
-                  <%= typeof employee.school !=='undefined' ? employee.school.name : 'Não Definido' %>
-                </h6>
-              </div>
-            </div>
-            <div class="column is-one-half">
-              <div class="field">
-                <h4 class="title is-4">Turma</h4>
-                <h6 class="subtitle">
-                  <%= typeof employee.classroom !=='undefined' ? employee.classroom.name : 'Não Definido' %>
+                <h4 class="title is-5">Setor de Origem</h4>
+                <h6 class="subtitle is-3">
+                  <%= employee.origin_sector.name %>
                 </h6>
               </div>
             </div>
             <div class="column is-one-third">
               <div class="field">
-                <h4 class="title is-4">Turno</h4>
-                <h6 class="subtitle">
-                  <%= employee.shift %>
+                <h4 class="title is-5">Setor Atual</h4>
+                <h6 class="subtitle is-3">
+                  <%= employee.current_sector.name %>
+                </h6>
+              </div>
+            </div>
+            <div class="column is-one-third">
+              <div class="field">
+                <h4 class="title is-5">Turno</h4>
+                <h6 class="subtitle is-3">
+                  <%= employee.shift === 'morning' ? 'Manhã' : '' %>
+                  <%= employee.shift === 'afternoon' ? 'Tarde' : '' %>
+                  <%= employee.shift === 'night' ? 'Noite' : '' %>
                 </h6>
               </div>
             </div>
           </div>
 
           <div class="field">
-            <h4 class="title is-4">Informações Adicionais</h4>
-            <h6 class="subtitle">
+            <h4 class="title is-5">Informações Adicionais</h4>
+            <h6 class="subtitle is-3">
               <%= employee.info %>
             </h6>
           </div>

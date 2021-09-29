@@ -5,8 +5,10 @@
       <div class="card">
         <div class="card-content">
           <div class="is-flex is-align-items-center is-justify-content-space-between">
-            <h1 class="title size-4 mb-0">Listagem de Escolas</h1>
-            <a href="/admin/schools/create" class="button is-link">Nova Escola</a>
+            <h1 class="title size-4 mb-0">Todas as Escolas</h1>
+            <div class="button-group">
+              <a href="/admin/schools/create" class="button is-link">Nova Escola</a>
+            </div>
           </div>
 
           <hr>
@@ -31,7 +33,7 @@
                       <%= school.inep_code %>
                     </td>
                     <td>
-                      <%= school.user_id %>
+                      <%= school.manager.name %>
                     </td>
                     <td>
                       <a href="/admin/schools/<%= school.id %>">Exibir</a>

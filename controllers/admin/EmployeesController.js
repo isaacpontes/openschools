@@ -9,7 +9,7 @@ class EmployeesController extends Controller {
   // GET /employees
   index = async (req, res) => {
     try {
-      const employees = await this.service.findAll(true, { path: 'currentSector'});
+      const employees = await this.service.findAllWithSector();
 
       return res.render('admin/employees/index', { employees });
     } catch (error) {
@@ -21,14 +21,35 @@ class EmployeesController extends Controller {
   // POST /employees
   save = async (req, res) => {
     const {
-      name, enrollment, position, role, bond, cpf, rg, ctps, electorTitle, pis, address, phone,
-      email, situation, admissionDate, formation, complementaryFormation, workload, fundeb,
-      originSector, currentSector, school, classroom, shift, info
+      name,
+      employee_code,
+      address,
+      phone,
+      email,
+      birthday,
+      situation,
+      position,
+      role,
+      bond,
+      cpf,
+      rg,
+      ctps,
+      elector_title,
+      pis,
+      fundeb,
+      admission_date,
+      formation,
+      complementary_formation,
+      workload,
+      shift,
+      info,
+      origin_sector_id,
+      current_sector_id
     } = req.body.employee;
 
-    const birthday = dayjs(req.body.employee.birthday);
+    // const birthday = dayjs(req.body.employee.birthday);
 
-    const employee = await this.service.create(name, enrollment, position, role, bond, birthday, cpf, rg, ctps, electorTitle, pis, address, phone, email, situation, admissionDate, formation, complementaryFormation, workload, fundeb, originSector, currentSector, school, classroom, shift, info);
+    const employee = this.service.create({ name, employee_code, position, role, bond, birthday, cpf, rg, ctps, elector_title, pis, address, phone, email, situation, admission_date, formation, complementary_formation, workload, fundeb, origin_sector_id, current_sector_id, shift, info });
 
     try {
       await this.service.save(employee);
@@ -44,7 +65,7 @@ class EmployeesController extends Controller {
   // Render the create employee form
   // GET /admin/employees/create
   create = async (req, res) => {
-    const employee = this.service.create();
+    const employee = this.service.create({});
 
     const classroomsService = new ClassroomsService();
     const schoolsService = new SchoolsService();
@@ -67,7 +88,7 @@ class EmployeesController extends Controller {
     const { id } = req.params;
 
     try {
-      const employee = await this.service.findOne(id, true, [ 'originSector', 'currentSector', 'school', 'classroom' ]);
+      const employee = await this.service.findOne(id, true, [ 'origin_sector_id', 'current_sector_id', 'school', 'classroom' ]);
 
       return res.render('admin/employees/show', { employee, dayjs });
     } catch (error) {
@@ -100,15 +121,72 @@ class EmployeesController extends Controller {
   // PUT /admin/employees/:id
   update = async (req, res) => {
     const { id } = req.params;
-    const { name, enrollment, position, role, bond, birthday, cpf, rg, ctps, electorTitle, pis, address, phone, email, situation, admissionDate, formation, complementaryFormation, workload, fundeb, originSector, currentSector, school, classroom, shift, info } = req.body.employee;
+    const {
+      name,
+      employee_code,
+      address,
+      phone,
+      email,
+      birthday,
+      situation,
+      position,
+      role,
+      bond,
+      cpf,
+      rg,
+      ctps,
+      elector_title,
+      pis,
+      fundeb,
+      admission_date,
+      formation,
+      complementary_formation,
+      workload,
+      shift,
+      info,
+      origin_sector_id,
+      current_sector_id
+    } = req.body.employee;
 
     try {
-      await this.service.update(id, name, enrollment, position, role, bond, birthday, cpf, rg, ctps, electorTitle, pis, address, phone, email, situation, admissionDate, formation, complementaryFormation, workload, fundeb, originSector, currentSector, school, classroom, shift, info);
+
+      const employee = await this.service.findOne(id);
+
+      if (name) employee.name = name;
+      if (employee_code) employee.employee_code = employee_code;
+      if (address) employee.address = address;
+      if (phone) employee.phone = phone;
+      if (email) employee.email = email;
+      if (birthday) employee.birthday = birthday;
+      if (situation) employee.situation = situation;
+      if (position) employee.position = position;
+      if (role) employee.role = role;
+      if (bond) employee.bond = bond;
+      if (cpf) employee.cpf = cpf;
+      if (rg) employee.rg = rg;
+      if (ctps) employee.ctps = ctps;
+      if (elector_title) employee.elector_title = elector_title;
+      if (pis) employee.pis = pis;
+      if (fundeb) employee.fundeb = fundeb;
+      if (admission_date) employee.admission_date = admission_date;
+      if (formation) employee.formation = formation;
+      if (complementary_formation) employee.complementary_formation = complementary_formation;
+      if (workload) employee.workload = workload;
+      if (shift) employee.shift = shift;
+      if (info) employee.info = info;
+      if (origin_sector_id) employee.origin_sector_id = origin_sector_id;
+      if (current_sector_id) employee.current_sector_id = current_sector_id;
+
+      await this.service.save(employee);
 
       req.flash('success', 'Funcionário atualizado com sucesso.');
+
       return res.redirect('/admin/employees');
+
     } catch (error) {
+
       req.flash('error', 'Erro ao atualizar funcionário.');
+
       return res.redirect(`/admin/employees/${id}/edit`);
     }
   }
@@ -122,9 +200,13 @@ class EmployeesController extends Controller {
       await this.service.delete(id);
 
       req.flash('success', 'Funcionário excluído com sucesso.');
+
       return res.redirect('/admin/employees');
+
     } catch (error) {
+
       req.flash('error', 'Erro ao excluir funcionário.');
+
       return res.redirect('/admin/employees');
     }
   }

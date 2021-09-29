@@ -1,0 +1,55 @@
+<%- include('../../layouts/header') %>
+
+  <section class="section">
+    <div class="container">
+      <div class="card">
+        <div class="card-content">
+          <div class="is-flex is-align-items-center is-justify-content-space-between">
+            <h1 class="title size-4 mb-0">Todas as Matrículas</h1>
+            <div class="button-group">
+              <a href="#" class="button is-link">Nova Matrícula</a>
+            </div>
+          </div>
+
+          <hr>
+
+          <%- include('../../partials/messages') %>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Ano Letivo</th>
+                <th>Estudante</th>
+                <th>Turma</th>
+                <th>Situação</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% enrollments.forEach(enrollment=> { %>
+                <tr>
+                  <th>
+                    <%= enrollment.id %>
+                  </th>
+                  <td>
+                    <%= enrollment.academic_year.year %>
+                  </td>
+                  <td>
+                    <%= enrollment.student.first_name %> <%= enrollment.student.last_name %>
+                  </td>
+                  <td>
+                    <%= enrollment.classroom.name %>
+                  </td>
+                  <td>
+                    <%= enrollment.readableStatus() %>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <%- include('../../layouts/footer') %>

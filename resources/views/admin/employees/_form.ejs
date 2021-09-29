@@ -5,22 +5,19 @@
   <div class="columns">
     <div class="column is-half">
       <div class="field">
-        <label class="label" for="enrollment">Matrícula</label>
+        <label class="label" for="employee_code">Matrícula</label>
         <div class="control">
           <input
             class="input"
             type="text"
-            name="employee[enrollment]"
-            id="enrollment"
+            name="employee[employee_code]"
+            id="employee_code"
             placeholder="Ex.: 196158-1"
-            value="<%= typeof employee.enrollment != 'undefined' ? employee.enrollment : '' %>"
+            value="<%= typeof employee.employee_code != 'undefined' ? employee.employee_code : '' %>"
             autofocus
             autocomplete="off"
             required
           />
-          <% if (employee.errors && employee.errors.hasOwnProperty('enrollment')) { %>
-            <p class="is-danger help"><%= employee.errors.enrollment %></p>
-          <% } %>
         </div>
       </div>
     </div>
@@ -39,9 +36,6 @@
             autocomplete="off"
             required
           />
-          <% if (employee.errors && employee.errors.hasOwnProperty('name')) { %>
-            <p class="is-danger help"><%= employee.errors.name %></p>
-          <% } %>
         </div>
       </div>
     </div>
@@ -62,9 +56,6 @@
             autocomplete="off"
             required
           />
-          <% if (employee.errors && employee.errors.hasOwnProperty('position')) { %>
-            <p class="is-danger help"><%= employee.errors.position %></p>
-          <% } %>
         </div>
       </div>
     </div>
@@ -84,9 +75,6 @@
             autocomplete="off"
             required
           />
-          <% if (employee.errors && employee.errors.hasOwnProperty('role')) { %>
-            <p class="is-danger help"><%= employee.errors.role %></p>
-          <% } %>
         </div>
       </div>
     </div>
@@ -117,9 +105,6 @@
               </option>
             </select>
           </div>
-          <% if (employee.errors && employee.errors.hasOwnProperty('bond')) { %>
-            <p class="is-danger help"><%= employee.errors.bond %></p>
-          <% } %>
         </div>
       </div>
     </div>
@@ -136,9 +121,6 @@
             value="<%= typeof employee.birthday != 'undefined' ? dayjs(employee.birthday).format('YYYY-MM-DD') : '' %>"
             required
           />
-          <% if (employee.errors && employee.errors.hasOwnProperty('birthday')) { %>
-            <p class="is-danger help"><%= employee.errors.birthday %></p>
-          <% } %>
         </div>
       </div>
     </div>
@@ -159,9 +141,6 @@
             autocomplete="off"
             required
           />
-          <% if (employee.errors && employee.errors.hasOwnProperty('cpf')) { %>
-            <p class="is-danger help"><%= employee.errors.cpf %></p>
-          <% } %>
         </div>
       </div>
     </div>
@@ -181,9 +160,6 @@
             autocomplete="off"
             required
           />
-          <% if (employee.errors && employee.errors.hasOwnProperty('rg')) { %>
-            <p class="is-danger help"><%= employee.errors.rg %></p>
-          <% } %>
         </div>
       </div>
     </div>
@@ -204,31 +180,25 @@
             autocomplete="off"
             required
           />
-          <% if (employee.errors && employee.errors.hasOwnProperty('ctps')) { %>
-            <p class="is-danger help"><%= employee.errors.ctps %></p>
-          <% } %>
         </div>
       </div>
     </div>
 
     <div class="column is-half">
       <div class="field">
-        <label class="label" for="electorTitle">Título de Eleitor</label>
+        <label class="label" for="elector_title">Título de Eleitor</label>
         <div class="control">
           <input
             class="input"
             type="text"
-            name="employee[electorTitle]"
-            id="electorTitle"
+            name="employee[elector_title]"
+            id="elector_title"
             placeholder="Insira apenas números"
-            value="<%= typeof employee.electorTitle != 'undefined' ? employee.electorTitle : '' %>"
+            value="<%= typeof employee.elector_title != 'undefined' ? employee.elector_title : '' %>"
             autofocus
             autocomplete="off"
             required
           />
-          <% if (employee.errors && employee.errors.hasOwnProperty('electorTitle')) { %>
-            <p class="is-danger help"><%= employee.errors.electorTitle %></p>
-          <% } %>
         </div>
       </div>
     </div>
@@ -249,9 +219,6 @@
             autocomplete="off"
             required
           />
-          <% if (employee.errors && employee.errors.hasOwnProperty('pis')) { %>
-            <p class="is-danger help"><%= employee.errors.pis %></p>
-          <% } %>
         </div>
       </div>
     </div>
@@ -271,9 +238,6 @@
             autocomplete="off"
             required
           />
-          <% if (employee.errors && employee.errors.hasOwnProperty('fundeb')) { %>
-            <p class="is-danger help"><%= employee.errors.fundeb %></p>
-          <% } %>
         </div>
       </div>
     </div>
@@ -292,9 +256,6 @@
         autocomplete="off"
         required
       />
-      <% if (employee.errors && employee.errors.hasOwnProperty('address')) { %>
-        <p class="is-danger help"><%= employee.errors.address %></p>
-      <% } %>
     </div>
   </div>
   
@@ -314,9 +275,6 @@
             autocomplete="off"
             required
           />
-          <% if (employee.errors && employee.errors.hasOwnProperty('phone')) { %>
-            <p class="is-danger help"><%= employee.errors.phone %></p>
-          <% } %>
         </div>
       </div>
     </div>
@@ -327,7 +285,7 @@
         <div class="control">
           <input
             class="input"
-            type="text"
+            type="email"
             name="employee[email]"
             id="email"
             placeholder="Ex.: mhelena@gmail.com"
@@ -335,9 +293,6 @@
             autocomplete="off"
             required
           />
-          <% if (employee.errors && employee.errors.hasOwnProperty('email')) { %>
-            <p class="is-danger help"><%= employee.errors.email %></p>
-          <% } %>
         </div>
       </div>
     </div>
@@ -359,30 +314,23 @@
             autocomplete="off"
             required
           />
-          <% if (employee.errors && employee.errors.hasOwnProperty('formation')) { %>
-            <p class="is-danger help"><%= employee.errors.formation %></p>
-          <% } %>
         </div>
       </div>
     </div>
 
     <div class="column is-half">
       <div class="field">
-        <label class="label" for="complementaryFormation">Formação Complementar</label>
+        <label class="label" for="complementary_formation">Formação Complementar</label>
         <div class="control">
           <input
             class="input"
             type="text"
-            name="employee[complementaryFormation]"
-            id="complementaryFormation"
+            name="employee[complementary_formation]"
+            id="complementary_formation"
             placeholder="Ex.: Pós-Graduação em História Antiga"
-            value="<%= typeof employee.complementaryFormation != 'undefined' ? employee.complementaryFormation : '' %>"
+            value="<%= typeof employee.complementary_formation != 'undefined' ? employee.complementary_formation : '' %>"
             autocomplete="off"
-            required
           />
-          <% if (employee.errors && employee.errors.hasOwnProperty('complementaryFormation')) { %>
-            <p class="is-danger help"><%= employee.errors.complementaryFormation %></p>
-          <% } %>
         </div>
       </div>
     </div>
@@ -419,28 +367,22 @@
               </option>
             </select>
           </div>
-          <% if (employee.errors && employee.errors.hasOwnProperty('situation')) { %>
-            <p class="is-danger help"><%= employee.errors.situation %></p>
-          <% } %>
         </div>
       </div>
     </div>
 
     <div class="column is-one-third">
       <div class="field">
-        <label for="admissionDate" class="label">Data de Admissão</label>
+        <label for="admission_date" class="label">Data de Admissão</label>
         <div class="control">
           <input
             class="input"
             type="date"
-            name="employee[admissionDate]"
-            id="admissionDate"
-            value="<%= typeof employee.admissionDate != 'undefined' ? dayjs(employee.admissionDate).format('YYYY-MM-DD') : '' %>"
+            name="employee[admission_date]"
+            id="admission_date"
+            value="<%= typeof employee.admission_date != 'undefined' ? dayjs(employee.admission_date).format('YYYY-MM-DD') : '' %>"
             required
           />
-          <% if (employee.errors && employee.errors.hasOwnProperty('admissionDate')) { %>
-            <p class="is-danger help"><%= employee.errors.admissionDate %></p>
-          <% } %>
         </div>
       </div>
     </div>
@@ -460,9 +402,6 @@
             autocomplete="off"
             required
           />
-          <% if (employee.errors && employee.errors.hasOwnProperty('workload')) { %>
-            <p class="is-danger help"><%= employee.errors.workload %></p>
-          <% } %>
         </div>
       </div>
     </div>
@@ -471,15 +410,15 @@
   <div class="columns">
     <div class="column is-half">
       <div class="field">
-        <label for="originSector" class="label">Setor de Origem</label>
+        <label for="origin_sector_id" class="label">Setor de Origem</label>
         <div class="control">
           <div class="select is-fullwidth">
-            <select name="employee[originSector]" id="originSector" required>
+            <select name="employee[origin_sector_id]" id="origin_sector_id" required>
               <option value="" disabled selected>Escolha um setor...</option>
               <% allSectors.forEach(sector => { %>
                 <option
                   value="<%= sector.id %>"
-                  <%= sector._id.equals(employee.originSector) ? 'selected' : '' %>
+                  <%= sector.id === employee.origin_sector_id ? 'selected' : '' %>
                 >
                   <%= sector.name %>
                 </option>
@@ -492,88 +431,41 @@
 
     <div class="column is-half">
       <div class="field">
-        <label for="currentSector" class="label">Setor Atual</label>
+        <label for="current_sector_id" class="label">Setor Atual</label>
         <div class="control">
           <div class="select is-fullwidth">
-            <select name="employee[currentSector]" id="currentSector" required>
+            <select name="employee[current_sector_id]" id="current_sector_id" required>
               <option value="" disabled selected>Escolha um setor...</option>
               <% allSectors.forEach(sector => { %>
                 <option
                   value="<%= sector.id %>"
-                  <%= sector._id.equals(employee.currentSector) ? 'selected' : '' %>
+                  <%= sector.id === employee.current_sector_id ? 'selected' : '' %>
                 >
                   <%= sector.name %>
                 </option>
               <% }) %>
             </select>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="columns">
-    <div class="column is-one-half">
-      <div class="field">
-        <label for="school" class="label">Escola</label>
-        <div class="control">
-          <div class="select is-fullwidth">
-            <select name="employee[school]" id="school">
-              <option value="" selected>Escolha uma escola...</option>
-              <% allSchools.forEach(school => { %>
-                <option
-                  value="<%= school.id %>"
-                  <%= school._id.equals(employee.school) ? 'selected' : '' %>
-                >
-                  <%= school.name %>
-                </option>
-              <% }) %>
-            </select>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="column is-one-half">
-      <div class="field">
-        <label for="shift" class="label">Turno</label>
-        <div class="control">
-          <div class="select is-fullwidth">
-            <select name="employee[shift]" id="shift">
-              <option value="" selected>Selecione um turno</option>
-              <option value="Manhã" <%= employee.shift === 'Manhã' ? 'selected' : '' %>>
-                Manhã
-              </option>
-              <option value="Tarde" <%= employee.shift === 'Tarde' ? 'selected' : '' %>>
-                Tarde
-              </option>
-              <option value="Noite" <%= employee.shift === 'Noite' ? 'selected' : '' %>>
-                Noite
-              </option>
-            </select>
-          </div>
-          <% if (employee.errors && employee.errors.hasOwnProperty('shift')) { %>
-            <p class="is-danger help"><%= employee.errors.shift %></p>
-          <% } %>
         </div>
       </div>
     </div>
   </div>
 
   <div class="field">
-    <label for="classroom" class="label">Turma</label>
+    <label for="shift" class="label">Turno</label>
     <div class="control">
       <div class="select is-fullwidth">
-        <select name="employee[classroom]" id="classroom" autofocus>
-          <option value="" selected>Escolha uma turma...</option>
-          <% allClasses.forEach(classroom => { %>
-            <option
-              value="<%= classroom.id %>"
-              <%= classroom._id.equals(employee.classroom) ? 'selected' : '' %>
-            >
-              <%= `${classroom.name} | ${classroom.school.name}` %>
-            </option>
-          <% }) %>
+        <select name="employee[shift]" id="shift">
+          <option value="" selected>Selecione um turno</option>
+          <option value="morning" <%= employee.shift === 'morning' ? 'selected' : '' %>>
+            Manhã
+          </option>
+          <option value="afternoon" <%= employee.shift === 'afternoon' ? 'selected' : '' %>>
+            Tarde
+          </option>
+          <option value="night" <%= employee.shift === 'night' ? 'selected' : '' %>>
+            Noite
+          </option>
         </select>
       </div>
     </div>
@@ -589,10 +481,6 @@
         id="info"
         placeholder="Insira outras informações adicionais"
       ><%= typeof employee.info != 'undefined' ? employee.info : '' %></textarea>
-
-      <% if (employee.errors && employee.errors.hasOwnProperty('info')) { %>
-        <p class="is-danger help"><%= employee.errors.info %></p>
-      <% } %>
     </div>
   </div>
 

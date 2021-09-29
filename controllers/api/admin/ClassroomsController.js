@@ -44,7 +44,7 @@ class ClassroomsController {
 
     try {
       const classroom = await this.service.findById(id, { path: 'grade_id' });
-      const students = await this.studentsService.findByClassroomId(classroom._id);
+      const students = await this.studentsService.findByClassroomId(classroom.id);
 
       return res.json({ ...classroom._doc, students });
     } catch (error) {
