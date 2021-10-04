@@ -1,5 +1,5 @@
 const Controller = require('../Controller');
-const UsersService = require('../../services/UsersService');
+const UserService = require('../../services/UserService');
 
 class SchoolsController extends Controller {
   // Render a list of all schools
@@ -35,9 +35,9 @@ class SchoolsController extends Controller {
     try {
       const school = this.service.create();
 
-      const usersService = new UsersService();
+      const userService = new UserService();
 
-      const allManagers = await usersService.findAllManagers();
+      const allManagers = await userService.findAllManagers();
 
       return res.render('admin/schools/create', { school, allManagers });
     } catch (error) {
@@ -66,8 +66,8 @@ class SchoolsController extends Controller {
     try {
       const school = await this.service.findById(id);
 
-      const usersService = new UsersService();
-      const allManagers = await usersService.findAllManagers();
+      const userService = new UserService();
+      const allManagers = await userService.findAllManagers();
 
       return res.render('admin/schools/edit', { school, allManagers });
     } catch (error) {

@@ -1,7 +1,7 @@
 const Controller = require("../Controller");
-const GradesService = require("../../services/GradesService");
-const StudentsService = require("../../services/StudentsService");
-const TransportsService = require("../../services/TransportsService");
+const GradeService = require("../../services/GradeService");
+const StudentService = require("../../services/StudentService");
+const TransportService = require("../../services/TransportService");
 
 class ClassroomsController extends Controller {
   // Render a list of all user's classrooms
@@ -38,7 +38,7 @@ class ClassroomsController extends Controller {
   show = async (req, res) => {
     const { id } = req.params;
 
-    const studentsService = new StudentsService();
+    const studentService = new StudentService();
 
     try {
       const classroom = await this.service.findById(id);
@@ -55,11 +55,11 @@ class ClassroomsController extends Controller {
   edit = async (req, res) => {
     const { id } = req.params;
 
-    const gradesService = new GradesService();
+    const gradeService = new GradeService();
 
     try {
       const classroom = await this.service.findById(id);
-      const grades = await gradesService.findAll();
+      const grades = await gradeService.findAll();
 
       return res.status(200).render('manager/classrooms/edit', { classroom, grades });
     } catch (error) {
@@ -107,8 +107,8 @@ class ClassroomsController extends Controller {
     try {
       const classroom = await this.service.findById(id);
 
-      const transportsService = new TransportsService();
-      const allTransports = await transportsService.findAll();
+      const transportService = new TransportService();
+      const allTransports = await transportService.findAll();
 
       return res.render('manager/classrooms/add-student', {
         classroom,

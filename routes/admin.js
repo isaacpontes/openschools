@@ -1,15 +1,15 @@
 const express = require('express');
 
 const AcademicYearsService = require('../services/AcademicYearService');
-const ClassroomsService = require('../services/ClassroomsService');
-const EmployeesService = require('../services/EmployeesService');
-const EnrollmentsService = require('../services/EnrollmentsService');
-const GradesService = require('../services/GradesService');
-const SchoolsService = require('../services/SchoolsService');
-const SectorsService = require('../services/SectorsService');
-const StudentsService = require('../services/StudentsService');
-const TransportsService = require('../services/TransportsService');
-const UsersService = require( '../services/UsersService');
+const ClassroomService = require('../services/ClassroomService');
+const EmployeeService = require('../services/EmployeeService');
+const EnrollmentService = require('../services/EnrollmentService');
+const GradeService = require('../services/GradeService');
+const SchoolService = require('../services/SchoolService');
+const SectorService = require('../services/SectorService');
+const StudentService = require('../services/StudentService');
+const TransportService = require('../services/TransportService');
+const UserService = require( '../services/UserService');
 
 const AcademicYearsController = require('../controllers/admin/AcademicYearsController');
 const ClassroomsController = require('../controllers/admin/ClassroomsController');
@@ -24,27 +24,27 @@ const TransportsController = require('../controllers/admin/TransportsController'
 const UsersController = require('../controllers/admin/UsersController');
 
 const academicYearsService = new AcademicYearsService();
-const classroomsService = new ClassroomsService();
-const employeesService = new EmployeesService();
-const enrollmentsService = new EnrollmentsService();
-const gradesService = new GradesService();
-const schoolsService = new SchoolsService();
-const sectorsService = new SectorsService();
-const studentsService = new StudentsService();
-const transportsService = new TransportsService();
-const usersService = new UsersService();
+const classroomService = new ClassroomService();
+const employeeService = new EmployeeService();
+const enrollmentService = new EnrollmentService();
+const gradeService = new GradeService();
+const schoolService = new SchoolService();
+const sectorService = new SectorService();
+const studentService = new StudentService();
+const transportService = new TransportService();
+const userService = new UserService();
 
 const academicYearsController = new AcademicYearsController(academicYearsService);
-const classroomsController = new ClassroomsController(classroomsService);
+const classroomsController = new ClassroomsController(classroomService);
 const dashboardController = new DashboardController();
-const employeesController = new EmployeesController(employeesService);
-const enrollmentsController = new EnrollmentsController(enrollmentsService);
-const gradesController = new GradesController(gradesService);
-const schoolsController = new SchoolsController(schoolsService);
-const sectorsController = new SectorsController(sectorsService);
-const studentsController = new StudentsController(studentsService);
-const transportsController = new TransportsController(transportsService);
-const usersController = new UsersController(usersService);
+const employeesController = new EmployeesController(employeeService);
+const enrollmentsController = new EnrollmentsController(enrollmentService);
+const gradesController = new GradesController(gradeService);
+const schoolsController = new SchoolsController(schoolService);
+const sectorsController = new SectorsController(sectorService);
+const studentsController = new StudentsController(studentService);
+const transportsController = new TransportsController(transportService);
+const usersController = new UsersController(userService);
 
 const router = express.Router();
 

@@ -1,6 +1,6 @@
 const Transport = require("../models/Transport");
 
-class TransportsService {
+class TransportService {
   create(name, driver, info) {
     const transport = Transport.build({ name, driver, info });
     return transport;
@@ -30,4 +30,4 @@ class TransportsService {
   }
 }
 
-module.exports = TransportsService;
+module.exports = TransportService;

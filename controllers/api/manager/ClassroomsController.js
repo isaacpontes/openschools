@@ -1,7 +1,7 @@
 class ClassroomsController {
-  constructor (service, studentsService) {
+  constructor (service, studentService) {
     this.service = service;
-    this.studentsService = studentsService;
+    this.studentService = studentService;
   }
 
   // Save a new classroom to the database
@@ -77,7 +77,7 @@ class ClassroomsController {
     const { id } = req.params;
 
     try {
-      const students = await this.studentsService.findByClassroomId(id);
+      const students = await this.studentService.findByClassroomId(id);
       
       return res.status(200).json(students);
     } catch (error) {

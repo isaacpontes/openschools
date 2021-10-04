@@ -1,41 +1,41 @@
 const User = require('../models/User');
 
-class UsersService {
-  create = (name, role, email, password) => {
+class UserService {
+  create (name, role, email, password) {
     const user = User.build({ name, role, email, password });
     return user;
   }
 
-  findAll = async () => {
+  async findAll () {
     const users = await User.findAll();
     return users;
   }
 
-  findAllManagers = async () => {
+  async findAllManagers () {
     const users = await User.findAll({ where: { role: 'manager' }});
     return users;
   }
 
-  save = async (user) => {
+  async save (user) {
     await user.save();
     return user;
   }
 
-  findById = async (id) => {
+  async findById (id) {
     const user = await User.findByPk(id);
     return user;
   }
 
-  findByEmail = async (email) => {
+  async findByEmail (email) {
     const user = await User.findOne({ where: { email }});
     return user;
   }
 
-  delete = async (id) => {
+  async delete (id) {
     await User.destroy({ where: { id }});
   }
 
-  countAdminUsers = async () => {
+  async countAdminUsers () {
     const count = await User.count({
       where: {
         role: 'admin'
@@ -46,4 +46,4 @@ class UsersService {
   }
 }
 
-module.exports = UsersService;
+module.exports = UserService;

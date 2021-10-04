@@ -1,9 +1,9 @@
 const Controller = require('../Controller');
 const dayjs = require('dayjs');
-const TransportsService = require('../../services/TransportsService');
+const TransportService = require('../../services/TransportService');
 const AcademicYearsService = require('../../services/AcademicYearService');
-const SchoolsService = require('../../services/SchoolsService');
-const EnrollmentsService = require('../../services/EnrollmentsService');
+const SchoolService = require('../../services/SchoolService');
+const EnrollmentService = require('../../services/EnrollmentService');
 
 class StudentsController extends Controller {
   // Render a list of all students
@@ -73,8 +73,8 @@ class StudentsController extends Controller {
     const student = this.service.create({});
 
     try {
-      const transportsService = new TransportsService();
-      const allTransports = await transportsService.findAll();
+      const transportService = new TransportService();
+      const allTransports = await transportService.findAll();
 
       return res.render('manager/students/create', { student, allTransports, dayjs });
     } catch (error) {
@@ -102,12 +102,12 @@ class StudentsController extends Controller {
     const userId = req.user.id;
 
     const academicYearsService = new AcademicYearsService();
-    const schoolsService = new SchoolsService();
+    const schoolService = new SchoolService();
 
     try {
       const student = await this.service.findById(id);
       const academicYears = await academicYearsService.findAll();
-      const schools = await schoolsService.findByManagerWithClassrooms(userId);
+      const schools = await schoolService.findByManagerWithClassrooms(userId);
 
       return res.status(200).render('manager/students/enroll', { student, academicYears, schools });
     } catch (error) {
@@ -121,11 +121,11 @@ class StudentsController extends Controller {
     const { id } = req.params;
     const { academic_year_id, classroom_id } = req.body;
 
-    const enrollmentsService = new EnrollmentsService();
-    const enrollment = enrollmentsService.create(id, classroom_id, academic_year_id);
+    const enrollmentService = new EnrollmentService();
+    const enrollment = enrollmentService.create(id, classroom_id, academic_year_id);
 
     try {
-      await enrollmentsService.save(enrollment);
+      await enrollmentService.save(enrollment);
 
       req.flash('success', 'Estudante matriculado com sucesso.');
       return res.redirect('/manager/students');
@@ -141,8 +141,8 @@ class StudentsController extends Controller {
   //   const { id } = req.params;
 
   //   try {
-  //     const transportsService = new TransportsService();
-  //     const allTransports = await transportsService.findAll();
+  //     const transportService = new TransportService();
+  //     const allTransports = await transportService.findAll();
 
   //     const student = await this.service.findById(id);
 

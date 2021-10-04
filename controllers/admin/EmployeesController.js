@@ -1,8 +1,8 @@
 const Controller = require('../Controller');
 const dayjs = require('dayjs');
-const SectorsService = require('../../services/SectorsService');
-const SchoolsService = require('../../services/SchoolsService');
-const ClassroomsService = require('../../services/ClassroomsService');
+const SectorService = require('../../services/SectorService');
+const SchoolService = require('../../services/SchoolService');
+const ClassroomService = require('../../services/ClassroomService');
 
 class EmployeesController extends Controller {
   // Render a list of all employees
@@ -67,14 +67,14 @@ class EmployeesController extends Controller {
   create = async (req, res) => {
     const employee = this.service.create({});
 
-    const classroomsService = new ClassroomsService();
-    const schoolsService = new SchoolsService();
-    const sectorsService = new SectorsService();
+    const classroomService = new ClassroomService();
+    const schoolService = new SchoolService();
+    const sectorService = new SectorService();
 
     try {
-      const allSectors = await sectorsService.findAll();
-      const allSchools = await schoolsService.findAll();
-      const allClasses = await classroomsService.findAll({ path: 'school' });
+      const allSectors = await sectorService.findAll();
+      const allSchools = await schoolService.findAll();
+      const allClasses = await classroomService.findAll({ path: 'school' });
 
       return res.render('admin/employees/create', { employee, allSectors, allSchools, allClasses, dayjs });
     } catch (error) {
@@ -101,15 +101,15 @@ class EmployeesController extends Controller {
   edit = async (req, res) => {
     const { id } = req.params;
 
-    const classroomsService = new ClassroomsService();
-    const schoolsService = new SchoolsService();
-    const sectorsService = new SectorsService();
+    const classroomService = new ClassroomService();
+    const schoolService = new SchoolService();
+    const sectorService = new SectorService();
 
     try {
       const employee = await this.service.findOne(id);
-      const allSectors = await sectorsService.findAll();
-      const allSchools = await schoolsService.findAll();
-      const allClasses = await classroomsService.findAll({ path: 'school' });
+      const allSectors = await sectorService.findAll();
+      const allSchools = await schoolService.findAll();
+      const allClasses = await classroomService.findAll({ path: 'school' });
 
       return res.render('admin/employees/edit', { employee, allSectors, allSchools, allClasses, dayjs });
     } catch (error) {

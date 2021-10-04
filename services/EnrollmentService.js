@@ -1,6 +1,6 @@
 const Enrollment = require("../models/Enrollment");
 
-class EnrollmentsService {
+class EnrollmentService {
   create(student_id, classroom_id, academic_year_id, status) {
     const enrollment = Enrollment.build({ status, student_id, classroom_id, academic_year_id });
     return enrollment;
@@ -36,4 +36,4 @@ class EnrollmentsService {
   }
 }
 
-module.exports = EnrollmentsService;
+module.exports = EnrollmentService;

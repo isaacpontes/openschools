@@ -1,36 +1,36 @@
 const { QueryTypes } = require('sequelize');
 const Grade = require('../models/Grade');
 
-class GradesService {
-  create = (name) => {
+class GradeService {
+  create (name) {
     const grade = Grade.build({ name });
     return grade;
   }
 
-  findAll = async () => {
+  async findAll () {
     const grades = await Grade.findAll();
     return grades;
   }
 
-  findOne = async (id) => {
+  async findOne (id) {
     const grade = await Grade.findByPk(id);
     return grade;
   }
 
-  save = async (grade) => {
+  async save (grade) {
     await grade.save();
     return grade;
   }
 
-  updateOne = async (id, name) => {
+  async updateOne (id, name) {
     await Grade.update({ name }, { where: { id } });
   }
 
-  deleteOne = async (id) => {
+  async deleteOne (id) {
     await Grade.destroy({ where: { id } });
   }
 
-  getStudentsCountByGrade = async () => {
+  async getStudentsCountByGrade () {
     const grades = await Grade.sequelize.query(`
       SELECT
         "Grade".id,
@@ -54,4 +54,4 @@ class GradesService {
   }
 }
 
-module.exports = GradesService;
+module.exports = GradeService;

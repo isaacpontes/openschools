@@ -1,13 +1,13 @@
 const { QueryTypes } = require('sequelize');
 const School = require('../models/School');
 
-class SchoolsService {
-  create = (name, inep_code, address, user_id) => {
+class SchoolService {
+  create (name, inep_code, address, user_id) {
     const school = School.build({ name, inep_code, address, user_id });
     return school;
   }
 
-  findAll = async () => {
+  async findAll () {
     const schools = await School.findAll({
       include: [
         { association: 'manager' }
@@ -16,7 +16,7 @@ class SchoolsService {
     return schools;
   }
 
-  findAllWithClassrooms = async () => {
+  async findAllWithClassrooms () {
     const schools = await School.findAll({
       include: [
         { association: 'manager' },
@@ -26,12 +26,12 @@ class SchoolsService {
     return schools;
   }
 
-  findByManager = async (user_id) => {
+  async findByManager (user_id) {
     const schools = await School.findAll({ where: { user_id }});
     return schools;
   }
 
-  findByManagerWithClassrooms = async (user_id) => {
+  async findByManagerWithClassrooms (user_id) {
     const schools = await School.findAll({
       where: { user_id },
       include: [
@@ -41,7 +41,7 @@ class SchoolsService {
     return schools;
   }
 
-  findById = async (id) => {
+  async findById (id) {
     const school = await School.findByPk(id, {
       include: [
         { association: 'manager' }
@@ -50,7 +50,7 @@ class SchoolsService {
     return school;
   }
 
-  findByIdWithClassrooms = async (id) => {
+  async findByIdWithClassrooms (id) {
     const school = await School.findByPk(id, {
       include: [
         { association: 'manager' },
@@ -60,20 +60,20 @@ class SchoolsService {
     return school;
   }
 
-  save = async (school) => {
+  async save (school) {
     await school.save();
     return school;
   }
 
-  update = async (id, name, inep_code, address, user_id) => {
+  async update (id, name, inep_code, address, user_id) {
     await School.update({ name, inep_code, address, user_id }, { where: { id } });
   }
 
-  delete = async (id) => {
+  async delete (id) {
     await School.destroy({ where: { id }});
   }
 
-  getStudentsCountBySchool = async () => {
+  async getStudentsCountBySchool () {
     const schools = await School.sequelize.query(`
       SELECT
         "School".id,
@@ -97,4 +97,4 @@ class SchoolsService {
   }
 }
 
-module.exports = SchoolsService;
+module.exports = SchoolService;

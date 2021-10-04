@@ -1,6 +1,6 @@
 const { Sequelize } = require('sequelize');
 const seedAdmin = require('../database/seedAdmin');
-const UsersService = require('../services/UsersService');
+const UserService = require('../services/UserService');
 const User = require('../models/User');
 const School = require('../models/School');
 const Grade = require('../models/Grade');
@@ -61,14 +61,14 @@ class Database {
   }
 
   createFirstAdminUser() {
-    const usersService = new UsersService();
+    const userService = new UserService();
 
-    usersService.countAdminUsers().then(count => {
+    userService.countAdminUsers().then(count => {
       if (count > 0) {
         console.log('It looks like you already have a registered Admin user.');
       } else {
         console.log('It looks like your users table is empty.');
-        seedAdmin(usersService);
+        seedAdmin(userService);
       }
     });
   }

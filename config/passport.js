@@ -1,15 +1,15 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const UsersService = require('../services/UsersService');
+const UserService = require('../services/UserService');
 
-const usersService = new UsersService();
+const userService = new UserService();
 
 function passportLocal(passport) {
 
   passport.use(
     new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
       
-      usersService.findByEmail(email)
+      userService.findByEmail(email)
         .then((user) => {
           if (!user) {
             return done(null, false, { message: 'Este email não está registrado.' });
@@ -37,7 +37,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  usersService.findById(id)
+  userService.findById(id)
     .then(user => {
       done(null, user.get());
     }).catch(error => {

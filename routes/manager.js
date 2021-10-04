@@ -1,19 +1,19 @@
 const express = require('express');
 
-const ClassroomsService = require('../services/ClassroomsService');
-const SchoolsService = require('../services/SchoolsService');
-const StudentsService = require('../services/StudentsService');
+const ClassroomService = require('../services/ClassroomService');
+const SchoolService = require('../services/SchoolService');
+const StudentService = require('../services/StudentService');
 const ClassroomsController = require('../controllers/manager/ClassroomsController');
 const StudentsController = require('../controllers/manager/StudentsController');
 const SchoolController = require('../controllers/manager/SchoolsController');
 
-const classroomsService = new ClassroomsService();
-const schoolsService = new SchoolsService();
-const studentsService = new StudentsService();
+const classroomService = new ClassroomService();
+const schoolService = new SchoolService();
+const studentService = new StudentService();
 
-const classroomsController = new ClassroomsController(classroomsService);
-const schoolsController = new SchoolController(schoolsService);
-const studentsController = new StudentsController(studentsService);
+const classroomsController = new ClassroomsController(classroomService);
+const schoolsController = new SchoolController(schoolService);
+const studentsController = new StudentsController(studentService);
 
 const router = express.Router({ mergeParams: true });
 

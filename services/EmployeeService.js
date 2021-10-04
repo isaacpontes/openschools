@@ -1,7 +1,7 @@
 const Employee = require('../models/Employee');
 
-class EmployeesService {
-  create = ({ name, employee_code, position, role, bond, birthday, cpf, rg, ctps, elector_title, pis, address, phone, email, situation, admission_date, formation, complementary_formation, workload, fundeb, origin_sector_id, current_sector_id, shift, info }) => {
+class EmployeeService {
+  create ({ name, employee_code, position, role, bond, birthday, cpf, rg, ctps, elector_title, pis, address, phone, email, situation, admission_date, formation, complementary_formation, workload, fundeb, origin_sector_id, current_sector_id, shift, info }) {
     const employee = Employee.build();
 
     if (name) employee.name = name;
@@ -32,12 +32,12 @@ class EmployeesService {
     return employee;
   }
 
-  findAll = async () => {
+  async findAll () {
     const employees = await Employee.findAll();
     return employees;
   }
 
-  findAllWithSector = async () => {
+  async findAllWithSector () {
     const employees = await Employee.findAll({
       include: [
         { association: 'origin_sector' },
@@ -47,7 +47,7 @@ class EmployeesService {
     return employees;
   }
 
-  findOne = async (id) => {
+  async findOne (id) {
     const employees = await Employee.findByPk(id, {
       include: [
         { association: 'origin_sector' },
@@ -57,7 +57,7 @@ class EmployeesService {
     return employees;
   }
 
-  save = async (employee) => {
+  async save (employee) {
     if (!employee.current_sector_id) {
       employee.current_sector_id = employee.origin_sector_id;
     }
@@ -66,9 +66,9 @@ class EmployeesService {
     return employee;
   }
 
-  delete = async (id) => {
+  async delete (id) {
     await Employee.destroy({ where: { id } });
   }
 }
 
-module.exports = EmployeesService;
+module.exports = EmployeeService;

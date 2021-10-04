@@ -1,20 +1,20 @@
 const Controller = require('../Controller');
-const SectorsService = require("../../services/SectorsService");
-const SchoolsService = require('../../services/SchoolsService');
-const GradesService = require('../../services/GradesService');
+const SectorService = require("../../services/SectorService");
+const SchoolService = require('../../services/SchoolService');
+const GradeService = require('../../services/GradeService');
 
 class DashboardController extends Controller {
   // Render the dashboard page
   // GET /admin
   index = async (req, res) => {
-    const gradesService = new GradesService();
-    const schoolsService = new SchoolsService();
-    const sectorsService = new SectorsService();
+    const gradeService = new GradeService();
+    const schoolService = new SchoolService();
+    const sectorService = new SectorService();
 
     try {
-      const gradesWithStudentsCount = await gradesService.getStudentsCountByGrade();
-      const schoolsWithStudentsCount = await schoolsService.getStudentsCountBySchool();
-      const sectorsWithEmployeesCount = await sectorsService.getEmployeesCountBySector();
+      const gradesWithStudentsCount = await gradeService.getStudentsCountByGrade();
+      const schoolsWithStudentsCount = await schoolService.getStudentsCountBySchool();
+      const sectorsWithEmployeesCount = await sectorService.getEmployeesCountBySector();
 
       return res.render('admin/dashboard', {
         gradesWithStudentsCount,

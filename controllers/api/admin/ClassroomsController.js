@@ -1,7 +1,7 @@
 class ClassroomsController {
-  constructor (service, studentsService) {
+  constructor (service, studentService) {
     this.service = service;
-    this.studentsService = studentsService;
+    this.studentService = studentService;
   }
 
   // Return a list of all classrooms
@@ -44,7 +44,7 @@ class ClassroomsController {
 
     try {
       const classroom = await this.service.findById(id, { path: 'grade_id' });
-      const students = await this.studentsService.findByClassroomId(classroom.id);
+      const students = await this.studentService.findByClassroomId(classroom.id);
 
       return res.json({ ...classroom._doc, students });
     } catch (error) {

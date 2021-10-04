@@ -1,9 +1,9 @@
 const JwtService = require('../services/JwtService');
-const UsersService = require('../services/UsersService');
+const UserService = require('../services/UserService');
 
 const ensureAuth = (req, res, next) => {
   const token = req.headers['x-access-token'];
-  const usersService = new UsersService();
+  const userService = new UserService();
 
   if (!token) {
     return res.status(401).json({ message: 'Não Autorizado: nenhum token encontrado.'});
@@ -16,7 +16,7 @@ const ensureAuth = (req, res, next) => {
     return res.status(401).json({ message: 'Não Autorizado: token inválido.'});
   }
 
-  usersService.findByEmail(jwt.payload.email)
+  userService.findByEmail(jwt.payload.email)
     .then(user => {
       req.user = user;
       next();

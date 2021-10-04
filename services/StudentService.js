@@ -1,8 +1,8 @@
 const dayjs = require('dayjs');
 const Student = require('../models/Student');
 
-class StudentsService {
-  create = ({ student_code, first_name, last_name, gender, phone, address, birthday, birth_place, father_name, father_ocupation, mother_name, mother_ocupation, blood_type, info, transport_id }) => {
+class StudentService {
+  create ({ student_code, first_name, last_name, gender, phone, address, birthday, birth_place, father_name, father_ocupation, mother_name, mother_ocupation, blood_type, info, transport_id }) {
     const student = Student.build();
 
     if (student_code) student.student_code = student_code;
@@ -24,12 +24,12 @@ class StudentsService {
     return student;
   }
 
-  findAll = async () => {
+  async findAll () {
     const students = await Student.findAll();
     return students;
   }
 
-  findAllWithAcademicYears = async () => {
+  async findAllWithAcademicYears () {
     const students = await Student.findAll({
       include: [
         { association: 'academicYears' }
@@ -38,19 +38,19 @@ class StudentsService {
     return students;
   }
 
-  findAllInClassrooms = async (classroomsList) => {
+  async findAllInClassrooms (classroomsList) {
     const students = await Student.find({ classroom: { $in: classroomsList } });
     return students;
   }
 
-  findById = async (id) => {
+  async findById (id) {
     const student = await Student.findByPk(id, {
       include: 'transport'
     });
     return student;
   }
 
-  findByClassroomId = async (classroomId) => {
+  async findByClassroomId (classroomId) {
     // const students = await Student.findAll({
     //   where: {
 
@@ -59,12 +59,12 @@ class StudentsService {
     // return students;
   }
 
-  save = async (student) => {
+  async save (student) {
     await student.save();
     return student;
   }
 
-  update = async (id, student_code, first_name, last_name, gender, phone, address, birthday, birth_place, father_name, father_ocupation, mother_name, mother_ocupation, blood_type, info, transport_id, school, classroom) => {
+  async update (id, student_code, first_name, last_name, gender, phone, address, birthday, birth_place, father_name, father_ocupation, mother_name, mother_ocupation, blood_type, info, transport_id, school, classroom) {
     await Student.update({
       student_code,
       first_name,
@@ -86,11 +86,11 @@ class StudentsService {
     });
   }
 
-  delete = async (id) => {
+  async delete (id) {
     await Student.destroy({ where: { id } });
   }
 
-  generatePdfList = async (pdf) => {
+  async generatePdfList (pdf) {
     const students = await this.findAll();
 
     const marginLeft = 0 + 40;
@@ -164,4 +164,4 @@ class StudentsService {
   }
 }
 
-module.exports = StudentsService;
+module.exports = StudentService;
