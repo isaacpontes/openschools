@@ -38,13 +38,13 @@
             </div>
             <div class="column is-half">
               <div class="field">
-                <label for="grade" class="label">Ano Escolar</label>
+                <label for="grade_id" class="label">Ano Escolar</label>
                 <div class="control">
                   <div class="select is-fullwidth">
-                    <select name="classroom[grade]" id="grade">
+                    <select name="classroom[grade_id]" id="grade_id">
                       <option disabled selected>Escolha um ano...</option>
                       <% grades.forEach(grade => { %>
-                        <option value="<%= grade._id %>" >
+                        <option value="<%= grade.id %>" >
                           <%= grade.name %>
                         </option>
                       <% }) %>
@@ -55,7 +55,7 @@
             </div>
           </div>
 
-          <input type="hidden" name="classroom[school]" value="<%= schoolId %>">
+          <input type="hidden" name="classroom[school_id]" value="<%= schoolId %>">
 
           <div class="field">
             <div class="control">

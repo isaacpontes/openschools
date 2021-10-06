@@ -1,11 +1,20 @@
-const mongoose = require('mongoose');
+'use strict';
 
-const gradeSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  created: { type: Date, default: Date.now },
-  updated: { type: Date, default: Date.now },
-});
+const { Model, DataTypes } = require('sequelize');
 
-const Grade = mongoose.model('Grade', gradeSchema);
+class Grade extends Model {
+  static init(sequelize) {
+    super.init({
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false
+      }
+    }, { sequelize });
+  }
+
+  static associate(models) {
+    this.hasMany(models.Classroom, { foreignKey: 'grade_id', as: 'classrooms' });
+  }
+};
 
 module.exports = Grade;

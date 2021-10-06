@@ -1,39 +1,62 @@
-const mongoose = require('mongoose');
+'use strict';
+
+const { Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 
-const userSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  role: { type: String, enum: ['admin', 'manager', 'teacher', 'student'], required: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  created: { type: Date, default: Date.now },
-  updated: { type: Date, default: Date.now }
-});
+class User extends Model {
 
-userSchema.pre('save', function (next) {
-  if (this.isNew || this.isModified('password')) {
-    bcrypt.hash(this.password, 10, (err, encryptedPassword) => {
-      if (err)
-        next(err);
-      else {
-        this.password = encryptedPassword;
-        next();
+  static init(sequelize) {
+    super.init({
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      role: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isIn: {
+            args: [['admin', 'manager', 'teacher', 'student']],
+            msg: 'Invalid role'
+          }
+        }
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+          isEmail: true
+        }
+      },
+      password: DataTypes.STRING
+    }, { sequelize });
+
+    this.addHook('beforeCreate', async (user) => {
+      if (user.isNewRecord || user.changed('password')) {
+        user.password = await bcrypt.hash(user.password, 10);
       }
     });
-  } else {
-    next();
+
+    this.addHook('beforeUpdate', async (user) => {
+      if (user.isNewRecord || user.changed('password')) {
+        user.password = await bcrypt.hash(user.password, 10);
+      }
+    });
   }
-});
 
-userSchema.methods.checkPassword = function (password, callback) {
-  bcrypt.compare(password, this.password, (err, isSame) => {
-    if (err)
-      callback(err);
-    else
-      callback(err, isSame);
-  });
+  static associate(models) {
+    this.hasMany(models.School, { foreignKey: 'user_id', as: 'schools' });
+  }
+
+  checkPassword(password, callback) {
+    bcrypt.compare(password, this.password, (err, isSame) => {
+      if (err)
+        callback(err);
+      else
+        callback(err, isSame);
+    });
+  }
 };
-
-const User = mongoose.model('User', userSchema);
 
 module.exports = User;

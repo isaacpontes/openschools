@@ -7,7 +7,7 @@
           <h1 class="title is-4">Editar Escola | <%= school.name %>
           </h1>
           <hr>
-          <%- include('_form', { url: `/admin/schools/${school._id}?_method=put`, school: school }) %>
+          <%- include('_form', { url: `/admin/schools/${school.id}?_method=put`, school }) %>
         </div>
       </div>
     </div>

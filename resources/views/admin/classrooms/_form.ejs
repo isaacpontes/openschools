@@ -18,23 +18,20 @@
             autocomplete="off"
     
           />
-          <% if (classroom.errors && classroom.errors.hasOwnProperty('name')) { %>
-            <p class="is-danger help"><%= classroom.errors.name %></p>
-          <% } %>
         </div>
       </div>
     </div>
     <div class="column is-one-third">
       <div class="field">
-        <label for="grade" class="label">Ano Escolar</label>
+        <label for="grade_id" class="label">Ano Escolar</label>
         <div class="control">
           <div class="select is-fullwidth">
-            <select name="classroom[grade]" id="grade">
+            <select name="classroom[grade_id]" id="grade_id">
               <option disabled selected>Escolha um ano...</option>
               <% grades.forEach(grade => { %>
                 <option
-                  value="<%= grade._id %>"
-                  <%= grade._id.equals(classroom.grade) ? 'selected' : '' %>
+                  value="<%= grade.id %>"
+                  <%= grade.id === classroom.grade_id ? 'selected' : '' %>
                 >
                   <%= grade.name %>
                 </option>
@@ -46,15 +43,15 @@
     </div>
     <div class="column is-one-third">
       <div class="field">
-        <label for="school" class="label">Escola</label>
+        <label for="school_id" class="label">Escola</label>
         <div class="control">
           <div class="select is-fullwidth">
-            <select name="classroom[school]" id="school">
+            <select name="classroom[school_id]" id="school_id">
               <option>Escolha uma escola...</option>
               <% schools.forEach(school => { %>
                 <option
-                  value="<%= school._id %>"
-                  <%= school._id.equals(classroom.school) ? 'selected' : '' %>
+                  value="<%= school.id %>"
+                  <%= school.id === classroom.school_id ? 'selected' : '' %>
                 >
                   <%= school.name %>
                 </option>

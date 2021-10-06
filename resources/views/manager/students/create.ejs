@@ -7,13 +7,13 @@
         <div class="is-flex is-align-items-center is-justify-content-space-between">
           <h1 class="title mb-0">Novo Estudante</h1>
           <div class="buttons">
-            <a href="/manager/classrooms/<%= student.classroom %>" class="button">
-              Voltar para Turma
+            <a href="/manager/classrooms/<%= student.classroom_id %>" class="button">
+              Voltar
             </a>
           </div>
         </div>
         <hr>
-        <%- include('_form', { url: '/manager/students?_method=post', student: student }) %> 
+        <%- include('_form', { url: '/manager/students?_method=post', student }) %> 
       </div>
     </div>
   </div>

@@ -5,10 +5,10 @@
       <div class="card">
         <div class="card-content">
           <div class="is-flex is-align-items-center is-justify-content-space-between">
-            <h1 class="title size-4 mb-0">Listagem de Alunos</h1>
-            <div class="button-group">
-              <a href="/admin/students/create" class="button is-link m-1">Novo Aluno</a>
-              <a href="/admin/students/export-pdf" class="button is-light m-1" target="_blank">Exportar em PDF</a>
+            <h1 class="title size-4 mb-0">Alunos</h1>
+            <div class="buttons">
+              <a href="/admin/students/create" class="button is-link">Novo Aluno</a>
+              <a href="/admin/students/export-pdf" class="button is-light" target="_blank">Exportar em PDF</a>
             </div>
           </div>
 
@@ -19,11 +19,12 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th>Matrícula</th>
+                    <th>Matrícula Estadual</th>
                     <th>Nome</th>
                     <th>Sobrenome</th>
+                    <th>Gênero</th>
                     <th>Telefone</th>
-                    <th>Escola</th>
+                    <th>Matriculado</th>
                     <th colspan="3">Ações</th>
                   </tr>
                 </thead>
@@ -31,35 +32,38 @@
                   <% students.forEach(student=> { %>
                     <tr>
                       <td>
-                        <%= student.enrollment %>
+                        <%= student.student_code %>
                       </td>
                       <td>
-                        <%= student.firstName %>
+                        <%= student.first_name %>
                       </td>
                       <td>
-                        <%= student.lastName %>
+                        <%= student.last_name %>
+                      </td>
+                      <td>
+                        <%= student.gender === 'female' ? 'Feminino' : 'Masculino' %>
                       </td>
                       <td>
                         <%= student.phone %>
                       </td>
                       <td>
-                        <%= student.school.name %>
+                        <%= student.enrolled() ? 'Sim' : 'Não' %>
                       </td>
                       <td>
-                        <a href="/admin/students/<%= student._id %>">Exibir</a>
+                        <a href="/admin/students/<%= student.id %>">Exibir</a>
                       </td>
                       <td>
-                        <a href="/admin/students/<%= student._id %>/edit">Editar</a>
+                        <a href="/admin/students/<%= student.id %>/edit">Editar</a>
                       </td>
                       <td>
-                        <a class="has-text-danger modal-toggler" data-target="deleteModalStudent_<%= student._id %>">
+                        <a class="has-text-danger modal-toggler" data-target="deleteModalStudent_<%= student.id %>">
                           Excluir
                         </a>
                       </td>
                     </tr>
 
-                    <%- include('../../partials/_delete-modal', { name: 'Student' , _id: student._id, url:
-                      `/admin/students/${student._id}?_method=delete` }) %>
+                    <%- include('../../partials/_delete-modal', { name: 'Student' , id: student.id, url:
+                      `/admin/students/${student.id}?_method=delete` }) %>
                       <% }) %>
                 </tbody>
               </table>

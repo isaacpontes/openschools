@@ -41,7 +41,7 @@ class TransportsController {
     const { id } = req.params;
 
     try {
-      const transport = await this.service.findOne(id);
+      const transport = await this.service.findById(id);
 
       return res.json(transport);
     } catch (error) {
@@ -59,7 +59,7 @@ class TransportsController {
     const { name, driver, info } = req.body;
 
     try {
-      const transport = await this.service.findOne(id);
+      const transport = await this.service.findById(id);
 
       if (name) {
         transport.name = name;

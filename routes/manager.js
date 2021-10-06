@@ -1,19 +1,19 @@
 const express = require('express');
 
-const ClassroomsService = require('../services/ClassroomsService');
-const SchoolsService = require('../services/SchoolsService');
-const StudentsService = require('../services/StudentsService');
+const ClassroomService = require('../services/ClassroomService');
+const SchoolService = require('../services/SchoolService');
+const StudentService = require('../services/StudentService');
 const ClassroomsController = require('../controllers/manager/ClassroomsController');
 const StudentsController = require('../controllers/manager/StudentsController');
 const SchoolController = require('../controllers/manager/SchoolsController');
 
-const classroomsService = new ClassroomsService();
-const schoolsService = new SchoolsService();
-const studentsService = new StudentsService();
+const classroomService = new ClassroomService();
+const schoolService = new SchoolService();
+const studentService = new StudentService();
 
-const classroomsController = new ClassroomsController(classroomsService);
-const schoolsController = new SchoolController(schoolsService);
-const studentsController = new StudentsController(studentsService);
+const classroomsController = new ClassroomsController(classroomService);
+const schoolsController = new SchoolController(schoolService);
+const studentsController = new StudentsController(studentService);
 
 const router = express.Router({ mergeParams: true });
 
@@ -29,16 +29,18 @@ router.get('/classrooms/:id', classroomsController.show);
 router.get('/classrooms/:id/edit', classroomsController.edit);
 router.put('/classrooms/:id', classroomsController.update);
 router.delete('/classrooms/:id', classroomsController.delete);
-router.get('/classrooms/:id/add-student', classroomsController.addStudent);
 
 router.get('/schools', schoolsController.index);
 router.get('/schools/:id', schoolsController.show);
 router.get('/schools/:id/add-classroom', schoolsController.addClassroom);
 
+router.get('/students', studentsController.index);
 router.post('/students', studentsController.save);
+router.get('/students/create', studentsController.create);
 router.get('/students/:id', studentsController.show);
-router.get('/students/:id/edit', studentsController.edit);
-router.put('/students/:id', studentsController.update);
-router.delete('/students/:id', studentsController.delete);
+router.get('/students/:id/enroll', studentsController.enrollForm);
+router.post('/students/:id/enroll', studentsController.enroll);
+// router.get('/students/:id/edit', studentsController.edit);
+// router.put('/students/:id', studentsController.update);
 
 module.exports = router;

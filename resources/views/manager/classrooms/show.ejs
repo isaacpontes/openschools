@@ -4,31 +4,50 @@
   <div class="container">
     <div class="card">
       <div class="card-content">
+
+        <%- include('../../partials/messages') %>
+
         <div class="is-flex is-align-items-center is-justify-content-space-between">
           <h1 class="title mb-0"><%= classroom.name %></h1>
           <div class="buttons">
             <a
-              href="/manager/classrooms/<%= classroom._id %>/edit"
+              href="/manager/classrooms/<%= classroom.id %>/edit"
               class="button is-link"
             >
-              Editar Turma
+              Editar
             </a>
-            <a href="/manager/schools/<%= classroom.school %>" class="button">
-              Voltar para Escola
+            <a href="/manager/classrooms" class="button">
+              Voltar
             </a>
           </div>
         </div>
 
         <hr>
+
+        <div class="columns">
+          <div class="column is-6">
+            <div class="field mb-6">
+              <h4 class="title is-5">Ano Escolar</h4>
+              <h6 class="subtitle is-3">
+                <%= classroom.grade.name %>
+              </h6>
+            </div>
+          </div>
+          <div class="column is-6">
+            <div class="field">
+              <h4 class="title is-5">Escola</h4>
+              <h6 class="subtitle is-3">
+                <%= classroom.school.name %>
+              </h6>
+            </div>
+          </div>
+        </div>
         
         <div class="is-flex is-align-items-center is-justify-content-space-between mb-4">
           <h4 class="title is-5 mb-0">
             Alunos
           </h4>
-          <a href="/manager/classrooms/<%= classroom._id %>/add-student" class="button is-link">Novo Aluno</a>
         </div>
-
-        <%- include('../../partials/messages') %>
 
         <div class="table-container">
           <table class="table">
@@ -45,19 +64,19 @@
               <% students.forEach(student => { %>
                 <tr>
                   <td>
-                    <%= student.enrollment %>
+                    <%= student.student_code %>
                   </td>
                   <td>
-                    <%= student.firstName %>
+                    <%= student.first_name %>
                   </td>
                   <td>
-                    <%= student.lastName %>
+                    <%= student.last_name %>
                   </td>
                   <td>
                     <%= student.phone %>
                   </td>
                   <td>
-                    <a href="/manager/students/<%= student._id %>" class="has-text-weight-bold">
+                    <a href="/manager/students/<%= student.id %>" class="has-text-weight-bold">
                       Exibir
                     </a>
                   </td>
@@ -72,12 +91,12 @@
         
         <a
           class="button is-danger modal-toggler"
-          data-target="deleteModalClassroom_<%= classroom._id %>"
+          data-target="deleteModalClassroom_<%= classroom.id %>"
         >
           Excluir
         </a>
 
-        <%- include('../../partials/_delete-modal', { name: 'Classroom', _id: classroom._id, url: `/manager/classrooms/${classroom._id}?_method=delete` }) %>
+        <%- include('../../partials/_delete-modal', { name: 'Classroom', id: classroom.id, url: `/manager/classrooms/${classroom.id}?_method=delete` }) %>
       </div>
     </div>
   </div>

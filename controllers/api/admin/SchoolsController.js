@@ -7,9 +7,10 @@ class SchoolsController {
   // GET /api/admin/schools
   findAll = async (req, res) => {
     try {
-      const schools = await this.service.findAll({ path: 'manager'});
+      const schools = await this.service.findAll();
       return res.json(schools);
     } catch (error) {
+      console.log(error);
       return res.status(400).json({
         message: 'Erro ao retornar escolas',
         error: error.message
@@ -22,7 +23,7 @@ class SchoolsController {
   findById = async (req, res) => {
     const { id } = req.params;
     try {
-      const school = await this.service.findById(id, { path: 'manager' });
+      const school = await this.service.findById(id);
       return res.json(school);
     } catch (error) {
       return res.status(400).json({
@@ -35,8 +36,8 @@ class SchoolsController {
   // Save a new school to the database
   // POST /api/admin/schools
   save = async (req, res) => {
-    const { name, inepCode, address, manager } = req.body;
-    const school = this.service.create(name, inepCode, address, manager);
+    const { name, inep_code, address, user_id } = req.body;
+    const school = this.service.create(name, inep_code, address, user_id);
 
     try {
       await this.service.save(school);
@@ -53,7 +54,7 @@ class SchoolsController {
   // PUT /api/admin/schools/:id
   update = async (req, res) => {
     const { id } = req.params;
-    const { name, inepCode, address, manager } = req.body;
+    const { name, inep_code, address, user_id } = req.body;
 
     try {
       const school = await this.service.findById(id);
@@ -61,14 +62,14 @@ class SchoolsController {
       if (name) {
         school.name = name;
       }
-      if (inepCode) {
-        school.inepCode = inepCode;
+      if (inep_code) {
+        school.inep_code = inep_code;
       }
       if (address) {
         school.address = address;
       }
-      if (manager) {
-        school.manager = manager;
+      if (user_id) {
+        school.user_id = user_id;
       }
 
       await this.service.save(school);

@@ -5,8 +5,10 @@
       <div class="card">
         <div class="card-content">
           <div class="is-flex is-align-items-center is-justify-content-space-between">
-            <h1 class="title size-4 mb-0">Listagem de Escolas</h1>
-            <a href="/admin/schools/create" class="button is-link">Nova Escola</a>
+            <h1 class="title size-4 mb-0">Todas as Escolas</h1>
+            <div class="button-group">
+              <a href="/admin/schools/create" class="button is-link">Nova Escola</a>
+            </div>
           </div>
 
           <hr>
@@ -28,26 +30,26 @@
                       <%= school.name %>
                     </td>
                     <td>
-                      <%= school.inepCode %>
+                      <%= school.inep_code %>
                     </td>
                     <td>
                       <%= school.manager.name %>
                     </td>
                     <td>
-                      <a href="/admin/schools/<%= school._id %>">Exibir</a>
+                      <a href="/admin/schools/<%= school.id %>">Exibir</a>
                     </td>
                     <td>
-                      <a href="/admin/schools/<%= school._id %>/edit">Editar</a>
+                      <a href="/admin/schools/<%= school.id %>/edit">Editar</a>
                     </td>
                     <td>
-                      <a class="has-text-danger modal-toggler" data-target="deleteModalSchool_<%= school._id %>">
+                      <a class="has-text-danger modal-toggler" data-target="deleteModalSchool_<%= school.id %>">
                         Excluir
                       </a>
                     </td>
                   </tr>
 
-                  <%- include('../../partials/_delete-modal', { name: 'School' , _id: school._id, url:
-                    `/admin/schools/${school._id}?_method=delete` }) %>
+                  <%- include('../../partials/_delete-modal', { name: 'School' , id: school.id, url:
+                    `/admin/schools/${school.id}?_method=delete` }) %>
                     <% }) %>
               </tbody>
             </table>

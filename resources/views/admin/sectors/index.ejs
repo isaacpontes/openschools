@@ -26,17 +26,17 @@
                       <%= sector.name %>
                     </td>
                     <td>
-                      <a href="/admin/sectors/<%= sector._id %>/edit">Editar</a>
+                      <a href="/admin/sectors/<%= sector.id %>/edit">Editar</a>
                     </td>
                     <td>
-                      <a class="has-text-danger modal-toggler" data-target="deleteModalSector_<%= sector._id %>">
+                      <a class="has-text-danger modal-toggler" data-target="deleteModalSector_<%= sector.id %>">
                         Excluir
                       </a>
                     </td>
                   </tr>
 
-                  <%- include('../../partials/_delete-modal', { name: 'Sector' , _id: sector._id, url:
-                    `/admin/sectors/${sector._id}?_method=delete` }) %>
+                  <%- include('../../partials/_delete-modal', { name: 'Sector' , id: sector.id, url:
+                    `/admin/sectors/${sector.id}?_method=delete` }) %>
                     <% }) %>
               </tbody>
             </table>

@@ -1,14 +1,14 @@
 class ClassroomsController {
-  constructor (service, studentsService) {
+  constructor (service, studentService) {
     this.service = service;
-    this.studentsService = studentsService;
+    this.studentService = studentService;
   }
 
   // Return a list of all classrooms
   // GET /api/admin/classrooms
   findAll = async (req, res) => {
     try {
-      const classrooms = await this.service.findAll(['grade']);
+      const classrooms = await this.service.findAll();
 
       return res.json(classrooms);
     } catch (error) {
@@ -22,8 +22,8 @@ class ClassroomsController {
   // Save a new classroom to the database
   // POST /api/admin/classrooms
   save = async (req, res) => {
-    const { name, grade, school } = req.body;
-    const classroom = this.service.create(name, grade, school);
+    const { name, grade_id, school_id } = req.body;
+    const classroom = this.service.create(name, grade_id, school_id);
 
     try {
       await this.service.save(classroom);
@@ -43,8 +43,8 @@ class ClassroomsController {
     const { id } = req.params;
 
     try {
-      const classroom = await this.service.findById(id, { path: 'grade' });
-      const students = await this.studentsService.findByClassroomId(classroom._id);
+      const classroom = await this.service.findById(id, { path: 'grade_id' });
+      const students = await this.studentService.findByClassroomId(classroom.id);
 
       return res.json({ ...classroom._doc, students });
     } catch (error) {
@@ -58,7 +58,7 @@ class ClassroomsController {
   // Update a classroom in the database
   // PUT /admin/classrooms/:id
   update = async (req, res) => {
-    const { name, grade } = req.body;
+    const { name, grade_id } = req.body;
     const { id } = req.params;
 
     try {
@@ -67,8 +67,8 @@ class ClassroomsController {
       if (name) {
         classroom.name = name;
       }
-      if (grade) {
-        classroom.grade = grade;
+      if (grade_id) {
+        classroom.grade_id = grade_id;
       }
 
       await this.service.save(classroom);

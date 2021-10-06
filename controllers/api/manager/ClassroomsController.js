@@ -1,14 +1,14 @@
 class ClassroomsController {
-  constructor (service, studentsService) {
+  constructor (service, studentService) {
     this.service = service;
-    this.studentsService = studentsService;
+    this.studentService = studentService;
   }
 
   // Save a new classroom to the database
   // POST /api/manager/classrooms
   save = async (req, res) => {
-    const { name, grade, school } = req.body;
-    const classroom = this.service.create(name, grade, school);
+    const { name, grade_id, school_id } = req.body;
+    const classroom = this.service.create(name, grade_id, school_id);
   
     try {
       await this.service.save(classroom);
@@ -19,7 +19,7 @@ class ClassroomsController {
   }
 
   // Return a single classroom
-  // GET /api/v1/classrooms/:id
+  // GET /api/manager/classrooms/:id
   findOne = async (req, res) => {
     const { id } = req.params;
 
@@ -32,20 +32,25 @@ class ClassroomsController {
   }
 
   // Update a classroom in the database
-  // PATCH /api/v1/classrooms/:id
+  // PATCH /api/manager/classrooms/:id
   update = async (req, res) => {
+    const { name, grade_id } = req.body;
     const { id } = req.params;
-    const { name, grade } = req.body;
 
     try {
-      if (typeof name === 'undefined' || typeof grade === 'undefined') {
-        throw new Error('Nome e Ano Escolar são obrigatórios');
-      }
+      const classroom = await this.service.findById(id);
+      
+      if (name) classroom.name = name;
+      if (grade_id) classroom.grade_id = grade_id;
 
-      await this.service.update(id, name, grade);
-      return res.status(204).json({ message: 'OK' });
+      await this.service.save(classroom);
+
+      return res.json(classroom);
     } catch (error) {
-      return res.status(400).json({ message: 'Erro ao atualizar turma.' });
+      return res.status(400).json({
+        message: 'Erro ao atualizar turma',
+        error: error.message
+      });
     }
   }
 
@@ -57,19 +62,22 @@ class ClassroomsController {
     try {
       await this.service.delete(id);
 
-      return res.status(204).json({ message: 'OK' });
+      return res.status(204).json();
     } catch (error) {
-      return res.status(400).json({ message: 'Erro ao excluir turma.' });
+      return res.status(400).json({
+        message: 'Erro ao excluir turma',
+        error: error.message
+      });
     }
   }
 
   // Return all the classroom's students
-  // GET /api/v1/classrooms/:id/students
+  // GET /api/manager/classrooms/:id/students
   findClassroomStudents = async (req, res) => {
     const { id } = req.params;
 
     try {
-      const students = await this.studentsService.findByClassroomId(id);
+      const students = await this.studentService.findByClassroomId(id);
       
       return res.status(200).json(students);
     } catch (error) {

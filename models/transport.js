@@ -1,13 +1,28 @@
-const mongoose = require('mongoose');
+'use strict';
 
-const transportSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  driver: { type: String, required: true },
-  info: { type: String },
-  created: { type: Date, default: Date.now },
-  updated: { type: Date, default: Date.now }
-});
+const { Model, DataTypes } = require('sequelize');
 
-const Transport = mongoose.model('Transport', transportSchema);
+class Transport extends Model {
+  static init(sequelize) {
+    super.init({
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      driver: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      info: {
+        type: DataTypes.TEXT,
+        allowNull: true
+      }
+    }, { sequelize });
+  }
+
+  static associate(models) {
+    this.hasMany(models.Student, { foreignKey: 'transport_id', as: 'transports' });
+  }
+};
 
 module.exports = Transport;

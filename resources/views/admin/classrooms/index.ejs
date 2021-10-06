@@ -5,8 +5,10 @@
       <div class="card">
         <div class="card-content">
           <div class="is-flex is-align-items-center is-justify-content-space-between">
-            <h1 class="title size-4 mb-0">Lista de Turmas</h1>
-            <a href="/admin/classrooms/new" class="button is-link">Nova Turma</a>
+            <h1 class="title size-4 mb-0">Todas as Turmas</h1>
+            <div class="button-group">
+              <a href="/admin/classrooms/create" class="button is-link">Nova Turma</a>
+            </div>
           </div>
 
           <hr>
@@ -34,20 +36,20 @@
                       <%= classroom.school.name %>
                     </td>
                     <td>
-                      <a href="/admin/classrooms/<%= classroom._id %>">Exibir</a>
+                      <a href="/admin/classrooms/<%= classroom.id %>">Exibir</a>
                     </td>
                     <td>
-                      <a href="/admin/classrooms/<%= classroom._id %>/edit">Editar</a>
+                      <a href="/admin/classrooms/<%= classroom.id %>/edit">Editar</a>
                     </td>
                     <td>
-                      <a class="has-text-danger modal-toggler" data-target="deleteModalClassroom_<%= classroom._id %>">
+                      <a class="has-text-danger modal-toggler" data-target="deleteModalClassroom_<%= classroom.id %>">
                         Excluir
                       </a>
                     </td>
                   </tr>
 
-                  <%- include('../../partials/_delete-modal', { name: 'Classroom' , _id: classroom._id, url:
-                    `/admin/classrooms/${classroom._id}?_method=delete` }) %>
+                  <%- include('../../partials/_delete-modal', { name: 'Classroom' , id: classroom.id, url:
+                    `/admin/classrooms/${classroom.id}?_method=delete` }) %>
                     <% }) %>
               </tbody>
             </table>

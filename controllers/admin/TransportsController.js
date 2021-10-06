@@ -43,8 +43,9 @@ class TransportsController extends Controller {
   // GET /transports/:id/edit
   edit = async (req, res) => {
     const id = req.params.id;
+
     try {
-      const transport = await this.service.findOne(id);
+      const transport = await this.service.findById(id);
       return res.render('admin/transports/edit', { transport });
     } catch (error) {
       return res.render('pages/error', { error });
@@ -58,7 +59,20 @@ class TransportsController extends Controller {
     const { name, driver, info } = req.body.transport;
 
     try {
-      await this.service.updateOne(id, name, driver, info);
+      const transport = await this.service.findById(id);
+
+      if (name) {
+        transport.name = name;
+      }
+      if (driver) {
+        transport.driver = driver;
+      }
+      if (info) {
+        transport.info = info;
+      }
+
+      await this.service.save(transport);
+
       req.flash('success', 'Transporte atualizado com sucesso.');
       return res.redirect('/admin/transports');
     } catch (error) {

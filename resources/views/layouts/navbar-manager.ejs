@@ -2,7 +2,7 @@
   <div class="navbar-brand">
     <a class="navbar-item" href="/">
       <img src="/images/logo.png" width="28" height="28">
-      <span class="ml-2">OpenSchools</span>
+      <!-- <span class="ml-2">OpenSchools</span> -->
     </a>
 
     <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -19,24 +19,26 @@
       </a>
 
       <a class="navbar-item" href="/manager/schools">
-        Minhas Escolas
+        Escolas
       </a>
 
       <a class="navbar-item" href="/manager/classrooms">
-        Minhas Turmas
+        Turmas
+      </a>
+
+      <a class="navbar-item" href="/manager/students">
+        Alunos
       </a>
     </div>
 
     <div class="navbar-end">
+      <a href="#" class="navbar-item">
+        Meu Usuário
+      </a>
       <div class="navbar-item">
-        <div class="buttons">
-          <a class="button is-light">
-            Meu Usuário
-          </a>
-          <a class="button is-danger" href="/auth/logout">
-            Sair
-          </a>
-        </div>
+        <a class="button is-danger" href="/auth/logout">
+          Sair
+        </a>
       </div>
     </div>
   </div>

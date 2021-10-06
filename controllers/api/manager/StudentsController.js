@@ -1,20 +1,20 @@
 class StudentsController {
-  constructor (service, schoolsService) {
+  constructor (service, schoolService) {
     this.service = service;
-    this.schoolsService = schoolsService;
+    this.schoolService = schoolService;
   }
 
   // Find all students from the manager's schools
   // GET /api/manager/students
   index = async (req, res) => {
-    const manager = req.user._id;
+    const manager = req.user.id;
 
     try {
-      const managerSchools = await this.schoolsService.findByManager(manager);
+      const managerSchools = await this.schoolService.findByManager(manager);
       const managerClassrooms = [];
 
       managerSchools.forEach((school) => {
-        const schoolClassrooms = school.classrooms.map((classroom) => classroom._id);
+        const schoolClassrooms = school.classrooms.map((classroom) => classroom.id);
         managerClassrooms.push(...schoolClassrooms);
       });
 
@@ -29,8 +29,40 @@ class StudentsController {
   // Save a new student to the database
   // POST /api/manager/students
   save = async (req, res) => {
-    const { enrollment, firstName, lastName, gender, phone, address, birthday, birthPlace, fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info, transport, school, classroom } = req.body;
-    const student = this.service.create(enrollment, firstName, lastName, gender, phone, address, birthday, birthPlace, fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info, transport, school, classroom);
+    const {
+      student_code,
+      first_name,
+      last_name,
+      gender,
+      phone,
+      address,
+      birthday,
+      birthPlace,
+      fatherName,
+      fatherOcupation,
+      motherName,
+      motherOcupation,
+      bloodType,
+      info,
+      transport_id
+    } = req.body;
+
+    const student = this.service.create({student_code,
+      first_name,
+      last_name,
+      gender,
+      phone,
+      address,
+      birthday,
+      birthPlace,
+      fatherName,
+      fatherOcupation,
+      motherName,
+      motherOcupation,
+      bloodType,
+      info,
+      transport_id
+    });
   
     try {
       await this.service.save(student);
@@ -59,14 +91,29 @@ class StudentsController {
   // PUT /api/manager/students/:id
   update = async (req, res) => {
     const { id } = req.params;
-    const { enrollment, firstName, lastName, gender, phone, address, birthday, birthPlace, fatherName, fatherOcupation, motherName, motherOcupation, bloodType, info, transport, school, classroom } = req.body;
+    const { student_code,
+      first_name,
+      last_name,
+      gender,
+      phone,
+      address,
+      birthday,
+      birthPlace,
+      fatherName,
+      fatherOcupation,
+      motherName,
+      motherOcupation,
+      bloodType,
+      info,
+      transport_id
+    } = req.body;
   
     try {
       const student = await this.service.findById(id);
 
-      if (enrollment) student.enrollment = enrollment;
-      if (firstName) student.firstName = firstName;
-      if (lastName) student.lastName = lastName;
+      if (student_code) student.student_code = student_code;
+      if (first_name) student.first_name = first_name;
+      if (last_name) student.last_name = last_name;
       if (gender) student.gender = gender;
       if (phone) student.phone = phone;
       if (address) student.address = address;
@@ -78,10 +125,7 @@ class StudentsController {
       if (motherOcupation) student.motherOcupation = motherOcupation;
       if (bloodType) student.bloodType = bloodType;
       if (info) student.info = info;
-      if (transport) student.transport = transport;
-      if (school) student.school = school;
-      if (school) student.school = school;
-      if (classroom) student.classroom = classroom;
+      if (transport_id) student.transport_id = transport_id;
       student.updated = Date.now();
 
       await this.service.save(student);

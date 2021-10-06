@@ -1,12 +1,12 @@
 const Controller = require('../Controller');
-const UsersService = require('../../services/UsersService');
+const UserService = require('../../services/UserService');
 
 class SchoolsController extends Controller {
   // Render a list of all schools
   // GET /admin/schools
   index = async (req, res) => {
     try {
-      const schools = await this.service.findAll({ path: 'manager'});
+      const schools = await this.service.findAll();
       return res.status(200).render('admin/schools/index', { schools });
     } catch (error) {
       return res.status(400).render('pages/error', { error });
@@ -16,15 +16,15 @@ class SchoolsController extends Controller {
   // Save a new school to the database
   // POST /admin/schools
   save = async (req, res) => {
-    const { name, inepCode, address, manager } = req.body.school;
-    const school = this.service.create(name, inepCode, address, manager);
+    const { name, inep_code, address, user_id } = req.body.school;
+    const school = this.service.create(name, inep_code, address, user_id);
 
     try {
       await this.service.save(school);
       req.flash('success', 'Escola salva com sucesso.');
       return res.redirect('/admin/schools');
     } catch (error) {
-      req.flash('error', 'Erro ao salvar escola.');
+      req.flash('error', `Erro ao salvar escola. ${error.message}`);
       return res.redirect('/admin/schools/create');
     }
   }
@@ -35,9 +35,9 @@ class SchoolsController extends Controller {
     try {
       const school = this.service.create();
 
-      const usersService = new UsersService();
+      const userService = new UserService();
 
-      const allManagers = await usersService.findAllManagers();
+      const allManagers = await userService.findAllManagers();
 
       return res.render('admin/schools/create', { school, allManagers });
     } catch (error) {
@@ -50,7 +50,8 @@ class SchoolsController extends Controller {
   show = async (req, res) => {
     const { id } = req.params;
     try {
-      const school = await this.service.findById(id, { path: 'manager' });
+      const school = await this.service.findByIdWithClassrooms(id);
+      console.log(school)
       return res.render('admin/schools/show', { school });
     } catch (error) {
       return res.render('pages/error', { error });
@@ -61,12 +62,12 @@ class SchoolsController extends Controller {
   // GET /admin/schools/:id/edit
   edit = async (req, res) => {
     const { id } = req.params;
+
     try {
       const school = await this.service.findById(id);
 
-      const usersService = new UsersService();
-
-      const allManagers = await usersService.findAllManagers();
+      const userService = new UserService();
+      const allManagers = await userService.findAllManagers();
 
       return res.render('admin/schools/edit', { school, allManagers });
     } catch (error) {
@@ -78,9 +79,26 @@ class SchoolsController extends Controller {
   // PUT /admin/schools/:id
   update = async (req, res) => {
     const { id } = req.params;
-    const { name, inepCode, address, manager } = req.body.school;
+    const { name, inep_code, address, user_id } = req.body.school;
+
     try {
-      await this.service.update(id, name, inepCode, address, manager);
+      const school = await this.service.findById(id);
+
+      if (name) {
+        school.name = name;
+      }
+      if (inep_code) {
+        school.inep_code = inep_code;
+      }
+      if (address) {
+        school.address = address;
+      }
+      if (user_id) {
+        school.user_id = user_id;
+      }
+
+      await this.service.save(school);
+
       req.flash('success', 'Escola atualizada com sucesso.');
       return res.redirect('/admin/schools');
     } catch (error) {

@@ -7,7 +7,7 @@
           <h1 class="title is-4">Editar Setor | <%= sector.name %>
           </h1>
           <hr>
-          <%- include('_form', { url: `/admin/sectors/${sector._id}?_method=put`, sector: sector }) %>
+          <%- include('_form', { url: `/admin/sectors/${sector.id}?_method=put`, sector: sector }) %>
         </div>
       </div>
     </div>
