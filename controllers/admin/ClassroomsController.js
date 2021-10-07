@@ -110,7 +110,7 @@ class ClassroomsController {
     const { id } = req.params;
 
     try {
-      await ClassroomService.deleteOneOne(id);
+      await ClassroomService.deleteOne(id);
 
       req.flash('success', 'Turma excluída com sucesso.');
       return res.redirect('/admin/classrooms');

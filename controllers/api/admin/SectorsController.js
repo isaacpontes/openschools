@@ -99,7 +99,7 @@ class SectorsController {
 
     try {
 
-      await SectorService.deleteOneOne(id);
+      await SectorService.deleteOne(id);
 
       return res.status(204).json();
 

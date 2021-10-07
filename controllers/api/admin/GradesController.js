@@ -58,7 +58,7 @@ class GradesController {
     const { id } = req.params;
 
     try {
-      await GradeService.deleteOneOne(id);
+      await GradeService.deleteOne(id);
 
       return res.status(204).json();
     } catch (error) {

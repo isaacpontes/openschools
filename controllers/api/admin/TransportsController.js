@@ -86,7 +86,7 @@ class TransportsController {
     const { id } = req.params;
 
     try {
-      await TransportService.deleteOneOne(id);
+      await TransportService.deleteOne(id);
 
       return res.status(204).json();
     } catch (error) {

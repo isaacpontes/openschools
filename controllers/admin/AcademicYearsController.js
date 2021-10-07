@@ -51,7 +51,7 @@ class AcademicYearsController {
   delete = async (req, res) => {
     const { id } = req.params;
     try {
-      await AcademicYearService.deleteOneOne(id);
+      await AcademicYearService.deleteOne(id);
       req.flash('success', 'Ano letivo excluído com sucesso.');
       return res.redirect('/admin/academic-years');
     } catch (error) {

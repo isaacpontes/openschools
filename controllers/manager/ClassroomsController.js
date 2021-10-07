@@ -85,7 +85,7 @@ class ClassroomsController {
     const classroom = await ClassroomService.findById(id);
 
     try {
-      await ClassroomService.deleteOneOne(id);
+      await ClassroomService.deleteOne(id);
       req.flash('success', 'Turma excluída com sucesso.');
       return res.redirect(`/manager/schools/${classroom.school_id}`);
     } catch (error) {

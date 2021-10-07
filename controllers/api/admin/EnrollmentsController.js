@@ -58,7 +58,7 @@ class EnrollmentsController {
     const { id } = req.params;
 
     try {
-      await EnrollmentService.deleteOneOne(id);
+      await EnrollmentService.deleteOne(id);
 
       return res.status(204).json();
     } catch (error) {

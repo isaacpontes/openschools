@@ -87,7 +87,7 @@ class TransportsController {
     const { id } = req.params;
 
     try {
-      await TransportService.deleteOneOne(id);
+      await TransportService.deleteOne(id);
       req.flash('success', 'Transporte excluído com sucesso.');
       return res.redirect('/admin/transports');
     } catch (error) {

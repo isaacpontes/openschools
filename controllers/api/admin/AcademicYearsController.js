@@ -58,7 +58,7 @@ class AcademicYearsController {
     const { id } = req.params;
 
     try {
-      await AcademicYearService.deleteOneOne(id);
+      await AcademicYearService.deleteOne(id);
 
       return res.status(204).json();
     } catch (error) {

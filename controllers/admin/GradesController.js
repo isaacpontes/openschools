@@ -51,7 +51,7 @@ class GradesController {
   delete = async (req, res) => {
     const { id } = req.params;
     try {
-      await GradeService.deleteOneOne(id);
+      await GradeService.deleteOne(id);
       req.flash('success', 'Ano escolar excluído com sucesso.');
       return res.redirect('/admin/grades');
     } catch (error) {

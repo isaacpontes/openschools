@@ -85,7 +85,7 @@ class ClassroomsController {
     const { id } = req.params;
 
     try {
-      await ClassroomService.deleteOneOne(id);
+      await ClassroomService.deleteOne(id);
 
       return res.status(204).json();
     } catch (error) {

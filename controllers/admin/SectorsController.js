@@ -67,7 +67,7 @@ class SectorsController {
   delete = async (req, res) => {
     const { id } = req.params;
     try {
-      await SectorService.deleteOneOne(id);
+      await SectorService.deleteOne(id);
       req.flash('success', 'Setor excluído com sucesso.');
       return res.redirect('/admin/sectors');
     } catch (error) {
