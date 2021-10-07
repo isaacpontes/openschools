@@ -1,11 +1,9 @@
-class TransportsController {
-  constructor (service) {
-    this.service = service;
-  }
+const TransportService = require("../../../services/TransportService");
 
+class TransportsController {
   findAll = async (req, res) => {
     try {
-      const transports = await this.service.findAll();
+      const transports = await TransportService.findAll();
       return res.json(transports);
     } catch (error) {
       return res.status(400).json({

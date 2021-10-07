@@ -2,35 +2,35 @@ const { QueryTypes } = require('sequelize');
 const Grade = require('../models/Grade');
 
 class GradeService {
-  create (name) {
+  static create(name) {
     const grade = Grade.build({ name });
     return grade;
   }
 
-  async findAll () {
+  static async findAll() {
     const grades = await Grade.findAll();
     return grades;
   }
 
-  async findOne (id) {
+  static async findOne(id) {
     const grade = await Grade.findByPk(id);
     return grade;
   }
 
-  async save (grade) {
+  static async save(grade) {
     await grade.save();
     return grade;
   }
 
-  async updateOne (id, name) {
+  static async updateOne(id, name) {
     await Grade.update({ name }, { where: { id } });
   }
 
-  async deleteOne (id) {
+  static async deleteOne(id) {
     await Grade.destroy({ where: { id } });
   }
 
-  async getStudentsCountByGrade () {
+  static async getStudentsCountByGrade() {
     const grades = await Grade.sequelize.query(`
       SELECT
         "Grade".id,

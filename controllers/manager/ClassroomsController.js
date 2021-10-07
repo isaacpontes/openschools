@@ -1,16 +1,15 @@
-const Controller = require("../Controller");
+const ClassroomService = require("../../services/ClassroomService");
 const GradeService = require("../../services/GradeService");
-const StudentService = require("../../services/StudentService");
 const TransportService = require("../../services/TransportService");
 
-class ClassroomsController extends Controller {
+class ClassroomsController {
   // Render a list of all user's classrooms
   // GET /manager/classrooms
   index = async (req, res) => {
     const currentUser = req.user.id;
 
     try {
-      const classrooms = await this.service.findByUserId(currentUser);
+      const classrooms = await ClassroomService.findByUserId(currentUser);
 
       return res.render('manager/classrooms/index', { classrooms });
     } catch (error) {
@@ -22,10 +21,10 @@ class ClassroomsController extends Controller {
   // POST /classrooms
   save = async (req, res) => {
     const { name, grade_id, school_id } = req.body.classroom;
-    const classroom = this.service.create(name, grade_id, school_id);
+    const classroom = ClassroomService.create(name, grade_id, school_id);
 
     try {
-      await this.service.save(classroom);
+      await ClassroomService.save(classroom);
       req.flash('success', 'Turma salva com sucesso.');
       return res.redirect(`/manager/schools/${classroom.school_id}`);
     } catch (error) {
@@ -38,10 +37,8 @@ class ClassroomsController extends Controller {
   show = async (req, res) => {
     const { id } = req.params;
 
-    const studentService = new StudentService();
-
     try {
-      const classroom = await this.service.findById(id);
+      const classroom = await ClassroomService.findById(id);
       const students = await classroom.getStudents();
 
       return res.status(200).render('manager/classrooms/show', { classroom, students });
@@ -55,11 +52,9 @@ class ClassroomsController extends Controller {
   edit = async (req, res) => {
     const { id } = req.params;
 
-    const gradeService = new GradeService();
-
     try {
-      const classroom = await this.service.findById(id);
-      const grades = await gradeService.findAll();
+      const classroom = await ClassroomService.findById(id);
+      const grades = await GradeService.findAll();
 
       return res.status(200).render('manager/classrooms/edit', { classroom, grades });
     } catch (error) {
@@ -74,7 +69,7 @@ class ClassroomsController extends Controller {
     const { id } = req.params;
 
     try {
-      await this.service.update(id, name, grade_id);
+      await ClassroomService.updateOneOne(id, name, grade_id);
       req.flash('success', 'Turma atualizada com sucesso.');
       return res.redirect(`/manager/schools/${school_id}`);
     } catch (error) {
@@ -87,10 +82,10 @@ class ClassroomsController extends Controller {
   // DELETE /manager/classrooms/:id
   delete = async (req, res) => {
     const { id } = req.params;
-    const classroom = await this.service.findById(id);
+    const classroom = await ClassroomService.findById(id);
 
     try {
-      await this.service.delete(id);
+      await ClassroomService.deleteOneOne(id);
       req.flash('success', 'Turma excluída com sucesso.');
       return res.redirect(`/manager/schools/${classroom.school_id}`);
     } catch (error) {
@@ -105,10 +100,9 @@ class ClassroomsController extends Controller {
     const { id } = req.params;
 
     try {
-      const classroom = await this.service.findById(id);
+      const classroom = await ClassroomService.findById(id);
 
-      const transportService = new TransportService();
-      const allTransports = await transportService.findAll();
+      const allTransports = await TransportService.findAll();
 
       return res.render('manager/classrooms/add-student', {
         classroom,

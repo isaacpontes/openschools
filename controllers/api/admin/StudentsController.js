@@ -1,13 +1,11 @@
-class StudentsController {
-  constructor (service) {
-    this.service = service;
-  }
+const StudentService = require("../../../services/StudentService");
 
+class StudentsController {
   // Return a list of all students
   // GET /api/admin/students
   findAll = async (req, res) => {
     try {
-      const students = await this.service.findAll();
+      const students = await StudentService.findAll();
       return res.json(students);
     } catch (error) {
       return res.status(400).json({
@@ -38,7 +36,7 @@ class StudentsController {
       transport_id
     } = req.body;
 
-    const student = this.service.create({
+    const student = StudentService.create({
       student_code,
       first_name,
       last_name,
@@ -57,7 +55,7 @@ class StudentsController {
     });
 
     try {
-      await this.service.save(student);
+      await StudentService.save(student);
 
       return res.status(201).json(student);
     } catch (error) {
@@ -74,7 +72,7 @@ class StudentsController {
     const { id } = req.params;
 
     try {
-      const student = await this.service.findById(id);
+      const student = await StudentService.findById(id);
       return res.json(student);
     } catch (error) {
       return res.status(400).json({
@@ -107,7 +105,7 @@ class StudentsController {
     } = req.body;
 
     try {
-      const student = await this.service.findById(id);
+      const student = await StudentService.findById(id);
 
       if (student_code) student.student_code = student_code;
       if (first_name) student.first_name = first_name;
@@ -125,7 +123,7 @@ class StudentsController {
       if (info) student.info = info;
       if (transport_id) student.transport_id = transport_id;
 
-      await this.service.save(student);
+      await StudentService.save(student);
 
       return res.json(student)
     } catch (error) {
@@ -142,7 +140,7 @@ class StudentsController {
     const { id } = req.params;
 
     try {
-      await this.service.delete(id);
+      await StudentService.deleteOne(id);
 
       return res.status(204).json();
     } catch (error) {

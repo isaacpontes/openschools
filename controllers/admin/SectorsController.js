@@ -1,11 +1,11 @@
-const Controller = require('../Controller');
+const SectorService = require('../../services/SectorService');
 
-class SectorsController extends Controller {
+class SectorsController {
   // Render a list of all sectors
   // GET /sectors
   index = async (req, res) => {
     try {
-      const sectors = await this.service.findAll();
+      const sectors = await SectorService.findAll();
       return res.render('admin/sectors/index', { sectors });
     } catch (error) {
       return res.render('pages/error', { error });
@@ -16,10 +16,10 @@ class SectorsController extends Controller {
   // POST /sectors
   save = async (req, res) => {
     const { name } = req.body.sector;
-    const sector = this.service.create(name);
+    const sector = SectorService.create(name);
 
     try {
-      await this.service.save(sector);
+      await SectorService.save(sector);
       req.flash('success', 'Setor salvo com sucesso.');
       return res.redirect('/admin/sectors');
     } catch (error) {
@@ -31,7 +31,7 @@ class SectorsController extends Controller {
   // Render the create sector form
   // GET /sectors/create
   create = async (req, res) => {
-    const sector = this.service.create();
+    const sector = SectorService.create();
     return res.render('admin/sectors/create', { sector });
   }
 
@@ -40,7 +40,7 @@ class SectorsController extends Controller {
   edit = async (req, res) => {
     const { id } = req.params;
     try {
-      const sector = await this.service.findById(id);
+      const sector = await SectorService.findById(id);
       return res.render('admin/sectors/edit', { sector });
     } catch (error) {
       return res.render('pages/error', { error });
@@ -53,7 +53,7 @@ class SectorsController extends Controller {
     const { id } = req.params;
     const { name } = req.body.sector;
     try {
-      await this.service.updateOne(id, name);
+      await SectorService.updateOneOne(id, name);
       req.flash('success', 'Setor atualizado com sucesso.');
       return res.redirect('/admin/sectors');
     } catch (error) {
@@ -67,7 +67,7 @@ class SectorsController extends Controller {
   delete = async (req, res) => {
     const { id } = req.params;
     try {
-      await this.service.deleteOne(id);
+      await SectorService.deleteOneOne(id);
       req.flash('success', 'Setor excluído com sucesso.');
       return res.redirect('/admin/sectors');
     } catch (error) {

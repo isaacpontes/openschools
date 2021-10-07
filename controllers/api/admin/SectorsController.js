@@ -1,15 +1,13 @@
-class SectorsController {
-  constructor (service) {
-    this.service = service;
-  }
+const SectorService = require("../../../services/SectorService");
 
+class SectorsController {
   // Return a list of all sectors
   // GET /api/admin/sectors
   findAll = async (req, res) => {
 
     try {
 
-      const sectors = await this.service.findAll();
+      const sectors = await SectorService.findAll();
 
       return res.json(sectors);
 
@@ -30,7 +28,7 @@ class SectorsController {
     
     try {
 
-      const sector = await this.service.findById(id);
+      const sector = await SectorService.findById(id);
 
       return res.json(sector);
 
@@ -48,11 +46,11 @@ class SectorsController {
   save = async (req, res) => {
 
     const { name } = req.body;
-    const sector = this.service.create(name);
+    const sector = SectorService.create(name);
 
     try {
 
-      await this.service.save(sector);
+      await SectorService.save(sector);
 
       return res.status(201).json(sector);
 
@@ -74,13 +72,13 @@ class SectorsController {
 
     try {
 
-      const sector = await this.service.findById(id);
+      const sector = await SectorService.findById(id);
 
       if (name) {
         sector.name = name;
       }
 
-      await this.service.save(sector);
+      await SectorService.save(sector);
 
       return res.json(sector);
 
@@ -101,7 +99,7 @@ class SectorsController {
 
     try {
 
-      await this.service.deleteOne(id);
+      await SectorService.deleteOneOne(id);
 
       return res.status(204).json();
 

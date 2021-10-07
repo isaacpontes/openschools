@@ -1,13 +1,13 @@
-const Controller = require('../Controller');
+const GradeService = require('../../services/GradeService');
 
-class GradesController extends Controller {
+class GradesController {
   // Render a list of all grades
   // GET /grades
   index = async (req, res) => {
-    const newGrade = this.service.create();
+    const newGrade = GradeService.create();
 
     try {
-      const grades = await this.service.findAll();
+      const grades = await GradeService.findAll();
       return res.render('admin/grades/index', { grades, newGrade });
     } catch (error) {
       return res.status(400).render('pages/error', { error });
@@ -18,10 +18,10 @@ class GradesController extends Controller {
   // POST /grades
   save = async (req, res) => {
     const { name } = req.body.grade;
-    const grade = this.service.create(name);
+    const grade = GradeService.create(name);
 
     try {
-      await this.service.save(grade);
+      await GradeService.save(grade);
       req.flash('success', 'Ano escolar salvo com sucesso.');
       return res.redirect('/admin/grades');
     } catch (error) {
@@ -37,7 +37,7 @@ class GradesController extends Controller {
     const { name } = req.body.grade;
 
     try {
-      await this.service.updateOne(id, name);
+      await GradeService.updateOneOne(id, name);
       req.flash('success', 'Ano escolar atualizado com sucesso.');
       return res.redirect('/admin/grades');
     } catch (error) {
@@ -51,7 +51,7 @@ class GradesController extends Controller {
   delete = async (req, res) => {
     const { id } = req.params;
     try {
-      await this.service.deleteOne(id);
+      await GradeService.deleteOneOne(id);
       req.flash('success', 'Ano escolar excluído com sucesso.');
       return res.redirect('/admin/grades');
     } catch (error) {

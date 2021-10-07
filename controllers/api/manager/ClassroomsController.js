@@ -1,17 +1,14 @@
-class ClassroomsController {
-  constructor (service, studentService) {
-    this.service = service;
-    this.studentService = studentService;
-  }
+const ClassroomService = require("../../../services/ClassroomService");
 
+class ClassroomsController {
   // Save a new classroom to the database
   // POST /api/manager/classrooms
   save = async (req, res) => {
     const { name, grade_id, school_id } = req.body;
-    const classroom = this.service.create(name, grade_id, school_id);
+    const classroom = ClassroomService.create(name, grade_id, school_id);
   
     try {
-      await this.service.save(classroom);
+      await ClassroomService.save(classroom);
       return res.status(201).json(classroom);
     } catch (error) {
       return res.status(400).json({ message: 'Erro ao salvar turma.', error });
@@ -24,7 +21,7 @@ class ClassroomsController {
     const { id } = req.params;
 
     try {
-      const classroom = await this.service.findById(id);
+      const classroom = await ClassroomService.findById(id);
       return res.status(200).json(classroom);
     } catch (error) {
       return res.status(400).json({ message: 'Erro ao retornar turma.' })
@@ -38,12 +35,12 @@ class ClassroomsController {
     const { id } = req.params;
 
     try {
-      const classroom = await this.service.findById(id);
+      const classroom = await ClassroomService.findById(id);
       
       if (name) classroom.name = name;
       if (grade_id) classroom.grade_id = grade_id;
 
-      await this.service.save(classroom);
+      await ClassroomService.save(classroom);
 
       return res.json(classroom);
     } catch (error) {
@@ -60,7 +57,7 @@ class ClassroomsController {
     const { id } = req.params;
 
     try {
-      await this.service.delete(id);
+      await ClassroomService.deleteOneOne(id);
 
       return res.status(204).json();
     } catch (error) {

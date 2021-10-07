@@ -1,11 +1,11 @@
-const Controller = require("../Controller");
+const TransportService = require("../../services/TransportService");
 
-class TransportsController extends Controller {
+class TransportsController {
   // Render a list of all transports
   // GET /transports
   index = async (req, res) => {
     try {
-      const transports = await this.service.findAll();
+      const transports = await TransportService.findAll();
       res.render('admin/transports/index', { transports });
     } catch (error) {
       res.render('pages/error', { error });
@@ -16,10 +16,10 @@ class TransportsController extends Controller {
   // POST /transports
   save = async (req, res) => {
     const { name, driver, info } = req.body.transport;
-    const transport = this.service.create(name, driver, info);
+    const transport = TransportService.create(name, driver, info);
 
     try {
-      await this.service.save(transport);
+      await TransportService.save(transport);
       req.flash('success', 'Transporte salvo com sucesso.');
       return res.redirect('/admin/transports');
     } catch (error) {
@@ -32,7 +32,7 @@ class TransportsController extends Controller {
   // GET /transports/create
   create = (req, res) => {
     try {
-      const transport = this.service.create();
+      const transport = TransportService.create();
       return res.render('admin/transports/create', { transport });
     } catch (error) {
       return res.render('pages/error', { error });
@@ -45,7 +45,7 @@ class TransportsController extends Controller {
     const id = req.params.id;
 
     try {
-      const transport = await this.service.findById(id);
+      const transport = await TransportService.findById(id);
       return res.render('admin/transports/edit', { transport });
     } catch (error) {
       return res.render('pages/error', { error });
@@ -59,7 +59,7 @@ class TransportsController extends Controller {
     const { name, driver, info } = req.body.transport;
 
     try {
-      const transport = await this.service.findById(id);
+      const transport = await TransportService.findById(id);
 
       if (name) {
         transport.name = name;
@@ -71,7 +71,7 @@ class TransportsController extends Controller {
         transport.info = info;
       }
 
-      await this.service.save(transport);
+      await TransportService.save(transport);
 
       req.flash('success', 'Transporte atualizado com sucesso.');
       return res.redirect('/admin/transports');
@@ -87,7 +87,7 @@ class TransportsController extends Controller {
     const { id } = req.params;
 
     try {
-      await this.service.deleteOne(id);
+      await TransportService.deleteOneOne(id);
       req.flash('success', 'Transporte excluído com sucesso.');
       return res.redirect('/admin/transports');
     } catch (error) {

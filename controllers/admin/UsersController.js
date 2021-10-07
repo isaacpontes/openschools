@@ -1,11 +1,11 @@
-const Controller = require("../Controller");
+const UserService = require("../../services/UserService");
 
-class UsersController extends Controller {
+class UsersController {
   // Render a list of all users
   // GET /admin/users
   index = async (req, res) => {
     try {
-      const users = await this.service.findAll();
+      const users = await UserService.findAll();
       return res.render('admin/users/index', { users });
     } catch (error) {
       return res.render('pages/error', { error });
@@ -16,7 +16,7 @@ class UsersController extends Controller {
   // POST /admin/users
   save = async (req, res) => {
     const { name, role, email, password, passwordConfirmation } = req.body.user;
-    const newUser = this.service.create(name, role, email, password);
+    const newUser = UserService.create(name, role, email, password);
 
     try {
       await newUser.validate();
@@ -26,7 +26,7 @@ class UsersController extends Controller {
         throw new Error('As senhas não conferem.');
       }
 
-      await this.service.save(newUser);
+      await UserService.save(newUser);
 
       req.flash('success', 'Usuário salvo com sucesso.');
       return res.redirect('/admin/users');
@@ -40,7 +40,7 @@ class UsersController extends Controller {
   // GET /admin/users/create
   create = async (req, res) => {
     try {
-      const user = this.service.create();
+      const user = UserService.create();
 
       return res.render('admin/users/create', { user });
     } catch (error) {
@@ -54,7 +54,7 @@ class UsersController extends Controller {
     const { id } = req.params;
 
     try {
-      const user = await this.service.findById(id);
+      const user = await UserService.findById(id);
 
       return res.render('admin/users/edit', { user });
     } catch (error) {
@@ -69,7 +69,7 @@ class UsersController extends Controller {
     const { name, role, email, password, password_confirmation } = req.body.user;
   
     try {
-      const user = await this.service.findById(id);
+      const user = await UserService.findById(id);
   
       if (name) user.name = name;
       if (role) user.role = role;
@@ -84,7 +84,7 @@ class UsersController extends Controller {
         user.password = password;
       }
   
-      await this.service.save(user);
+      await UserService.save(user);
 
       req.flash('success', 'Usuário atualizado com sucesso.');
       return res.redirect('/admin/users');
@@ -100,7 +100,7 @@ class UsersController extends Controller {
     const { id } = req.params;
 
     try {
-      await this.service.delete(id);
+      await UserService.deleteOne(id);
 
       req.flash('success', 'Usuário excluído com sucesso.');
       return res.redirect('/admin/users');

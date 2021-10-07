@@ -2,35 +2,35 @@ const { QueryTypes } = require('sequelize');
 const Sector = require('../models/Sector');
 
 class SectorService {
-  create (name) {
+  static create(name) {
     const sector = Sector.build({ name });
     return sector;
   }
 
-  async findAll () {
+  static async findAll() {
     const sectors = await Sector.findAll();
     return sectors;
   }
 
-  async findById (id) {
+  static async findById(id) {
     const sector = await Sector.findByPk(id);
     return sector;
   }
 
-  async save (sector) {
+  static async save(sector) {
     await sector.save();
     return sector;
   }
 
-  async updateOne (id, name) {
+  static async updateOne(id, name) {
     await Sector.update({ name }, { where: { id } });
   }
 
-  async deleteOne (id) {
+  static async deleteOne(id) {
     await Sector.destroy({ where: { id } });
   }
 
-  async getEmployeesCountBySector () {
+  static async getEmployeesCountBySector() {
     const sectors = await Sector.sequelize.query(`
       SELECT
         "Sector".id,

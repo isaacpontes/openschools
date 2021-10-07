@@ -1,14 +1,11 @@
-class ClassroomsController {
-  constructor (service, studentService) {
-    this.service = service;
-    this.studentService = studentService;
-  }
+const ClassroomService = require("../../../services/ClassroomService");
 
+class ClassroomsController {
   // Return a list of all classrooms
   // GET /api/admin/classrooms
   findAll = async (req, res) => {
     try {
-      const classrooms = await this.service.findAll();
+      const classrooms = await ClassroomService.findAll();
 
       return res.json(classrooms);
     } catch (error) {
@@ -23,10 +20,10 @@ class ClassroomsController {
   // POST /api/admin/classrooms
   save = async (req, res) => {
     const { name, grade_id, school_id } = req.body;
-    const classroom = this.service.create(name, grade_id, school_id);
+    const classroom = ClassroomService.create(name, grade_id, school_id);
 
     try {
-      await this.service.save(classroom);
+      await ClassroomService.save(classroom);
 
       return res.status(201).json(classroom);
     } catch (error) {
@@ -43,8 +40,8 @@ class ClassroomsController {
     const { id } = req.params;
 
     try {
-      const classroom = await this.service.findById(id, { path: 'grade_id' });
-      const students = await this.studentService.findByClassroomId(classroom.id);
+      const classroom = await ClassroomService.findById(id);
+      const students = await classroom.getStudents();
 
       return res.json({ ...classroom._doc, students });
     } catch (error) {
@@ -62,7 +59,7 @@ class ClassroomsController {
     const { id } = req.params;
 
     try {
-      const classroom = await this.service.findById(id);
+      const classroom = await ClassroomService.findById(id);
       
       if (name) {
         classroom.name = name;
@@ -71,7 +68,7 @@ class ClassroomsController {
         classroom.grade_id = grade_id;
       }
 
-      await this.service.save(classroom);
+      await ClassroomService.save(classroom);
 
       return res.json(classroom);
     } catch (error) {
@@ -88,7 +85,7 @@ class ClassroomsController {
     const { id } = req.params;
 
     try {
-      await this.service.delete(id);
+      await ClassroomService.deleteOneOne(id);
 
       return res.status(204).json();
     } catch (error) {

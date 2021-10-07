@@ -1,13 +1,11 @@
-class EmployeesController {
-  constructor (service) {
-    this.service = service;
-  }
+const EmployeeService = require("../../../services/EmployeeService");
 
+class EmployeesController {
   // Return a list of all employees
   // GET /api/admin/employees
   findAll = async (req, res) => {
     try {
-      const employees = await this.service.findAll();
+      const employees = await EmployeeService.findAll();
       return res.json(employees);
     } catch (error) {
       return res.status(400).json({
@@ -47,10 +45,10 @@ class EmployeesController {
       current_sector_id
     } = req.body;
 
-    const employee = this.service.create({ name, employee_code, position, role, bond, birthday, cpf, rg, ctps, elector_title, pis, address, phone, email, situation, admission_date, formation, complementary_formation, workload, fundeb, origin_sector_id, current_sector_id, shift, info });
+    const employee = EmployeeService.create({ name, employee_code, position, role, bond, birthday, cpf, rg, ctps, elector_title, pis, address, phone, email, situation, admission_date, formation, complementary_formation, workload, fundeb, origin_sector_id, current_sector_id, shift, info });
 
     try {
-      await this.service.save(employee);
+      await EmployeeService.save(employee);
 
       return res.json(employee);
     } catch (error) {
@@ -67,7 +65,7 @@ class EmployeesController {
     const { id } = req.params;
 
     try {
-      const employee = await this.service.findOne(id);
+      const employee = await EmployeeService.findOne(id);
       return res.json(employee);
     } catch (error) {
       return res.status(400).json({
@@ -109,7 +107,7 @@ class EmployeesController {
     } = req.body;
 
     try {
-      const employee = await this.service.findOne(id);
+      const employee = await EmployeeService.findOne(id);
 
       if (name) employee.name = name;
       if (employee_code) employee.employee_code = employee_code;
@@ -136,7 +134,7 @@ class EmployeesController {
       if (origin_sector_id) employee.origin_sector_id = origin_sector_id;
       if (current_sector_id) employee.current_sector_id = current_sector_id;
 
-      await this.service.save(employee);
+      await EmployeeService.save(employee);
 
       return res.json(employee);
     } catch (error) {
@@ -153,7 +151,7 @@ class EmployeesController {
     const { id } = req.params;
   
     try {
-      await this.service.delete(id);
+      await EmployeeService.deleteOne(id);
 
       return res.status(204).json();
     } catch (error) {

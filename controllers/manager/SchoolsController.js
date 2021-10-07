@@ -1,14 +1,14 @@
-const Controller = require('../Controller');
 const GradeService = require("../../services/GradeService");
+const SchoolService = require('../../services/SchoolService');
 
-class SchoolsController extends Controller {
+class SchoolsController {
   // Render a list of all schools belonging to current user
   // GET /schools
   index = async (req, res) => {
     const currentUser = req.user.id;
 
     try {
-      const schools = await this.service.findByManager(currentUser);
+      const schools = await SchoolService.findByManager(currentUser);
       return res.status(200).render('manager/schools/index', { schools });
     } catch (error) {
       return res.status(400).render('pages/error', { error });
@@ -21,7 +21,7 @@ class SchoolsController extends Controller {
     const { id } = req.params;
 
     try {
-      const school = await this.service.findByIdWithClassrooms(id);
+      const school = await SchoolService.findByIdWithClassrooms(id);
       return res.status(200).render('manager/schools/show', { school });
     } catch (error) {
       return res.status(400).render('pages/error', { error });
@@ -33,10 +33,8 @@ class SchoolsController extends Controller {
   addClassroom = async (req, res) => {
     const schoolId = req.params.id;
 
-    const gradeService = new GradeService();
-
     try {
-      const grades = await gradeService.findAll();
+      const grades = await GradeService.findAll();
 
       return res.render('manager/schools/add-classroom', { schoolId, grades });
     } catch (error) {

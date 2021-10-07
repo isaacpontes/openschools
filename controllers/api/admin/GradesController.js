@@ -1,13 +1,11 @@
-class GradesController {
-  constructor (service) {
-    this.service = service;
-  }
+const GradeService = require("../../../services/GradeService");
 
+class GradesController {
   // Return a list of all grades
   // GET /api/admin/grades
   findAll = async (req, res) => {
     try {
-      const grades = await this.service.findAll();
+      const grades = await GradeService.findAll();
 
       return res.json(grades);
     } catch (error) {
@@ -22,10 +20,10 @@ class GradesController {
   // POST /api/admin/grades
   save = async (req, res) => {
     const { name } = req.body;
-    const grade = this.service.create(name);
+    const grade = GradeService.create(name);
 
     try {
-      await this.service.save(grade);
+      await GradeService.save(grade);
 
       return res.status(201).json(grade);
     } catch (error) {
@@ -43,7 +41,7 @@ class GradesController {
     const { name } = req.body;
 
     try {
-      await this.service.updateOne(id, name);
+      await GradeService.updateOneOne(id, name);
 
       return res.status(204).json();
     } catch (error) {
@@ -60,7 +58,7 @@ class GradesController {
     const { id } = req.params;
 
     try {
-      await this.service.deleteOne(id);
+      await GradeService.deleteOneOne(id);
 
       return res.status(204).json();
     } catch (error) {

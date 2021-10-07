@@ -1,13 +1,13 @@
-const Controller = require('../Controller');
+const AcademicYearService = require('../../services/AcademicYearService');
 
-class AcademicYearsController extends Controller {
+class AcademicYearsController {
   // Render a list of all academic years
   // GET /academic-years
   index = async (req, res) => {
-    const newAcademicYear = this.service.create();
+    const newAcademicYear = AcademicYearService.create();
 
     try {
-      const academicYears = await this.service.findAll();
+      const academicYears = await AcademicYearService.findAll();
       return res.render('admin/academic-years/index', { academicYears, newAcademicYear });
     } catch (error) {
       return res.status(400).render('pages/error', { error });
@@ -18,10 +18,10 @@ class AcademicYearsController extends Controller {
   // POST /academic-years
   save = async (req, res) => {
     const { year } = req.body.academicYear;
-    const academicYear = this.service.create(year);
+    const academicYear = AcademicYearService.create(year);
 
     try {
-      await this.service.save(academicYear);
+      await AcademicYearService.save(academicYear);
       req.flash('success', 'Ano letivo salvo com sucesso.');
       return res.redirect('/admin/academic-years');
     } catch (error) {
@@ -37,7 +37,7 @@ class AcademicYearsController extends Controller {
     const { year } = req.body.academicYear;
 
     try {
-      await this.service.updateOne(id, year);
+      await AcademicYearService.updateOneOne(id, year);
       req.flash('success', 'Ano letivo atualizado com sucesso.');
       return res.redirect('/admin/academic-years');
     } catch (error) {
@@ -51,7 +51,7 @@ class AcademicYearsController extends Controller {
   delete = async (req, res) => {
     const { id } = req.params;
     try {
-      await this.service.deleteOne(id);
+      await AcademicYearService.deleteOneOne(id);
       req.flash('success', 'Ano letivo excluído com sucesso.');
       return res.redirect('/admin/academic-years');
     } catch (error) {

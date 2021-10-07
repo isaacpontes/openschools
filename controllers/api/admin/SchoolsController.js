@@ -1,13 +1,11 @@
-class SchoolsController {
-  constructor (service) {
-    this.service = service;
-  }
+const SchoolService = require("../../../services/SchoolService");
 
+class SchoolsController {
   // Return a list of all schools
   // GET /api/admin/schools
   findAll = async (req, res) => {
     try {
-      const schools = await this.service.findAll();
+      const schools = await SchoolService.findAll();
       return res.json(schools);
     } catch (error) {
       console.log(error);
@@ -23,7 +21,7 @@ class SchoolsController {
   findById = async (req, res) => {
     const { id } = req.params;
     try {
-      const school = await this.service.findById(id);
+      const school = await SchoolService.findById(id);
       return res.json(school);
     } catch (error) {
       return res.status(400).json({
@@ -37,10 +35,10 @@ class SchoolsController {
   // POST /api/admin/schools
   save = async (req, res) => {
     const { name, inep_code, address, user_id } = req.body;
-    const school = this.service.create(name, inep_code, address, user_id);
+    const school = SchoolService.create(name, inep_code, address, user_id);
 
     try {
-      await this.service.save(school);
+      await SchoolService.save(school);
       return res.status(201).json(school);
     } catch (error) {
       return res.status(400).json({
@@ -57,7 +55,7 @@ class SchoolsController {
     const { name, inep_code, address, user_id } = req.body;
 
     try {
-      const school = await this.service.findById(id);
+      const school = await SchoolService.findById(id);
 
       if (name) {
         school.name = name;
@@ -72,7 +70,7 @@ class SchoolsController {
         school.user_id = user_id;
       }
 
-      await this.service.save(school);
+      await SchoolService.save(school);
 
       return res.status(200).json(school);
     } catch (error) {
@@ -89,7 +87,7 @@ class SchoolsController {
     const { id } = req.params;
 
     try {
-      await this.service.delete(id);
+      await SchoolService.deleteOne(id);
 
       return res.status(204).json();
     } catch (error) {

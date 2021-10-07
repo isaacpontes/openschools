@@ -61,14 +61,12 @@ class Database {
   }
 
   createFirstAdminUser() {
-    const userService = new UserService();
-
-    userService.countAdminUsers().then(count => {
+    UserService.countAdminUsers().then(count => {
       if (count > 0) {
         console.log('It looks like you already have a registered Admin user.');
       } else {
         console.log('It looks like your users table is empty.');
-        seedAdmin(userService);
+        seedAdmin();
       }
     });
   }

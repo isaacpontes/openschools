@@ -1,13 +1,11 @@
-class TransportsController {
-  constructor (service) {
-    this.service = service;
-  }
+const TransportService = require("../../../services/TransportService");
 
+class TransportsController {
   // Return a list of all transports
   // GET /api/admintransports
   findAll = async (req, res) => {
     try {
-      const transports = await this.service.findAll();
+      const transports = await TransportService.findAll();
       return res.json(transports);
     } catch (error) {
       return res.status(400).json({
@@ -21,10 +19,10 @@ class TransportsController {
   // POST /api/admin/transports
   save = async (req, res) => {
     const { name, driver, info } = req.body;
-    const transport = this.service.create(name, driver, info);
+    const transport = TransportService.create(name, driver, info);
 
     try {
-      await this.service.save(transport);
+      await TransportService.save(transport);
 
       return res.status(201).json(transport);
     } catch (error) {
@@ -41,7 +39,7 @@ class TransportsController {
     const { id } = req.params;
 
     try {
-      const transport = await this.service.findById(id);
+      const transport = await TransportService.findById(id);
 
       return res.json(transport);
     } catch (error) {
@@ -59,7 +57,7 @@ class TransportsController {
     const { name, driver, info } = req.body;
 
     try {
-      const transport = await this.service.findById(id);
+      const transport = await TransportService.findById(id);
 
       if (name) {
         transport.name = name;
@@ -71,7 +69,7 @@ class TransportsController {
         transport.info = info;
       }
 
-      await this.service.save(transport);
+      await TransportService.save(transport);
 
       return res.json(transport);
     } catch (error) {
@@ -88,7 +86,7 @@ class TransportsController {
     const { id } = req.params;
 
     try {
-      await this.service.deleteOne(id);
+      await TransportService.deleteOneOne(id);
 
       return res.status(204).json();
     } catch (error) {

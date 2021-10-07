@@ -1,13 +1,11 @@
-class EnrollmentsController {
-  constructor (service) {
-    this.service = service;
-  }
+const EnrollmentService = require("../../../services/EnrollmentService");
 
+class EnrollmentsController {
   // Return a list of all enrollments
   // GET /api/admin/enrollments
   index = async (req, res) => {
     try {
-      const enrollments = await this.service.findAll();
+      const enrollments = await EnrollmentService.findAll();
 
       return res.json(enrollments);
     } catch (error) {
@@ -22,10 +20,10 @@ class EnrollmentsController {
   // POST /api/admin/enrollments
   save = async (req, res) => {
     const { status, student_id, classroom_id, academic_year_id } = req.body;
-    const enrollment = this.service.create(status, student_id, classroom_id, academic_year_id);
+    const enrollment = EnrollmentService.create(status, student_id, classroom_id, academic_year_id);
 
     try {
-      await this.service.save(enrollment);
+      await EnrollmentService.save(enrollment);
 
       return res.status(201).json(enrollment);
     } catch (error) {
@@ -43,7 +41,7 @@ class EnrollmentsController {
     const { status } = req.body;
 
     try {
-      await this.service.updateOne(id, status);
+      await EnrollmentService.updateOneOne(id, status);
 
       return res.status(204).json();
     } catch (error) {
@@ -60,7 +58,7 @@ class EnrollmentsController {
     const { id } = req.params;
 
     try {
-      await this.service.deleteOne(id);
+      await EnrollmentService.deleteOneOne(id);
 
       return res.status(204).json();
     } catch (error) {

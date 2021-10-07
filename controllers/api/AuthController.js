@@ -1,17 +1,14 @@
 const JwtService = require("../../services/JwtService");
+const UserService = require("../../services/UserService");
 
 class AuthController {
-  constructor (service) {
-    this.service = service;
-  }
-
   // Authenticates the user returning a JWT
   // POST /api/auth/login
   login = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-      const user = await this.service.findByEmail(email);
+      const user = await UserService.findByEmail(email);
 
       if (!user) {
         return res.status(401).json({ message: 'Email inválido ou não registrado.'});

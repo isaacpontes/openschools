@@ -1,13 +1,11 @@
-class UsersController {
-  constructor (service) {
-    this.service = service
-  }
+const UserService = require('../../../services/UserService');
 
+class UsersController {
   // Return a list of all users
   // GET /api/admin/users
   findAll = async (req, res) => {
     try {
-      const users = await this.service.findAll();
+      const users = await UserService.findAll();
       
       return res.json(users);
     } catch (error) {
@@ -24,7 +22,7 @@ class UsersController {
     const { id } = req.params;
 
     try {
-      const user = await this.service.findById(id);
+      const user = await UserService.findById(id);
 
       return res.json(user);
     } catch (error) {
@@ -39,10 +37,10 @@ class UsersController {
   // POST /api/admin/users
   save = async (req, res) => {
     const { name, role, email, password } = req.body;
-    const user = this.service.create(name, role, email, password);
+    const user = UserService.create(name, role, email, password);
 
     try {
-      await this.service.save(user)
+      await UserService.save(user)
       
       return res.status(201).json(user);
     } catch (error) {
@@ -60,7 +58,7 @@ class UsersController {
     const { name, role, email, password, password_confirmation } = req.body;
   
     try {
-      const user = await this.service.findById(id);
+      const user = await UserService.findById(id);
   
       if (name) user.name = name;
       if (role) user.role = role;
@@ -75,7 +73,7 @@ class UsersController {
         user.password = password;
       }
   
-      await this.service.save(user);
+      await UserService.save(user);
 
       return res.json(user);
     } catch (error) {
@@ -92,7 +90,7 @@ class UsersController {
     const { id } = req.params;
 
     try {
-      await this.service.delete(id);
+      await UserService.deleteOne(id);
       
       return res.status(204).json();
     } catch (error) {

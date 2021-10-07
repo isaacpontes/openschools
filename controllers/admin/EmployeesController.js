@@ -1,15 +1,15 @@
-const Controller = require('../Controller');
-const dayjs = require('dayjs');
+const EmployeeService = require('../../services/EmployeeService');
 const SectorService = require('../../services/SectorService');
 const SchoolService = require('../../services/SchoolService');
 const ClassroomService = require('../../services/ClassroomService');
+const dayjs = require('dayjs');
 
-class EmployeesController extends Controller {
+class EmployeesController {
   // Render a list of all employees
   // GET /employees
   index = async (req, res) => {
     try {
-      const employees = await this.service.findAllWithSector();
+      const employees = await EmployeeService.findAllWithSector();
 
       return res.render('admin/employees/index', { employees });
     } catch (error) {
@@ -47,12 +47,10 @@ class EmployeesController extends Controller {
       current_sector_id
     } = req.body.employee;
 
-    // const birthday = dayjs(req.body.employee.birthday);
-
-    const employee = this.service.create({ name, employee_code, position, role, bond, birthday, cpf, rg, ctps, elector_title, pis, address, phone, email, situation, admission_date, formation, complementary_formation, workload, fundeb, origin_sector_id, current_sector_id, shift, info });
+    const employee = EmployeeService.create({ name, employee_code, position, role, bond, birthday, cpf, rg, ctps, elector_title, pis, address, phone, email, situation, admission_date, formation, complementary_formation, workload, fundeb, origin_sector_id, current_sector_id, shift, info });
 
     try {
-      await this.service.save(employee);
+      await EmployeeService.save(employee);
 
       req.flash('success', 'Funcionário salvo com sucesso.');
       return res.redirect('/admin/employees');
@@ -65,16 +63,12 @@ class EmployeesController extends Controller {
   // Render the create employee form
   // GET /admin/employees/create
   create = async (req, res) => {
-    const employee = this.service.create({});
-
-    const classroomService = new ClassroomService();
-    const schoolService = new SchoolService();
-    const sectorService = new SectorService();
+    const employee = EmployeeService.create({});
 
     try {
-      const allSectors = await sectorService.findAll();
-      const allSchools = await schoolService.findAll();
-      const allClasses = await classroomService.findAll({ path: 'school' });
+      const allSectors = await SectorService.findAll();
+      const allSchools = await SchoolService.findAll();
+      const allClasses = await ClassroomService.findAll({ path: 'school' });
 
       return res.render('admin/employees/create', { employee, allSectors, allSchools, allClasses, dayjs });
     } catch (error) {
@@ -88,7 +82,7 @@ class EmployeesController extends Controller {
     const { id } = req.params;
 
     try {
-      const employee = await this.service.findOne(id, true, [ 'origin_sector_id', 'current_sector_id', 'school', 'classroom' ]);
+      const employee = await EmployeeService.findOne(id, true, [ 'origin_sector_id', 'current_sector_id', 'school', 'classroom' ]);
 
       return res.render('admin/employees/show', { employee, dayjs });
     } catch (error) {
@@ -101,15 +95,11 @@ class EmployeesController extends Controller {
   edit = async (req, res) => {
     const { id } = req.params;
 
-    const classroomService = new ClassroomService();
-    const schoolService = new SchoolService();
-    const sectorService = new SectorService();
-
     try {
-      const employee = await this.service.findOne(id);
-      const allSectors = await sectorService.findAll();
-      const allSchools = await schoolService.findAll();
-      const allClasses = await classroomService.findAll({ path: 'school' });
+      const employee = await EmployeeService.findOne(id);
+      const allSectors = await SectorService.findAll();
+      const allSchools = await SchoolService.findAll();
+      const allClasses = await ClassroomService.findAll({ path: 'school' });
 
       return res.render('admin/employees/edit', { employee, allSectors, allSchools, allClasses, dayjs });
     } catch (error) {
@@ -150,7 +140,7 @@ class EmployeesController extends Controller {
 
     try {
 
-      const employee = await this.service.findOne(id);
+      const employee = await EmployeeService.findOne(id);
 
       if (name) employee.name = name;
       if (employee_code) employee.employee_code = employee_code;
@@ -177,7 +167,7 @@ class EmployeesController extends Controller {
       if (origin_sector_id) employee.origin_sector_id = origin_sector_id;
       if (current_sector_id) employee.current_sector_id = current_sector_id;
 
-      await this.service.save(employee);
+      await EmployeeService.save(employee);
 
       req.flash('success', 'Funcionário atualizado com sucesso.');
 
@@ -197,7 +187,7 @@ class EmployeesController extends Controller {
     const { id } = req.params;
   
     try {
-      await this.service.delete(id);
+      await EmployeeService.deleteOne(id);
 
       req.flash('success', 'Funcionário excluído com sucesso.');
 

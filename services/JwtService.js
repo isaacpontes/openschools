@@ -8,11 +8,11 @@ class JwtService {
     this.token = token;
   }
 
-  signIn = (expiration) => {
+  signIn(expiration) {
     this.token = jwt.sign(this.payload, secret, { expiresIn: expiration });
   }
 
-  verifyToken = () => {
+  verifyToken() {
     return jwt.verify(this.token, secret, (err, decoded) => {
       this.payload = !err ? decoded : undefined;
     });

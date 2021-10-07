@@ -1,16 +1,14 @@
-class StudentsController {
-  constructor (service, schoolService) {
-    this.service = service;
-    this.schoolService = schoolService;
-  }
+const StudentService = require("../../../services/StudentService");
+const SchoolService = require("../../../services/SchoolService");
 
+class StudentsController {
   // Find all students from the manager's schools
   // GET /api/manager/students
   index = async (req, res) => {
     const manager = req.user.id;
 
     try {
-      const managerSchools = await this.schoolService.findByManager(manager);
+      const managerSchools = await SchoolService.findByManager(manager);
       const managerClassrooms = [];
 
       managerSchools.forEach((school) => {
@@ -18,7 +16,7 @@ class StudentsController {
         managerClassrooms.push(...schoolClassrooms);
       });
 
-      const managerStudents = await this.service.findAllInClassrooms(managerClassrooms);
+      const managerStudents = await StudentService.findAllInClassrooms(managerClassrooms);
       
       return res.status(200).json(managerStudents);
     } catch (error) {
@@ -47,7 +45,7 @@ class StudentsController {
       transport_id
     } = req.body;
 
-    const student = this.service.create({student_code,
+    const student = StudentService.create({student_code,
       first_name,
       last_name,
       gender,
@@ -65,7 +63,7 @@ class StudentsController {
     });
   
     try {
-      await this.service.save(student);
+      await StudentService.save(student);
   
       return res.status(201).json(student);
     } catch (error) {
@@ -79,7 +77,7 @@ class StudentsController {
     const { id } = req.params;
   
     try {
-      const student = await this.service.findById(id, ['school', 'classroom', 'transport']);
+      const student = await StudentService.findById(id, ['school', 'classroom', 'transport']);
 
       return res.status(200).json(student);
     } catch (error) {
@@ -109,7 +107,7 @@ class StudentsController {
     } = req.body;
   
     try {
-      const student = await this.service.findById(id);
+      const student = await StudentService.findById(id);
 
       if (student_code) student.student_code = student_code;
       if (first_name) student.first_name = first_name;
@@ -128,7 +126,7 @@ class StudentsController {
       if (transport_id) student.transport_id = transport_id;
       student.updated = Date.now();
 
-      await this.service.save(student);
+      await StudentService.save(student);
   
       return res.status(200).json(student);
     } catch (error) {
@@ -145,7 +143,7 @@ class StudentsController {
     const { id } = req.params;
 
     try {
-      await this.service.delete(id);
+      await StudentService.deleteOne(id);
   
       return res.status(204).json({ message: 'OK' });
     } catch (error) {

@@ -1,13 +1,11 @@
-class AcademicYearsController {
-  constructor (service) {
-    this.service = service;
-  }
+const AcademicYearService = require("../../../services/AcademicYearService");
 
+class AcademicYearsController {
   // Return a list of all academic years
   // GET /api/admin/academic-years
   index = async (req, res) => {
     try {
-      const academicYears = await this.service.findAll();
+      const academicYears = await AcademicYearService.findAll();
 
       return res.json(academicYears);
     } catch (error) {
@@ -22,10 +20,10 @@ class AcademicYearsController {
   // POST /api/admin/academic-years
   save = async (req, res) => {
     const { year } = req.body;
-    const academicYear = this.service.create(year);
+    const academicYear = AcademicYearService.create(year);
 
     try {
-      await this.service.save(academicYear);
+      await AcademicYearService.save(academicYear);
 
       return res.status(201).json(academicYear);
     } catch (error) {
@@ -43,7 +41,7 @@ class AcademicYearsController {
     const { year } = req.body;
 
     try {
-      await this.service.updateOne(id, year);
+      await AcademicYearService.updateOneOne(id, year);
 
       return res.status(204).json();
     } catch (error) {
@@ -60,7 +58,7 @@ class AcademicYearsController {
     const { id } = req.params;
 
     try {
-      await this.service.deleteOne(id);
+      await AcademicYearService.deleteOneOne(id);
 
       return res.status(204).json();
     } catch (error) {
