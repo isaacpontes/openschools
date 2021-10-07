@@ -1,6 +1,23 @@
 const ClassroomService = require("../../../services/ClassroomService");
 
 class ClassroomsController {
+  // Return a list of all classrooms belonging to the manager's school
+  // GET /api/manager/classrooms
+  index = async (req, res) => {
+    const { id } = req.user;
+
+    try {
+      const classrooms = await ClassroomService.findByUserId(id);
+
+      return res.json(classrooms);
+    } catch (error) {
+      return res.status(400).json({
+        message: 'Erro ao retornar turmas',
+        error: error.message
+      });
+    }
+  }
+
   // Save a new classroom to the database
   // POST /api/manager/classrooms
   save = async (req, res) => {
@@ -74,9 +91,8 @@ class ClassroomsController {
     const { id } = req.params;
 
     try {
-      const students = await this.studentService.findByClassroomId(id);
       
-      return res.status(200).json(students);
+      return res.status(200).json();
     } catch (error) {
       return res.status(400).json({ message: 'Erro ao recuperar turmas.'})
     }

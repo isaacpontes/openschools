@@ -15,6 +15,7 @@ const router = express.Router();
 router.get('/schools', schoolsController.findManagerSchools);
 router.get('/schools/:id', schoolsController.findSchoolById);
 
+router.get('/classrooms', classroomsController.index);
 router.post('/classrooms', classroomsController.save);
 router.get('/classrooms/:id', classroomsController.findOne);
 router.put('/classrooms/:id', classroomsController.update);

@@ -34,14 +34,12 @@ class ClassroomService {
 
   static async findByUserId(userId) {
     const classrooms = await Classroom.sequelize.query(
-      'SELECT "Classroom"."id", "Classroom"."name", "School"."name" AS "school_name" FROM "classrooms" AS "Classroom", "schools" AS "School" WHERE "Classroom"."school_id" = "School"."id" AND "School"."user_id" = :userId',
+      'SELECT "Classroom"."id", "Classroom"."name", "Classroom"."school_id", "School"."name" AS "school_name" FROM "classrooms" AS "Classroom", "schools" AS "School" WHERE "Classroom"."school_id" = "School"."id" AND "School"."user_id" = :userId',
       {
         replacements: { userId },
         type: QueryTypes.SELECT
       }
     );
-
-    console.log(classrooms)
 
     return classrooms;
   }
