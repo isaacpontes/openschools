@@ -7,8 +7,8 @@ class StudentsController {
     const { id } = req.user;
 
     try {
-      const students = await StudentService.findAllFromManager(id);
-      
+      const students = await StudentService.findAll();
+
       return res.status(200).json(students);
     } catch (error) {
       console.log(error);
@@ -27,12 +27,12 @@ class StudentsController {
       phone,
       address,
       birthday,
-      birthPlace,
-      fatherName,
-      fatherOcupation,
-      motherName,
-      motherOcupation,
-      bloodType,
+      birth_place,
+      father_name,
+      father_ocupation,
+      mother_name,
+      mother_ocupation,
+      blood_type,
       info,
       transport_id
     } = req.body;
@@ -44,28 +44,28 @@ class StudentsController {
       phone,
       address,
       birthday,
-      birthPlace,
-      fatherName,
-      fatherOcupation,
-      motherName,
-      motherOcupation,
-      bloodType,
+      birth_place,
+      father_name,
+      father_ocupation,
+      mother_name,
+      mother_ocupation,
+      blood_type,
       info,
       transport_id
     });
-  
+
     try {
       await StudentService.save(student);
   
       return res.status(201).json(student);
     } catch (error) {
-      return res.status(400).json({ message: 'Erro ao salvar estudante.' });
+      return res.status(400).json({ message: 'Erro ao salvar estudante.', error: error.message });
     }
   }
 
   // Return a single student
   // GET /api/manager/students/:id
-  findOne = async (req, res) => {
+  show = async (req, res) => {
     const { id } = req.params;
   
     try {
@@ -88,12 +88,12 @@ class StudentsController {
       phone,
       address,
       birthday,
-      birthPlace,
-      fatherName,
-      fatherOcupation,
-      motherName,
-      motherOcupation,
-      bloodType,
+      birth_place,
+      father_name,
+      father_ocupation,
+      mother_name,
+      mother_ocupation,
+      blood_type,
       info,
       transport_id
     } = req.body;
@@ -108,12 +108,12 @@ class StudentsController {
       if (phone) student.phone = phone;
       if (address) student.address = address;
       if (birthday) student.birthday = birthday;
-      if (birthPlace) student.birthPlace = birthPlace;
-      if (fatherName) student.fatherName = fatherName;
-      if (fatherOcupation) student.fatherOcupation = fatherOcupation;
-      if (motherName) student.motherName = motherName;
-      if (motherOcupation) student.motherOcupation = motherOcupation;
-      if (bloodType) student.bloodType = bloodType;
+      if (birth_place) student.birth_place = birth_place;
+      if (father_name) student.father_name = father_name;
+      if (father_ocupation) student.father_ocupation = father_ocupation;
+      if (mother_name) student.mother_name = mother_name;
+      if (mother_ocupation) student.mother_ocupation = mother_ocupation;
+      if (blood_type) student.blood_type = blood_type;
       if (info) student.info = info;
       if (transport_id) student.transport_id = transport_id;
       student.updated = Date.now();
@@ -140,6 +140,21 @@ class StudentsController {
       return res.status(204).json({ message: 'OK' });
     } catch (error) {
       return res.status(400).json({ message: 'Erro ao excluir aluno.' });
+    }
+  }
+
+  // Find all students from the manager's schools
+  // GET /api/manager/enrolled-students
+  enrolledStudents = async (req, res) => {
+    const { id } = req.user;
+
+    try {
+      const students = await StudentService.findAllFromManager(id);
+
+      return res.status(200).json(students);
+    } catch (error) {
+      console.log(error);
+      return res.status(400).json({ message: 'Erro ao retornar estudantes.', error: error.message });
     }
   }
 }

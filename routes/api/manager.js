@@ -23,10 +23,12 @@ router.delete('/classrooms/:id', classroomsController.delete);
 router.get('/classrooms/:id/students', classroomsController.findClassroomStudents);
 
 router.get('/students', studentsController.index);
+router.get('/students/:id', studentsController.show);
 router.post('/students', studentsController.save);
-router.get('/students/:id', studentsController.findOne);
 router.put('/students/:id', studentsController.update);
 router.delete('/students/:id', studentsController.delete);
+
+router.get('/enrolled-students', studentsController.enrolledStudents);
 
 router.get('/transports', transportsController.findAll);
 
