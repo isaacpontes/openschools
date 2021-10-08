@@ -1,4 +1,5 @@
 const dayjs = require('dayjs');
+const { QueryTypes } = require('sequelize');
 const Student = require('../models/Student');
 
 class StudentService {
@@ -38,8 +39,33 @@ class StudentService {
     return students;
   }
 
-  static async findAllInClassrooms(classroomsList) {
-    const students = await Student.find({ classroom: { $in: classroomsList } });
+  static async findAllFromManager(managerId) {
+    const students = await Student.sequelize.query(`
+      SELECT
+        "Student".*,
+        "Enrollment".id AS enrollment_id,
+        "Classroom".id AS classroom_id,
+        "Classroom".name AS classroom_name,
+        "School".id AS school_id,
+        "School".name AS school_name,
+        "School".user_id AS school_user_id
+      FROM
+        "students" AS "Student"
+        LEFT JOIN "enrollments" AS "Enrollment"
+          ON "Enrollment".student_id = "Student".id
+        LEFT JOIN "classrooms" AS "Classroom"
+          ON "Classroom".id = "Enrollment".classroom_id
+        LEFT JOIN "schools" AS "School"
+          ON "School".id = "Classroom".school_id
+      WHERE
+        "School".user_id = :managerId;
+    `, {
+      replacements: { managerId },
+      type: QueryTypes.SELECT
+    });
+
+    console.log(students);
+
     return students;
   }
 

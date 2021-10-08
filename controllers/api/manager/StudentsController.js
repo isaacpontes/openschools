@@ -5,21 +5,14 @@ class StudentsController {
   // Find all students from the manager's schools
   // GET /api/manager/students
   index = async (req, res) => {
-    const manager = req.user.id;
+    const { id } = req.user;
 
     try {
-      const managerSchools = await SchoolService.findByManager(manager);
-      const managerClassrooms = [];
-
-      managerSchools.forEach((school) => {
-        const schoolClassrooms = school.classrooms.map((classroom) => classroom.id);
-        managerClassrooms.push(...schoolClassrooms);
-      });
-
-      const managerStudents = await StudentService.findAllInClassrooms(managerClassrooms);
+      const students = await StudentService.findAllFromManager(id);
       
-      return res.status(200).json(managerStudents);
+      return res.status(200).json(students);
     } catch (error) {
+      console.log(error);
       return res.status(400).json({ message: 'Erro ao retornar estudantes.', error: error.message });
     }
   }
