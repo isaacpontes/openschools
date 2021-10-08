@@ -91,10 +91,12 @@ class ClassroomsController {
     const { id } = req.params;
 
     try {
-      
-      return res.status(200).json();
+      const classroom = await ClassroomService.findById(id);
+      const students = await classroom.getStudents();
+
+      return res.status(200).json({ classroom, students });
     } catch (error) {
-      return res.status(400).json({ message: 'Erro ao recuperar turmas.'})
+      return res.status(400).json({ message: 'Erro ao recuperar turmas.', error: error.message });
     }
   }
 }
