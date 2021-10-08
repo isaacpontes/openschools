@@ -1,5 +1,5 @@
 const { Sequelize } = require('sequelize');
-const seedAdmin = require('../database/seedAdmin');
+const seedAdmin = require('./seed-admin');
 const UserService = require('../services/UserService');
 const User = require('../models/User');
 const School = require('../models/School');
