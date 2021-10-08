@@ -1,5 +1,4 @@
 const StudentService = require("../../../services/StudentService");
-const SchoolService = require("../../../services/SchoolService");
 
 class StudentsController {
   // Find all students from the manager's schools

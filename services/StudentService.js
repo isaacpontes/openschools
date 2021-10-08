@@ -64,8 +64,6 @@ class StudentService {
       type: QueryTypes.SELECT
     });
 
-    console.log(students);
-
     return students;
   }
 
