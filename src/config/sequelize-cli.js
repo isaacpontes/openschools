@@ -1,11 +1,13 @@
+require('dotenv').config()
+
 module.exports = {
   development: {
-    username: "openschools",
-    password: "openschools",
-    database: "openschools_development",
-    host: "127.0.0.1",
-    port: "5432",
-    dialect: "postgres"
+    username: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    dialect: process.env.DB_DIALECT
   },
   test: {
     username: "root",
@@ -16,11 +18,11 @@ module.exports = {
     dialect: "postgres"
   },
   production: {
-    username: "root",
-    password: null,
-    database: "openschools_production",
-    host: "127.0.0.1",
-    port: "5432",
-    dialect: "postgres"
+    username: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    dialect: process.env.DB_DIALECT
   }
 }
