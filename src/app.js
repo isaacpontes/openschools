@@ -5,7 +5,7 @@ const methodOverride = require('method-override');
 const morgan = require('morgan');
 const passport = require('passport');
 const path = require('path');
-const session = require('express-session');
+const session = require('cookie-session');
 const setFlashMessages = require('./middlewares/flash-messages');
 const passportLocal = require('./config/passport');
 
