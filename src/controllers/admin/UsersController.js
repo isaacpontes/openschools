@@ -15,14 +15,14 @@ class UsersController {
   // Save a new user to the database
   // POST /admin/users
   save = async (req, res) => {
-    const { name, role, email, password, passwordConfirmation } = req.body.user;
+    const { name, role, email, password, password_confirmation } = req.body.user;
     const newUser = UserService.create(name, role, email, password);
 
     try {
       await newUser.validate();
 
-      if (password !== passwordConfirmation) {
-        newUser.errors = { ...newUser.errors, passwordConfirmation: 'As senhas não conferem.' };
+      if (password !== password_confirmation) {
+        newUser.errors = { ...newUser.errors, password_confirmation: 'As senhas não conferem.' };
         throw new Error('As senhas não conferem.');
       }
 
