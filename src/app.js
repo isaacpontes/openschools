@@ -6,55 +6,88 @@ const morgan = require('morgan');
 const passport = require('passport');
 const path = require('path');
 const session = require('cookie-session');
+const sessionOptions = require('./config/session');
 const setFlashMessages = require('./middlewares/flash-messages');
 const passportLocal = require('./config/passport');
+const Database = require('./database');
+const appRouter = require('./routes/index')
+const apiRouter = require('./routes/api')
 
-const app = express();
+class App {
+  constructor() {
+    // Express app
+    this.express = express();
 
-// Passport config
-passportLocal(passport);
+    // Passport config
+    passportLocal(passport);
+    
+    // EJS as View Engine
+    this.express.set('views', path.join(__dirname, 'resources/views'));
+    this.express.set('view engine', 'ejs');
 
-// Static Files
-app.use(express.static('public'));
+    this.defineMiddlewares();
 
-// EJS as View Engine
-app.set('views', path.join(__dirname, 'resources/views'));
-app.set('view engine', 'ejs');
+    // Database instace
+    this.database = new Database({
+      dialect: process.env.DB_DIALECT,
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      name: process.env.DB_NAME,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASS,
+      options: {
+        define: { timestamps: true, underscored: true }
+      }
+    });
 
-// Body Parser
-app.use(express.urlencoded({ extended: true }));
+    this.connectDatabase();
+  }
 
-// JSON middleware
-app.use(express.json());
+  connectDatabase() {
+    this.database.connect()
+      .then(() => {
+        this.database.initSequelize();
+        this.database.createFirstAdminUser();
+      });
+  }
 
-// Express Session
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: true,
-  saveUninitialized: true,
-  cookie: {}
-}));
+  defineMiddlewares() {
+    // Static Files
+    this.express.use(express.static('public'));
+    
+    // Body Parser
+    this.express.use(express.urlencoded({ extended: true }));
+    
+    // JSON middleware
+    this.express.use(express.json());
+    
+    // Express Session
+    this.express.use(session(sessionOptions));
+    
+    // Passport middleware
+    this.express.use(passport.initialize());
+    this.express.use(passport.session());
+    
+    // Flash messages middleware
+    this.express.use(flash());
+    
+    // Global variables for controlling messages
+    this.express.use(setFlashMessages);
+    
+    // Method Override
+    this.express.use(methodOverride('_method', { methods: ['POST', 'GET'] }));
+    
+    // Morgan logs
+    this.express.use(morgan('dev'));
+    
+    // Routes
+    this.express.use('/', appRouter);
+    this.express.use('/api', apiRouter);
+  }
 
-// Passport middleware
-app.use(passport.initialize());
-app.use(passport.session());
+  start(port, callbackfn) {
+    this.express.listen(port, callbackfn)
+  }
+}
 
-// Flash messages middleware
-app.use(flash());
-
-// Global variables for controlling messages
-app.use(setFlashMessages);
-
-// Method Override
-app.use(methodOverride('_method', { methods: ['POST', 'GET'] }));
-
-// Morgan logs
-app.use(morgan('dev'));
-
-// Routes
-app.use('/', require('./routes/index'));
-
-// API routes
-app.use('/api', require('./routes/api'));
-
-module.exports = { app };
+module.exports = { App };
