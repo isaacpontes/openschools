@@ -9,85 +9,51 @@ const session = require('cookie-session');
 const sessionOptions = require('./config/session');
 const setFlashMessages = require('./middlewares/flash-messages');
 const passportLocal = require('./config/passport');
-const Database = require('./database');
-const appRouter = require('./routes/index')
-const apiRouter = require('./routes/api')
+const appRouter = require('./routes/index');
+const apiRouter = require('./routes/api');
+const { adminJs, adminJsRouter } = require('./config/adminjs')
 
-class App {
-  constructor() {
-    // Express app
-    this.express = express();
+// Express app
+const app = express();
 
-    // Passport config
-    passportLocal(passport);
-    
-    // EJS as View Engine
-    this.express.set('views', path.join(__dirname, 'resources/views'));
-    this.express.set('view engine', 'ejs');
+// Passport config
+passportLocal(passport);
 
-    this.defineMiddlewares();
+// EJS as View Engine
+app.set('views', path.join(__dirname, 'resources/views'));
+app.set('view engine', 'ejs');
+app.use(adminJs.options.rootPath, adminJsRouter)
 
-    // Database instace
-    this.database = new Database({
-      dialect: process.env.DB_DIALECT,
-      host: process.env.DB_HOST,
-      port: process.env.DB_PORT,
-      name: process.env.DB_NAME,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASS,
-      options: {
-        define: { timestamps: true, underscored: true }
-      }
-    });
+// Static Files
+app.use(express.static('public'));
 
-    this.connectDatabase();
-  }
+// Body Parser
+app.use(express.urlencoded({ extended: true }));
 
-  connectDatabase() {
-    this.database.connect()
-      .then(() => {
-        this.database.initSequelize();
-        this.database.createFirstAdminUser();
-      });
-  }
+// JSON middleware
+app.use(express.json());
 
-  defineMiddlewares() {
-    // Static Files
-    this.express.use(express.static('public'));
-    
-    // Body Parser
-    this.express.use(express.urlencoded({ extended: true }));
-    
-    // JSON middleware
-    this.express.use(express.json());
-    
-    // Express Session
-    this.express.use(session(sessionOptions));
-    
-    // Passport middleware
-    this.express.use(passport.initialize());
-    this.express.use(passport.session());
-    
-    // Flash messages middleware
-    this.express.use(flash());
-    
-    // Global variables for controlling messages
-    this.express.use(setFlashMessages);
-    
-    // Method Override
-    this.express.use(methodOverride('_method', { methods: ['POST', 'GET'] }));
-    
-    // Morgan logs
-    this.express.use(morgan('dev'));
-    
-    // Routes
-    this.express.use('/', appRouter);
-    this.express.use('/api', apiRouter);
-  }
+// Express Session
+app.use(session(sessionOptions));
 
-  start(port, callbackfn) {
-    this.express.listen(port, callbackfn)
-  }
-}
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
-module.exports = { App };
+// Flash messages middleware
+app.use(flash());
+
+// Global variables for controlling messages
+app.use(setFlashMessages);
+
+// Method Override
+app.use(methodOverride('_method', { methods: ['POST', 'GET'] }));
+
+// Morgan logs
+app.use(morgan('dev'));
+
+// Routes
+app.use('/', appRouter);
+app.use('/api', apiRouter);
+
+module.exports = { app };

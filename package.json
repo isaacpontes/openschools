@@ -14,6 +14,9 @@
   "repository": "https://github.com/isaacpontes/openschools",
   "license": "MIT",
   "dependencies": {
+    "@adminjs/express": "^4.0.1",
+    "@adminjs/sequelize": "^2.1.0",
+    "adminjs": "^5.5.1",
     "bcrypt": "^5.0.1",
     "connect-flash": "^0.1.1",
     "cookie-session": "^2.0.0",
@@ -21,6 +24,7 @@
     "dotenv": "^9.0.2",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
+    "express-formidable": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
     "method-override": "^3.0.0",
     "morgan": "^1.10.0",
