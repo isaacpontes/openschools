@@ -20,6 +20,6 @@ router.get('/home', auth, (req, res) => {
 
 router.use('/auth', authRoutes);
 router.use('/manager', auth, authManager, managerRoutes);
-router.use('/admin', auth, authAdmin, adminRoutes);
+router.use('/dashboard', auth, authAdmin, adminRoutes);
 
 module.exports = router;

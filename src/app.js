@@ -16,13 +16,15 @@ const { adminJs, adminJsRouter } = require('./config/adminjs')
 // Express app
 const app = express();
 
+// AdminJS Dashboard
+app.use(adminJs.options.rootPath, adminJsRouter);
+
 // Passport config
 passportLocal(passport);
 
 // EJS as View Engine
 app.set('views', path.join(__dirname, 'resources/views'));
 app.set('view engine', 'ejs');
-app.use(adminJs.options.rootPath, adminJsRouter)
 
 // Static Files
 app.use(express.static('public'));
