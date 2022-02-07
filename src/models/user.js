@@ -57,6 +57,6 @@ class User extends Model {
         callback(err, isSame);
     });
   }
-};
+}
 
 module.exports = User;

@@ -4,4 +4,4 @@ module.exports = {
   filterProperties: ['name', 'grade_id', 'school_id'],
   listProperties: ['id', 'name', 'grade_id', 'school_id'],
   showProperties: ['id', 'name', 'grade_id', 'school_id', 'created_at', 'updated_at']
-}
+};

@@ -29,7 +29,7 @@ async function seedAdmin() {
       console.log(`\nAdmin user with email '${user.email}' created successfully.\n`);
       valid = true;
 
-    } catch (error) {
+    } catch (err) {
 
       console.log(err.message + '\nPlease, try again.\n');
       valid = false;

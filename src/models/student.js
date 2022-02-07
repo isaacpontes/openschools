@@ -86,7 +86,7 @@ class Student extends Model {
   }
 
   enrolled() {
-    const enrolled = this.academicYears.filter(academicYear => academicYear.year === new Date().getFullYear())
+    const enrolled = this.academicYears.filter(academicYear => academicYear.year === new Date().getFullYear());
 
     if (enrolled[0]) {
       return true;
@@ -94,6 +94,6 @@ class Student extends Model {
       return false;
     }
   }
-};
+}
 
 module.exports = Student;

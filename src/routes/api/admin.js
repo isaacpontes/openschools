@@ -1,15 +1,15 @@
-const express = require( "express");
+const express = require('express');
 
 const AcademicYearsController = require('../../controllers/api/admin/AcademicYearsController');
-const ClassroomsController = require( "../../controllers/api/admin/ClassroomsController");
-const EmployeesController = require( "../../controllers/api/admin/EmployeesController");
-const EnrollmentsController = require( "../../controllers/api/admin/EnrollmentsController");
-const GradesController = require( "../../controllers/api/admin/GradesController");
-const SchoolsController = require( "../../controllers/api/admin/SchoolsController");
-const SectorsController = require( "../../controllers/api/admin/SectorsController");
-const StudentsController = require( "../../controllers/api/admin/StudentsController");
-const TransportsController = require( "../../controllers/api/admin/TransportsController");
-const UsersController = require( "../../controllers/api/admin/UsersController");
+const ClassroomsController = require('../../controllers/api/admin/ClassroomsController');
+const EmployeesController = require('../../controllers/api/admin/EmployeesController');
+const EnrollmentsController = require('../../controllers/api/admin/EnrollmentsController');
+const GradesController = require('../../controllers/api/admin/GradesController');
+const SchoolsController = require('../../controllers/api/admin/SchoolsController');
+const SectorsController = require('../../controllers/api/admin/SectorsController');
+const StudentsController = require('../../controllers/api/admin/StudentsController');
+const TransportsController = require('../../controllers/api/admin/TransportsController');
+const UsersController = require('../../controllers/api/admin/UsersController');
 
 const academicYearsController = new AcademicYearsController();
 const classroomsController = new ClassroomsController();

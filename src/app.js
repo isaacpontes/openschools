@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const apiRouter = require('./routes/api');
-const { adminJs, adminJsRouter } = require('./config/adminjs')
+const { adminJs, adminJsRouter } = require('./config/adminjs');
 
 // Express app
 const app = express();

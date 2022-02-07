@@ -118,6 +118,6 @@ class Employee extends Model {
     this.belongsTo(models.Sector, { foreignKey: 'origin_sector_id', as: 'origin_sector' });
     this.belongsTo(models.Sector, { foreignKey: 'current_sector_id', as: 'current_sector' });
   }
-};
+}
 
 module.exports = Employee;

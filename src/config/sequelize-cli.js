@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 
 module.exports = {
   development: {
@@ -10,12 +10,12 @@ module.exports = {
     dialect: process.env.DB_DIALECT
   },
   test: {
-    username: "root",
+    username: 'root',
     password: null,
-    database: "openschools_test",
-    host: "127.0.0.1",
-    port: "5432",
-    dialect: "postgres"
+    database: 'openschools_test',
+    host: '127.0.0.1',
+    port: '5432',
+    dialect: 'postgres'
   },
   production: {
     username: process.env.DB_USER,
@@ -25,4 +25,4 @@ module.exports = {
     port: process.env.DB_PORT,
     dialect: process.env.DB_DIALECT
   }
-}
+};

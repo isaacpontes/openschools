@@ -24,6 +24,6 @@ class AcademicYear extends Model {
       as: 'students'
     });
   }
-};
+}
 
 module.exports = AcademicYear;

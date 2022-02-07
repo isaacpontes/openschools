@@ -24,6 +24,6 @@ class School extends Model {
     this.belongsTo(models.User, { foreignKey: 'user_id', as: 'manager' });
     this.hasMany(models.Classroom, { foreignKey: 'school_id', as: 'classrooms' });
   }
-};
+}
 
 module.exports = School;

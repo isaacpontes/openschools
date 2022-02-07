@@ -1,4 +1,4 @@
-const Enrollment = require("../models/Enrollment");
+const Enrollment = require('../models/Enrollment');
 
 class EnrollmentService {
   static create(student_id, classroom_id, academic_year_id, status) {

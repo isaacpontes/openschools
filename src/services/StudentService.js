@@ -1,4 +1,3 @@
-const dayjs = require('dayjs');
 const { QueryTypes } = require('sequelize');
 const Student = require('../models/Student');
 
@@ -74,21 +73,12 @@ class StudentService {
     return student;
   }
 
-  static async findByClassroomId(classroomId) {
-    // const students = await Student.findAll({
-    //   where: {
-
-    //   }
-    // });
-    // return students;
-  }
-
   static async save(student) {
     await student.save();
     return student;
   }
 
-  static async updateOne(id, student_code, first_name, last_name, gender, phone, address, birthday, birth_place, father_name, father_ocupation, mother_name, mother_ocupation, blood_type, info, transport_id, school, classroom) {
+  static async updateOne(id, student_code, first_name, last_name, gender, phone, address, birthday, birth_place, father_name, father_ocupation, mother_name, mother_ocupation, blood_type, info, transport_id) {
     await Student.update({
       student_code,
       first_name,
@@ -112,79 +102,6 @@ class StudentService {
 
   static async deleteOne(id) {
     await Student.destroy({ where: { id } });
-  }
-
-  static async generatePdfList(pdf) {
-    const students = await this.findAll();
-
-    const marginLeft = 0 + 40;
-    const marginRight = pdf.page.width - 40;
-    const student_codeX = 60;
-    const nameX = 140;
-    const phoneX = 320;
-    const schoolX = 422;
-
-    pdf.fontSize(14)
-      .moveDown(2)
-      .text('Listagem de Alunos', 60);
-    pdf.moveTo(marginLeft, 128).lineTo(marginRight, 128).stroke();
-    pdf.fontSize(11)
-      .font('Helvetica-Bold')
-      .text('Matrícula', student_codeX, 140, { lineBreak: false, bold: true })
-      .text('Nome Completo', nameX, 140, { lineBreak: false })
-      .text('Telefone', phoneX, 140, { lineBreak: false })
-      .font('Helvetica')
-      .moveTo(marginLeft, 160).lineTo(marginRight, 160).stroke()
-    ;
-
-    pdf.on('pageAdded', () => {
-      pdf.fontSize(14)
-        .moveDown(2)
-        .text('Listagem de Alunos', 60);
-      pdf.moveTo(marginLeft, 128).lineTo(marginRight, 128).stroke();
-      pdf.fontSize(11)
-        .font('Helvetica-Bold')
-        .text('Matrícula', student_codeX, 140, { lineBreak: false })
-        .text('Nome Completo', nameX, 140, { lineBreak: false })
-        .text('Telefone', phoneX, 140, { lineBreak: false })
-        .font('Helvetica')
-        .moveTo(marginLeft, 160).lineTo(marginRight, 160).stroke()
-      ;
-      rowY = 170;
-    });
-
-    let rowY = 170;
-
-    students.forEach(student => {
-      pdf.text(student.student_code, student_codeX, rowY, {
-          width: 80, height: 12
-        })
-        .text(`${student.first_name} ${student.last_name}`, nameX, rowY, {
-          width: 180, height: 12
-        })
-        .text(student.phone, phoneX, rowY, {
-          width: 102, height: 12
-        })
-      ;
-
-      rowY += 22;
-
-      if (rowY >= pdf.page.height - 82) {
-        pdf.addPage();
-      }
-    });
-
-    const range = pdf.bufferedPageRange();
-
-    for (let i = range.start; i <= (pdf._pageBufferStart + pdf._pageBuffer.length - 1); i++) {
-      pdf.switchToPage(i);
-      pdf.image('public/images/logo.png', (pdf.page.width - 48) / 2, 24, { fit: [48, 48] });
-      pdf.text('Prefeitura Municipal de São Fidélis', 0, 80, { align: 'center', width: pdf.page.width });
-      pdf.fontSize(8)
-        .text(`Página ${i + 1} | Gerado em ${dayjs(Date.now()).format('DD/MM/YYYY')}`, 90, pdf.page.height - 40, { lineBreak: false })
-        .fontSize(11)
-      ;
-    }
   }
 }
 

@@ -12,4 +12,4 @@ module.exports = {
   filterProperties: ['status', 'student_id', 'classroom_id', 'academic_year_id' ],
   listProperties: ['id', 'status', 'student_id', 'classroom_id', 'academic_year_id', 'created_at'],
   showProperties: ['id', 'status', 'student_id', 'classroom_id', 'academic_year_id', 'created_at', 'updated_at']
-}
+};

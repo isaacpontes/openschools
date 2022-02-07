@@ -1,8 +1,8 @@
 const express = require('express');
 
-const ClassroomsController = require( "../../controllers/api/manager/ClassroomsController");
-const SchoolsController = require( "../../controllers/api/manager/SchoolsController");
-const StudentsController = require( "../../controllers/api/manager/StudentsController");
+const ClassroomsController = require( '../../controllers/api/manager/ClassroomsController');
+const SchoolsController = require( '../../controllers/api/manager/SchoolsController');
+const StudentsController = require( '../../controllers/api/manager/StudentsController');
 const TransportsController = require('../../controllers/api/manager/TransportsController');
 
 const classroomsController = new ClassroomsController();

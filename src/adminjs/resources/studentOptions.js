@@ -73,4 +73,4 @@ module.exports = {
     'created_at',
     'updated_at'
   ]
-}
+};

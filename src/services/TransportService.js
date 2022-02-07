@@ -1,4 +1,4 @@
-const Transport = require("../models/Transport");
+const Transport = require('../models/Transport');
 
 class TransportService {
   static create(name, driver, info) {

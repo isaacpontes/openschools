@@ -33,18 +33,18 @@ class Enrollment extends Model {
 
   readableStatus() {
     switch (this.status) {
-      case 'active':
-        return 'Ativa';
-      case 'pending':
-        return 'Pendente';
-      case 'rejected':
-        return 'Recusada';
-      case 'inactive':
-        return 'Inativa';
-      default:
-        return '';
+    case 'active':
+      return 'Ativa';
+    case 'pending':
+      return 'Pendente';
+    case 'rejected':
+      return 'Recusada';
+    case 'inactive':
+      return 'Inativa';
+    default:
+      return '';
     }
   }
-};
+}
 
 module.exports = Enrollment;
