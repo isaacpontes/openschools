@@ -1,9 +1,9 @@
-const GradeService = require("../../../services/GradeService");
+const GradeService = require("../../services/GradeService");
 
-class GradesController {
+module.exports = {
   // Return a list of all grades
   // GET /api/admin/grades
-  findAll = async (req, res) => {
+  index: async (req, res) => {
     try {
       const grades = await GradeService.findAll();
 
@@ -14,11 +14,11 @@ class GradesController {
         error: error.message
       });
     }
-  }
+  },
 
   // Save a new grade to the database
   // POST /api/admin/grades
-  save = async (req, res) => {
+  save: async (req, res) => {
     const { name } = req.body;
     const grade = GradeService.create(name);
 
@@ -32,11 +32,11 @@ class GradesController {
         error: error.message
       });
     }
-  }
+  },
 
   // Update a grade in the database
   // PUT /api/admin/grades/:id
-  update = async (req, res) => {
+  update: async (req, res) => {
     const id = req.params.id;
     const { name } = req.body;
 
@@ -50,11 +50,11 @@ class GradesController {
         error: error.message
       });
     }
-  }
+  },
 
   // Delete grade from database
   // DELETE /api/admin/grades/:id
-  delete = async (req, res) => {
+  delete: async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -69,5 +69,3 @@ class GradesController {
     }
   }
 }
-
-module.exports = GradesController;

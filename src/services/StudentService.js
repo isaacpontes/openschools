@@ -1,44 +1,44 @@
 const { QueryTypes } = require('sequelize');
 const Student = require('../models/Student');
 
-class StudentService {
-  static create({ student_code, first_name, last_name, gender, phone, address, birthday, birth_place, father_name, father_ocupation, mother_name, mother_ocupation, blood_type, info, transport_id }) {
+module.exports = {
+  create: (values) => {
     const student = Student.build();
 
-    if (student_code) student.student_code = student_code;
-    if (first_name) student.first_name = first_name;
-    if (last_name) student.last_name = last_name;
-    if (gender) student.gender = gender;
-    if (phone) student.phone = phone;
-    if (address) student.address = address;
-    if (birthday) student.birthday = birthday;
-    if (birth_place) student.birth_place = birth_place;
-    if (father_name) student.father_name = father_name;
-    if (father_ocupation) student.father_ocupation = father_ocupation;
-    if (mother_name) student.mother_name = mother_name;
-    if (mother_ocupation) student.mother_ocupation = mother_ocupation;
-    if (blood_type) student.blood_type = blood_type;
-    if (info) student.info = info;
-    if (transport_id) student.transport_id = transport_id;
+    if (values.student_code) student.student_code = values.student_code;
+    if (values.first_name) student.first_name = values.first_name;
+    if (values.last_name) student.last_name = values.last_name;
+    if (values.gender) student.gender = values.gender;
+    if (values.phone) student.phone = values.phone;
+    if (values.address) student.address = values.address;
+    if (values.birthday) student.birthday = values.birthday;
+    if (values.birth_place) student.birth_place = values.birth_place;
+    if (values.father_name) student.father_name = values.father_name;
+    if (values.father_ocupation) student.father_ocupation = values.father_ocupation;
+    if (values.mother_name) student.mother_name = values.mother_name;
+    if (values.mother_ocupation) student.mother_ocupation = values.mother_ocupation;
+    if (values.blood_type) student.blood_type = values.blood_type;
+    if (values.info) student.info = values.info;
+    if (values.transport_id) student.transport_id = values.transport_id;
 
     return student;
-  }
+  },
 
-  static async findAll() {
+  findAll: async () => {
     const students = await Student.findAll();
     return students;
-  }
+  },
 
-  static async findAllWithAcademicYears() {
+  findAllWithAcademicYears: async () => {
     const students = await Student.findAll({
       include: [
         { association: 'academicYears' }
       ]
     });
     return students;
-  }
+  },
 
-  static async findAllFromManager(managerId) {
+  findAllFromManager: async (managerId) => {
     const students = await Student.sequelize.query(`
       SELECT
         "Student".*,
@@ -64,21 +64,21 @@ class StudentService {
     });
 
     return students;
-  }
+  },
 
-  static async findById(id) {
+  findById: async (id) => {
     const student = await Student.findByPk(id, {
       include: 'transport'
     });
     return student;
-  }
+  },
 
-  static async save(student) {
+  save: async (student) => {
     await student.save();
     return student;
-  }
+  },
 
-  static async updateOne(id, student_code, first_name, last_name, gender, phone, address, birthday, birth_place, father_name, father_ocupation, mother_name, mother_ocupation, blood_type, info, transport_id) {
+  updateOne: async (id, student_code, first_name, last_name, gender, phone, address, birthday, birth_place, father_name, father_ocupation, mother_name, mother_ocupation, blood_type, info, transport_id) => {
     await Student.update({
       student_code,
       first_name,
@@ -98,11 +98,9 @@ class StudentService {
     }, {
       where: { id }
     });
-  }
+  },
 
-  static async deleteOne(id) {
+  deleteOne: async (id) => {
     await Student.destroy({ where: { id } });
   }
 }
-
-module.exports = StudentService;

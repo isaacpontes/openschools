@@ -1,9 +1,9 @@
-const TransportService = require("../../../services/TransportService");
+const TransportService = require("../../services/TransportService");
 
-class TransportsController {
+module.exports = {
   // Return a list of all transports
   // GET /api/admintransports
-  findAll = async (req, res) => {
+  index: async (req, res) => {
     try {
       const transports = await TransportService.findAll();
       return res.json(transports);
@@ -13,11 +13,11 @@ class TransportsController {
         error: error.message
       });
     }
-  }
+  },
 
   // Save a new transport to the database
   // POST /api/admin/transports
-  save = async (req, res) => {
+  save: async (req, res) => {
     const { name, driver, info } = req.body;
     const transport = TransportService.create(name, driver, info);
 
@@ -31,11 +31,11 @@ class TransportsController {
         error: error.message
       });
     }
-  }
+  },
 
   // Return a single transport
   // GET /api/admin/transports/:id
-  findById = async (req, res) => {
+  show: async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -48,11 +48,11 @@ class TransportsController {
         error: error.message
       });
     }
-  }
+  },
 
   // Update a transport in the database
   // PUT /api/admin/transports/:id
-  update = async (req, res) => {
+  update: async (req, res) => {
     const id = req.params.id;
     const { name, driver, info } = req.body;
 
@@ -78,11 +78,11 @@ class TransportsController {
         error: error.message
       });
     }
-  }
+  },
 
   // Delete transport from database
   // DELETE /api/admin/transports/:id
-  delete = async (req, res) => {
+  delete: async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -97,5 +97,3 @@ class TransportsController {
     }
   }
 }
-
-module.exports = TransportsController;

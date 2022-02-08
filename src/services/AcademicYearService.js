@@ -1,33 +1,31 @@
 const AcademicYear = require('../models/AcademicYear');
 
-class AcademicYearService {
-  static create(year) {
+module.exports = {
+  create: (year) => {
     const academicYear = AcademicYear.build({ year });
     return academicYear;
-  }
+  },
 
-  static async findAll() {
+  findAll: async () => {
     const academicYears = await AcademicYear.findAll();
     return academicYears;
-  }
+  },
 
-  static async findById(id) {
+  findById: async (id) => {
     const academicYear = await AcademicYear.findByPk(id);
     return academicYear;
-  }
+  },
 
-  static async save(academicYear) {
+  save: async (academicYear) => {
     await academicYear.save();
     return academicYear;
-  }
+  },
 
-  static async updateOne(id, year) {
+  updateOne: async (id, year) => {
     await AcademicYear.update({ year }, { where: { id } });
-  }
+  },
 
-  static async deleteOne(id) {
+  deleteOne: async (id) => {
     await AcademicYear.destroy({ where: { id } });
   }
 }
-
-module.exports = AcademicYearService;

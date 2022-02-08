@@ -1,33 +1,31 @@
 const Transport = require('../models/Transport');
 
-class TransportService {
-  static create(name, driver, info) {
+module.exports = {
+  create: (name, driver, info) => {
     const transport = Transport.build({ name, driver, info });
     return transport;
-  }
+  },
 
-  static async findAll() {
+  findAll: async () => {
     const transports = await Transport.findAll();
     return transports;
-  }
+  },
 
-  static async findById(id) {
+  findById: async (id) => {
     const transport = await Transport.findByPk(id);
     return transport;
-  }
+  },
 
-  static async save(transport) {
+  save: async (transport) => {
     await transport.save();
     return transport;
-  }
+  },
 
-  static async updateOne(id, name, driver, info) {
+  updateOne: async (id, name, driver, info) => {
     await Transport.update({ name, driver, info }, { where: { id } });
-  }
+  },
 
-  static async deleteOne(id) {
+  deleteOne: async (id) => {
     await Transport.destroy({ where: { id } });
   }
 }
-
-module.exports = TransportService;

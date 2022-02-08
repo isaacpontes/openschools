@@ -1,7 +1,9 @@
-const TransportService = require("../../../services/TransportService");
+const TransportService = require("../../services/TransportService");
 
-class TransportsController {
-  findAll = async (req, res) => {
+module.exports = {
+  // Find all transports
+  // GET /api/manager/transports
+  index: async (req, res) => {
     try {
       const transports = await TransportService.findAll();
       return res.json(transports);
@@ -13,5 +15,3 @@ class TransportsController {
     }
   }
 }
-
-module.exports = TransportsController;

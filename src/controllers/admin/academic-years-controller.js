@@ -1,9 +1,9 @@
-const AcademicYearService = require("../../../services/AcademicYearService");
+const AcademicYearService = require("../../services/AcademicYearService");
 
-class AcademicYearsController {
+module.exports = {
   // Return a list of all academic years
   // GET /api/admin/academic-years
-  index = async (req, res) => {
+  index: async (req, res) => {
     try {
       const academicYears = await AcademicYearService.findAll();
 
@@ -14,11 +14,11 @@ class AcademicYearsController {
         error: error.message
       });
     }
-  }
+  },
 
   // Save a new academic year to the database
   // POST /api/admin/academic-years
-  save = async (req, res) => {
+  save: async (req, res) => {
     const { year } = req.body;
     const academicYear = AcademicYearService.create(year);
 
@@ -32,11 +32,11 @@ class AcademicYearsController {
         error: error.message
       });
     }
-  }
+  },
 
   // Update a academic year in the database
   // PUT /api/admin/academic-years/:id
-  update = async (req, res) => {
+  update: async (req, res) => {
     const id = req.params.id;
     const { year } = req.body;
 
@@ -50,11 +50,11 @@ class AcademicYearsController {
         error: error.message
       });
     }
-  }
+  },
 
   // Delete academic year from database
   // DELETE /api/admin/academic-years/:id
-  delete = async (req, res) => {
+  delete: async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -69,5 +69,3 @@ class AcademicYearsController {
     }
   }
 }
-
-module.exports = AcademicYearsController;

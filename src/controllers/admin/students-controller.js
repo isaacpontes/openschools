@@ -1,9 +1,9 @@
-const StudentService = require("../../../services/StudentService");
+const StudentService = require("../../services/StudentService");
 
-class StudentsController {
+module.exports = {
   // Return a list of all students
   // GET /api/admin/students
-  findAll = async (req, res) => {
+  index: async (req, res) => {
     try {
       const students = await StudentService.findAll();
       return res.json(students);
@@ -13,11 +13,11 @@ class StudentsController {
         error: error.message
       });
     }
-  }
+  },
 
   // Save a new student to the database
   // POST /api/admin/students
-  save = async (req, res) => {
+  save: async (req, res) => {
     const {
       student_code,
       first_name,
@@ -64,11 +64,11 @@ class StudentsController {
         error: error.message
       });
     }
-  }
+  },
 
   // Render a single student
   // GET /api/admin/students/:id
-  findById = async (req, res) => {
+  show: async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -80,11 +80,11 @@ class StudentsController {
         error: error.message
       });
     }
-  }
+  },
 
   // Update a student in the database
   // PUT /api/admin/students/:id
-  update = async (req, res) => {
+  update: async (req, res) => {
     const { id } = req.params;
     const {
       student_code,
@@ -132,11 +132,11 @@ class StudentsController {
         error: error.message
       });
     }
-  }
+  },
 
   // Delete student from database
   // DELETE /api/admin/students/:id
-  delete = async (req, res) => {
+  delete: async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -151,5 +151,3 @@ class StudentsController {
     }
   }
 }
-
-module.exports = StudentsController;

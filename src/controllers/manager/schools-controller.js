@@ -1,9 +1,9 @@
-const SchoolService = require("../../../services/SchoolService");
+const SchoolService = require("../../services/SchoolService");
 
-class SchoolsController {
+module.exports = {
   // Return a list of all schools belonging to current user
   // GET /api/manager/schools
-  findManagerSchools = async (req, res) => {
+  index: async (req, res) => {
     const manager = req.user.id;
 
     try {
@@ -15,11 +15,11 @@ class SchoolsController {
         error: error.message
       });
     }
-  }
+  },
 
   // Return a single school with it's classrooms
   // GET /api/manager/schools/:id
-  findSchoolById = async (req, res) => {
+  show: async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -30,5 +30,3 @@ class SchoolsController {
     }
   }
 }
-
-module.exports = SchoolsController;

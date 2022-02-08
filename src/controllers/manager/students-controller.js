@@ -1,9 +1,9 @@
-const StudentService = require("../../../services/StudentService");
+const StudentService = require("../../services/StudentService");
 
-class StudentsController {
+module.exports = {
   // Find all students from the manager's schools
   // GET /api/manager/students
-  index = async (req, res) => {
+  index: async (req, res) => {
     const { id } = req.user;
 
     try {
@@ -14,11 +14,11 @@ class StudentsController {
       console.log(error);
       return res.status(400).json({ message: 'Erro ao retornar estudantes.', error: error.message });
     }
-  }
+  },
 
   // Save a new student to the database
   // POST /api/manager/students
-  save = async (req, res) => {
+  save: async (req, res) => {
     const {
       student_code,
       first_name,
@@ -61,11 +61,11 @@ class StudentsController {
     } catch (error) {
       return res.status(400).json({ message: 'Erro ao salvar estudante.', error: error.message });
     }
-  }
+  },
 
   // Return a single student
   // GET /api/manager/students/:id
-  show = async (req, res) => {
+  show: async (req, res) => {
     const { id } = req.params;
   
     try {
@@ -75,11 +75,11 @@ class StudentsController {
     } catch (error) {
       return res.status(400).json({ message: 'Erro ao retornar aluno.' });
     }
-  }
+  },
 
   // Update a student in the database
   // PUT /api/manager/students/:id
-  update = async (req, res) => {
+  update: async (req, res) => {
     const { id } = req.params;
     const { student_code,
       first_name,
@@ -127,11 +127,11 @@ class StudentsController {
         error: error.message
       });
     }
-  }
+  },
 
   // Delete student from database
   // DELETE /api/manager/students/:id
-  delete = async (req, res) => {
+  delete: async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -141,11 +141,11 @@ class StudentsController {
     } catch (error) {
       return res.status(400).json({ message: 'Erro ao excluir aluno.' });
     }
-  }
+  },
 
   // Find all students from the manager's schools
   // GET /api/manager/enrolled-students
-  enrolledStudents = async (req, res) => {
+  enrolledStudents: async (req, res) => {
     const { id } = req.user;
 
     try {
@@ -158,5 +158,3 @@ class StudentsController {
     }
   }
 }
-
-module.exports = StudentsController;

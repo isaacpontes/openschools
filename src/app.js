@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
-const apiRouter = require('./routes/api');
+const router = require('./routes');
 const { adminJs, adminJsRouter } = require('./config/adminjs');
 
 // Express app
@@ -20,6 +20,6 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 // Routes
-app.use('/api', apiRouter);
+app.use('/api', router);
 
 module.exports = { app };

@@ -1,10 +1,10 @@
-const JwtService = require("../../services/JwtService");
-const UserService = require("../../services/UserService");
+const JwtService = require("../services/JwtService");
+const UserService = require("../services/UserService");
 
-class AuthController {
+module.exports = {
   // Authenticates the user returning a JWT
   // POST /api/auth/login
-  login = async (req, res) => {
+  login: async (req, res) => {
     const { email, password } = req.body;
 
     try {
@@ -32,5 +32,3 @@ class AuthController {
     }
   }
 }
-
-module.exports = AuthController;

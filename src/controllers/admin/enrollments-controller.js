@@ -1,9 +1,9 @@
-const EnrollmentService = require("../../../services/EnrollmentService");
+const EnrollmentService = require("../../services/EnrollmentService");
 
-class EnrollmentsController {
+module.exports = {
   // Return a list of all enrollments
   // GET /api/admin/enrollments
-  index = async (req, res) => {
+  index: async (req, res) => {
     try {
       const enrollments = await EnrollmentService.findAll();
 
@@ -14,11 +14,11 @@ class EnrollmentsController {
         error: error.message
       });
     }
-  }
+  },
 
   // Save a new enrollment to the database
   // POST /api/admin/enrollments
-  save = async (req, res) => {
+  save: async (req, res) => {
     const { status, student_id, classroom_id, academic_year_id } = req.body;
     const enrollment = EnrollmentService.create(status, student_id, classroom_id, academic_year_id);
 
@@ -32,11 +32,11 @@ class EnrollmentsController {
         error: error.message
       });
     }
-  }
+  },
 
   // Update a enrollment in the database
   // PUT /api/admin/enrollments/:id
-  update = async (req, res) => {
+  update: async (req, res) => {
     const id = req.params.id;
     const { status } = req.body;
 
@@ -50,11 +50,11 @@ class EnrollmentsController {
         error: error.message
       });
     }
-  }
+  },
 
   // Delete enrollment from database
   // DELETE /api/admin/enrollments/:id
-  delete = async (req, res) => {
+  delete: async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -69,5 +69,3 @@ class EnrollmentsController {
     }
   }
 }
-
-module.exports = EnrollmentsController;

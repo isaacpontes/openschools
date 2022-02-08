@@ -1,9 +1,9 @@
-const ClassroomService = require("../../../services/ClassroomService");
+const ClassroomService = require("../../services/ClassroomService");
 
-class ClassroomsController {
+module.exports = {
   // Return a list of all classrooms
   // GET /api/admin/classrooms
-  findAll = async (req, res) => {
+  index: async (req, res) => {
     try {
       const classrooms = await ClassroomService.findAll();
 
@@ -14,11 +14,11 @@ class ClassroomsController {
         error: error.message
       });
     }
-  }
+  },
 
   // Save a new classroom to the database
   // POST /api/admin/classrooms
-  save = async (req, res) => {
+  save: async (req, res) => {
     const { name, grade_id, school_id } = req.body;
     const classroom = ClassroomService.create(name, grade_id, school_id);
 
@@ -32,11 +32,11 @@ class ClassroomsController {
         error: error.message
       });
     }
-  }
+  },
 
   // Return a single classroom
   // GET /api/admin/classrooms/:id
-  findById = async (req, res) => {
+  show: async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -50,11 +50,11 @@ class ClassroomsController {
         error: error.message
       });
     }
-  }
+  },
 
   // Update a classroom in the database
   // PUT /admin/classrooms/:id
-  update = async (req, res) => {
+  update: async (req, res) => {
     const { name, grade_id } = req.body;
     const { id } = req.params;
 
@@ -77,11 +77,11 @@ class ClassroomsController {
         error: error.message
       });
     }
-  }
+  },
 
   // Delete classroom from database
   // DELETE /classrooms/:id
-  delete = async (req, res) => {
+  delete: async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -96,5 +96,3 @@ class ClassroomsController {
     }
   }
 }
-
-module.exports = ClassroomsController;

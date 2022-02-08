@@ -1,9 +1,9 @@
-const EmployeeService = require("../../../services/EmployeeService");
+const EmployeeService = require("../../services/EmployeeService");
 
-class EmployeesController {
+module.exports = {
   // Return a list of all employees
   // GET /api/admin/employees
-  findAll = async (req, res) => {
+  index: async (req, res) => {
     try {
       const employees = await EmployeeService.findAll();
       return res.json(employees);
@@ -13,11 +13,11 @@ class EmployeesController {
         error: error.message
       });
     }
-  }
+  },
 
   // Save a new employee to the database
   // POST /api/admin/employees
-  save = async (req, res) => {
+  save: async (req, res) => {
     const {
       name,
       employee_code,
@@ -57,11 +57,11 @@ class EmployeesController {
         error: error.message
       });
     }
-  }
+  },
 
   // Render a single employee
   // GET /admin/employees/:id
-  findById = async (req, res) => {
+  show: async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -73,11 +73,11 @@ class EmployeesController {
         error: error.message
       });
     }
-  }
+  },
 
   // Update a employee in the database
   // PUT /admin/employees/:id
-  update = async (req, res) => {
+  update: async (req, res) => {
     const { id } = req.params;
     const {
       name,
@@ -143,11 +143,11 @@ class EmployeesController {
         error: error.message
       });
     }
-  }
+  },
 
   // Delete employee from database
   // DELETE /admin/employees/:id
-  delete = async (req, res) => {
+  delete: async (req, res) => {
     const { id } = req.params;
   
     try {
@@ -162,5 +162,3 @@ class EmployeesController {
     }
   }
 }
-
-module.exports = EmployeesController;

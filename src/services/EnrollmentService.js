@@ -1,12 +1,12 @@
 const Enrollment = require('../models/Enrollment');
 
-class EnrollmentService {
-  static create(student_id, classroom_id, academic_year_id, status) {
+module.exports = {
+  create: (student_id, classroom_id, academic_year_id, status) => {
     const enrollment = Enrollment.build({ status, student_id, classroom_id, academic_year_id });
     return enrollment;
-  }
+  },
 
-  static async findAll() {
+  findAll: async () => {
     const enrollments = await Enrollment.findAll({
       include: [
         { association: 'academic_year' },
@@ -15,25 +15,23 @@ class EnrollmentService {
       ]
     });
     return enrollments;
-  }
+  },
 
-  static async findById(id) {
+  findById: async (id) => {
     const enrollment = await Enrollment.findByPk(id);
     return enrollment;
-  }
+  },
 
-  static async save(enrollment) {
+  save: async (enrollment) => {
     await enrollment.save();
     return enrollment;
-  }
+  },
 
-  static async updateOne(id, status) {
+  updateOne: async (id, status) => {
     await Enrollment.update({ status }, { where: { id } });
-  }
+  },
 
-  static async deleteOne(id) {
+  deleteOne: async (id) => {
     await Enrollment.destroy({ where: { id } });
   }
 }
-
-module.exports = EnrollmentService;
