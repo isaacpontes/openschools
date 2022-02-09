@@ -1,11 +1,11 @@
-const TransportService = require("../../services/TransportService");
+const transportService = require("../../services/transport-service");
 
 module.exports = {
   // Return a list of all transports
   // GET /api/admintransports
   index: async (req, res) => {
     try {
-      const transports = await TransportService.findAll();
+      const transports = await transportService.findAll();
       return res.json(transports);
     } catch (error) {
       return res.status(400).json({
@@ -19,10 +19,10 @@ module.exports = {
   // POST /api/admin/transports
   save: async (req, res) => {
     const { name, driver, info } = req.body;
-    const transport = TransportService.create(name, driver, info);
+    const transport = transportService.create(name, driver, info);
 
     try {
-      await TransportService.save(transport);
+      await transportService.save(transport);
 
       return res.status(201).json(transport);
     } catch (error) {
@@ -39,7 +39,7 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      const transport = await TransportService.findById(id);
+      const transport = await transportService.findById(id);
 
       return res.json(transport);
     } catch (error) {
@@ -57,7 +57,7 @@ module.exports = {
     const { name, driver, info } = req.body;
 
     try {
-      const transport = await TransportService.findById(id);
+      const transport = await transportService.findById(id);
 
       if (name) {
         transport.name = name;
@@ -69,7 +69,7 @@ module.exports = {
         transport.info = info;
       }
 
-      await TransportService.save(transport);
+      await transportService.save(transport);
 
       return res.json(transport);
     } catch (error) {
@@ -86,7 +86,7 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      await TransportService.deleteOne(id);
+      await transportService.deleteOne(id);
 
       return res.status(204).json();
     } catch (error) {

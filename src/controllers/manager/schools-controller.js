@@ -1,4 +1,4 @@
-const SchoolService = require("../../services/SchoolService");
+const schoolService = require("../../services/school-service");
 
 module.exports = {
   // Return a list of all schools belonging to current user
@@ -7,7 +7,7 @@ module.exports = {
     const manager = req.user.id;
 
     try {
-      const schools = await SchoolService.findByManager(manager);
+      const schools = await schoolService.findByManager(manager);
       return res.status(200).json(schools);
     } catch (error) {
       return res.status(400).json({
@@ -23,7 +23,7 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      const school = await SchoolService.findById(id);
+      const school = await schoolService.findById(id);
       return res.status(200).json(school);
     } catch (error) {
       return res.status(400).json({ message: 'Erro ao recuperar escola.' });

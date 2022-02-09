@@ -1,11 +1,11 @@
-const AcademicYearService = require("../../services/AcademicYearService");
+const academicYearService = require("../../services/academic-year-service");
 
 module.exports = {
   // Return a list of all academic years
   // GET /api/admin/academic-years
   index: async (req, res) => {
     try {
-      const academicYears = await AcademicYearService.findAll();
+      const academicYears = await academicYearService.findAll();
 
       return res.json(academicYears);
     } catch (error) {
@@ -20,10 +20,10 @@ module.exports = {
   // POST /api/admin/academic-years
   save: async (req, res) => {
     const { year } = req.body;
-    const academicYear = AcademicYearService.create(year);
+    const academicYear = academicYearService.create(year);
 
     try {
-      await AcademicYearService.save(academicYear);
+      await academicYearService.save(academicYear);
 
       return res.status(201).json(academicYear);
     } catch (error) {
@@ -41,7 +41,7 @@ module.exports = {
     const { year } = req.body;
 
     try {
-      await AcademicYearService.updateOneOne(id, year);
+      await academicYearService.updateOneOne(id, year);
 
       return res.status(204).json();
     } catch (error) {
@@ -58,7 +58,7 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      await AcademicYearService.deleteOne(id);
+      await academicYearService.deleteOne(id);
 
       return res.status(204).json();
     } catch (error) {

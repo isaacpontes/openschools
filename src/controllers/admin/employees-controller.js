@@ -1,11 +1,11 @@
-const EmployeeService = require("../../services/EmployeeService");
+const employeeService = require("../../services/employee-service");
 
 module.exports = {
   // Return a list of all employees
   // GET /api/admin/employees
   index: async (req, res) => {
     try {
-      const employees = await EmployeeService.findAll();
+      const employees = await employeeService.findAll();
       return res.json(employees);
     } catch (error) {
       return res.status(400).json({
@@ -45,10 +45,10 @@ module.exports = {
       current_sector_id
     } = req.body;
 
-    const employee = EmployeeService.create({ name, employee_code, position, role, bond, birthday, cpf, rg, ctps, elector_title, pis, address, phone, email, situation, admission_date, formation, complementary_formation, workload, fundeb, origin_sector_id, current_sector_id, shift, info });
+    const employee = employeeService.create({ name, employee_code, position, role, bond, birthday, cpf, rg, ctps, elector_title, pis, address, phone, email, situation, admission_date, formation, complementary_formation, workload, fundeb, origin_sector_id, current_sector_id, shift, info });
 
     try {
-      await EmployeeService.save(employee);
+      await employeeService.save(employee);
 
       return res.json(employee);
     } catch (error) {
@@ -65,7 +65,7 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      const employee = await EmployeeService.findOne(id);
+      const employee = await employeeService.findOne(id);
       return res.json(employee);
     } catch (error) {
       return res.status(400).json({
@@ -107,7 +107,7 @@ module.exports = {
     } = req.body;
 
     try {
-      const employee = await EmployeeService.findOne(id);
+      const employee = await employeeService.findOne(id);
 
       if (name) employee.name = name;
       if (employee_code) employee.employee_code = employee_code;
@@ -134,7 +134,7 @@ module.exports = {
       if (origin_sector_id) employee.origin_sector_id = origin_sector_id;
       if (current_sector_id) employee.current_sector_id = current_sector_id;
 
-      await EmployeeService.save(employee);
+      await employeeService.save(employee);
 
       return res.json(employee);
     } catch (error) {
@@ -151,7 +151,7 @@ module.exports = {
     const { id } = req.params;
   
     try {
-      await EmployeeService.deleteOne(id);
+      await employeeService.deleteOne(id);
 
       return res.status(204).json();
     } catch (error) {

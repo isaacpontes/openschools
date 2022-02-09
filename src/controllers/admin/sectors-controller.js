@@ -1,11 +1,11 @@
-const SectorService = require("../../services/SectorService");
+const sectorService = require("../../services/sector-service");
 
 module.exports = {
   // Return a list of all sectors
   // GET /api/admin/sectors
   index: async (req, res) => {
     try {
-      const sectors = await SectorService.findAll();
+      const sectors = await sectorService.findAll();
       return res.json(sectors);
     } catch (error) {
       return res.status(400).json({
@@ -19,10 +19,10 @@ module.exports = {
   // POST /api/admin/sectors
   save: async (req, res) => {
     const { name } = req.body;
-    const sector = SectorService.create(name);
+    const sector = sectorService.create(name);
 
     try {
-      await SectorService.save(sector);
+      await sectorService.save(sector);
       return res.status(201).json(sector);
     } catch (error) {
       return res.status(400).json({
@@ -37,7 +37,7 @@ module.exports = {
   show: async (req, res) => {
     const { id } = req.params;
     try {
-      const sector = await SectorService.findById(id);
+      const sector = await sectorService.findById(id);
       return res.json(sector);
     } catch (error) {
       return res.status(400).json({
@@ -54,13 +54,13 @@ module.exports = {
     const { name } = req.body;
 
     try {
-      const sector = await SectorService.findById(id);
+      const sector = await sectorService.findById(id);
 
       if (name) {
         sector.name = name;
       }
 
-      await SectorService.save(sector);
+      await sectorService.save(sector);
 
       return res.json(sector);
     } catch (error) {
@@ -77,7 +77,7 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      await SectorService.deleteOne(id);
+      await sectorService.deleteOne(id);
       return res.status(204).json();
     } catch (error) {
       return res.status(400).json({

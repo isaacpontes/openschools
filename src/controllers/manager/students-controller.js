@@ -1,4 +1,4 @@
-const StudentService = require("../../services/StudentService");
+const studentService = require("../../services/student-service");
 
 module.exports = {
   // Find all students from the manager's schools
@@ -7,7 +7,7 @@ module.exports = {
     const { id } = req.user;
 
     try {
-      const students = await StudentService.findAll();
+      const students = await studentService.findAll();
 
       return res.status(200).json(students);
     } catch (error) {
@@ -37,7 +37,7 @@ module.exports = {
       transport_id
     } = req.body;
 
-    const student = StudentService.create({student_code,
+    const student = studentService.create({student_code,
       first_name,
       last_name,
       gender,
@@ -55,7 +55,7 @@ module.exports = {
     });
 
     try {
-      await StudentService.save(student);
+      await studentService.save(student);
   
       return res.status(201).json(student);
     } catch (error) {
@@ -69,7 +69,7 @@ module.exports = {
     const { id } = req.params;
   
     try {
-      const student = await StudentService.findById(id, ['school', 'classroom', 'transport']);
+      const student = await studentService.findById(id, ['school', 'classroom', 'transport']);
 
       return res.status(200).json(student);
     } catch (error) {
@@ -99,7 +99,7 @@ module.exports = {
     } = req.body;
   
     try {
-      const student = await StudentService.findById(id);
+      const student = await studentService.findById(id);
 
       if (student_code) student.student_code = student_code;
       if (first_name) student.first_name = first_name;
@@ -118,7 +118,7 @@ module.exports = {
       if (transport_id) student.transport_id = transport_id;
       student.updated = Date.now();
 
-      await StudentService.save(student);
+      await studentService.save(student);
   
       return res.status(200).json(student);
     } catch (error) {
@@ -135,7 +135,7 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      await StudentService.deleteOne(id);
+      await studentService.deleteOne(id);
   
       return res.status(204).json({ message: 'OK' });
     } catch (error) {
@@ -149,7 +149,7 @@ module.exports = {
     const { id } = req.user;
 
     try {
-      const students = await StudentService.findAllFromManager(id);
+      const students = await studentService.findAllFromManager(id);
 
       return res.status(200).json(students);
     } catch (error) {

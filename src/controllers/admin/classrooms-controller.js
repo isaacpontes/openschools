@@ -1,11 +1,11 @@
-const ClassroomService = require("../../services/ClassroomService");
+const classroomService = require("../../services/classroom-service");
 
 module.exports = {
   // Return a list of all classrooms
   // GET /api/admin/classrooms
   index: async (req, res) => {
     try {
-      const classrooms = await ClassroomService.findAll();
+      const classrooms = await classroomService.findAll();
 
       return res.json(classrooms);
     } catch (error) {
@@ -20,10 +20,10 @@ module.exports = {
   // POST /api/admin/classrooms
   save: async (req, res) => {
     const { name, grade_id, school_id } = req.body;
-    const classroom = ClassroomService.create(name, grade_id, school_id);
+    const classroom = classroomService.create(name, grade_id, school_id);
 
     try {
-      await ClassroomService.save(classroom);
+      await classroomService.save(classroom);
 
       return res.status(201).json(classroom);
     } catch (error) {
@@ -40,7 +40,7 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      const classroom = await ClassroomService.findById(id);
+      const classroom = await classroomService.findById(id);
       const students = await classroom.getStudents();
 
       return res.json({ ...classroom._doc, students });
@@ -59,7 +59,7 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      const classroom = await ClassroomService.findById(id);
+      const classroom = await classroomService.findById(id);
       
       if (name) {
         classroom.name = name;
@@ -68,7 +68,7 @@ module.exports = {
         classroom.grade_id = grade_id;
       }
 
-      await ClassroomService.save(classroom);
+      await classroomService.save(classroom);
 
       return res.json(classroom);
     } catch (error) {
@@ -85,7 +85,7 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      await ClassroomService.deleteOne(id);
+      await classroomService.deleteOne(id);
 
       return res.status(204).json();
     } catch (error) {

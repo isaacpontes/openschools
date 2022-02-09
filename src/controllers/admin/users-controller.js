@@ -1,11 +1,11 @@
-const UserService = require('../../services/UserService');
+const userService = require('../../services/user-service');
 
 module.exports = {
   // Return a list of all users
   // GET /api/admin/users
   index: async (req, res) => {
     try {
-      const users = await UserService.findAll();
+      const users = await userService.findAll();
       
       return res.json(users);
     } catch (error) {
@@ -20,10 +20,10 @@ module.exports = {
   // POST /api/admin/users
   save: async (req, res) => {
     const { name, role, email, password } = req.body;
-    const user = UserService.create(name, role, email, password);
+    const user = userService.create(name, role, email, password);
 
     try {
-      await UserService.save(user)
+      await userService.save(user)
       
       return res.status(201).json(user);
     } catch (error) {
@@ -40,7 +40,7 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      const user = await UserService.findById(id);
+      const user = await userService.findById(id);
 
       return res.json(user);
     } catch (error) {
@@ -58,7 +58,7 @@ module.exports = {
     const { name, role, email, password, password_confirmation } = req.body;
   
     try {
-      const user = await UserService.findById(id);
+      const user = await userService.findById(id);
   
       if (name) user.name = name;
       if (role) user.role = role;
@@ -73,7 +73,7 @@ module.exports = {
         user.password = password;
       }
   
-      await UserService.save(user);
+      await userService.save(user);
 
       return res.json(user);
     } catch (error) {
@@ -90,7 +90,7 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      await UserService.deleteOne(id);
+      await userService.deleteOne(id);
       return res.status(204).json();
     } catch (error) {
       return res.status(400).json({

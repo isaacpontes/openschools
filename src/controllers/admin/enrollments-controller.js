@@ -1,11 +1,11 @@
-const EnrollmentService = require("../../services/EnrollmentService");
+const enrollmentService = require("../../services/enrollment-service");
 
 module.exports = {
   // Return a list of all enrollments
   // GET /api/admin/enrollments
   index: async (req, res) => {
     try {
-      const enrollments = await EnrollmentService.findAll();
+      const enrollments = await enrollmentService.findAll();
 
       return res.json(enrollments);
     } catch (error) {
@@ -20,10 +20,10 @@ module.exports = {
   // POST /api/admin/enrollments
   save: async (req, res) => {
     const { status, student_id, classroom_id, academic_year_id } = req.body;
-    const enrollment = EnrollmentService.create(status, student_id, classroom_id, academic_year_id);
+    const enrollment = enrollmentService.create(status, student_id, classroom_id, academic_year_id);
 
     try {
-      await EnrollmentService.save(enrollment);
+      await enrollmentService.save(enrollment);
 
       return res.status(201).json(enrollment);
     } catch (error) {
@@ -41,7 +41,7 @@ module.exports = {
     const { status } = req.body;
 
     try {
-      await EnrollmentService.updateOneOne(id, status);
+      await enrollmentService.updateOneOne(id, status);
 
       return res.status(204).json();
     } catch (error) {
@@ -58,7 +58,7 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      await EnrollmentService.deleteOne(id);
+      await enrollmentService.deleteOne(id);
 
       return res.status(204).json();
     } catch (error) {

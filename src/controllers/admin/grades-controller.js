@@ -1,11 +1,11 @@
-const GradeService = require("../../services/GradeService");
+const gradeService = require("../../services/grade-service");
 
 module.exports = {
   // Return a list of all grades
   // GET /api/admin/grades
   index: async (req, res) => {
     try {
-      const grades = await GradeService.findAll();
+      const grades = await gradeService.findAll();
 
       return res.json(grades);
     } catch (error) {
@@ -20,10 +20,10 @@ module.exports = {
   // POST /api/admin/grades
   save: async (req, res) => {
     const { name } = req.body;
-    const grade = GradeService.create(name);
+    const grade = gradeService.create(name);
 
     try {
-      await GradeService.save(grade);
+      await gradeService.save(grade);
 
       return res.status(201).json(grade);
     } catch (error) {
@@ -41,7 +41,7 @@ module.exports = {
     const { name } = req.body;
 
     try {
-      await GradeService.updateOneOne(id, name);
+      await gradeService.updateOneOne(id, name);
 
       return res.status(204).json();
     } catch (error) {
@@ -58,7 +58,7 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      await GradeService.deleteOne(id);
+      await gradeService.deleteOne(id);
 
       return res.status(204).json();
     } catch (error) {

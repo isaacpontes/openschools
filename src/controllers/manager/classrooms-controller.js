@@ -1,4 +1,4 @@
-const ClassroomService = require("../../services/ClassroomService");
+const classroomService = require("../../services/classroom-service");
 
 module.exports = {
   // Return a list of all classrooms belonging to the manager's school
@@ -7,7 +7,7 @@ module.exports = {
     const { id } = req.user;
 
     try {
-      const classrooms = await ClassroomService.findByUserId(id);
+      const classrooms = await classroomService.findByUserId(id);
 
       return res.json(classrooms);
     } catch (error) {
@@ -22,10 +22,10 @@ module.exports = {
   // POST /api/manager/classrooms
   save: async (req, res) => {
     const { name, grade_id, school_id } = req.body;
-    const classroom = ClassroomService.create(name, grade_id, school_id);
+    const classroom = classroomService.create(name, grade_id, school_id);
   
     try {
-      await ClassroomService.save(classroom);
+      await classroomService.save(classroom);
       return res.status(201).json(classroom);
     } catch (error) {
       return res.status(400).json({ message: 'Erro ao salvar turma.', error });
@@ -38,7 +38,7 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      const classroom = await ClassroomService.findById(id);
+      const classroom = await classroomService.findById(id);
       return res.status(200).json(classroom);
     } catch (error) {
       return res.status(400).json({ message: 'Erro ao retornar turma.' })
@@ -52,12 +52,12 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      const classroom = await ClassroomService.findById(id);
+      const classroom = await classroomService.findById(id);
       
       if (name) classroom.name = name;
       if (grade_id) classroom.grade_id = grade_id;
 
-      await ClassroomService.save(classroom);
+      await classroomService.save(classroom);
 
       return res.json(classroom);
     } catch (error) {
@@ -74,7 +74,7 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      await ClassroomService.deleteOne(id);
+      await classroomService.deleteOne(id);
 
       return res.status(204).json();
     } catch (error) {

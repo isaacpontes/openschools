@@ -1,5 +1,5 @@
 const readline = require('readline');
-const UserService = require('../services/UserService');
+const userService = require('../services/user-service');
 
 async function seedAdmin() {
   const rl = readline.createInterface({
@@ -23,8 +23,8 @@ async function seedAdmin() {
 
     try {
 
-      const user = await UserService.create('Admin', 'admin', adminEmail, adminPassword);
-      await UserService.save(user);
+      const user = await userService.create('Admin', 'admin', adminEmail, adminPassword);
+      await userService.save(user);
 
       console.log(`\nAdmin user with email '${user.email}' created successfully.\n`);
       valid = true;

@@ -1,5 +1,5 @@
-const JwtService = require("../services/JwtService");
-const UserService = require("../services/UserService");
+const jwtService = require("../services/jwt-service");
+const userService = require("../services/user-service");
 
 module.exports = {
   // Authenticates the user returning a JWT
@@ -8,7 +8,7 @@ module.exports = {
     const { email, password } = req.body;
 
     try {
-      const user = await UserService.findByEmail(email);
+      const user = await userService.findByEmail(email);
 
       if (!user) {
         return res.status(401).json({ message: 'Email inválido ou não registrado.'});
@@ -21,7 +21,7 @@ module.exports = {
 
         const payload = { email };
 
-        const token = JwtService.signPayload(payload, '1d')
+        const token = jwtService.signPayload(payload, '1d')
 
         return res.status(200).json({ authenticated: true, token });
       });

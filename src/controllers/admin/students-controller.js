@@ -1,11 +1,11 @@
-const StudentService = require("../../services/StudentService");
+const studentService = require("../../services/student-service");
 
 module.exports = {
   // Return a list of all students
   // GET /api/admin/students
   index: async (req, res) => {
     try {
-      const students = await StudentService.findAll();
+      const students = await studentService.findAll();
       return res.json(students);
     } catch (error) {
       return res.status(400).json({
@@ -36,7 +36,7 @@ module.exports = {
       transport_id
     } = req.body;
 
-    const student = StudentService.create({
+    const student = studentService.create({
       student_code,
       first_name,
       last_name,
@@ -55,7 +55,7 @@ module.exports = {
     });
 
     try {
-      await StudentService.save(student);
+      await studentService.save(student);
 
       return res.status(201).json(student);
     } catch (error) {
@@ -72,7 +72,7 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      const student = await StudentService.findById(id);
+      const student = await studentService.findById(id);
       return res.json(student);
     } catch (error) {
       return res.status(400).json({
@@ -105,7 +105,7 @@ module.exports = {
     } = req.body;
 
     try {
-      const student = await StudentService.findById(id);
+      const student = await studentService.findById(id);
 
       if (student_code) student.student_code = student_code;
       if (first_name) student.first_name = first_name;
@@ -123,7 +123,7 @@ module.exports = {
       if (info) student.info = info;
       if (transport_id) student.transport_id = transport_id;
 
-      await StudentService.save(student);
+      await studentService.save(student);
 
       return res.json(student)
     } catch (error) {
@@ -140,7 +140,7 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      await StudentService.deleteOne(id);
+      await studentService.deleteOne(id);
 
       return res.status(204).json();
     } catch (error) {

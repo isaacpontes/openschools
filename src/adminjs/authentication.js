@@ -1,9 +1,9 @@
 const bcrypt = require('bcrypt');
-const UserService = require('../services/UserService');
+const userService = require('../services/user-service');
 
 module.exports = {
   authenticate: async (email, password) => {
-    const user = await UserService.findByEmail(email);
+    const user = await userService.findByEmail(email);
 
     if (user) {
       const matched = await bcrypt.compare(password, user.password);
