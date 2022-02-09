@@ -21,11 +21,9 @@ module.exports = {
 
         const payload = { email };
 
-        const jwt = new JwtService({ payload });
+        const token = JwtService.signPayload(payload, '1d')
 
-        jwt.signIn('1d');
-
-        return res.status(200).json({ authenticated: true, token: jwt.token });
+        return res.status(200).json({ authenticated: true, token });
       });
     } catch (error) {
       return res.status(400).json({ message: 'Ocorreu um erro durante a autenticação.' });
