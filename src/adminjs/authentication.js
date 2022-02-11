@@ -5,7 +5,7 @@ module.exports = {
   authenticate: async (email, password) => {
     const user = await userService.findByEmail(email);
 
-    if (user) {
+    if (user && user.role === 'admin') {
       const matched = await bcrypt.compare(password, user.password);
 
       if (matched) {
