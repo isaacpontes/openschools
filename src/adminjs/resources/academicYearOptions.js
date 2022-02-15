@@ -1,5 +1,8 @@
 module.exports = {
-  navigation: 'Administração',
+  navigation: {
+    name: 'Administração',
+    icon: 'Settings'
+  },
   editProperties: ['year'],
   filterProperties: ['year' ],
   listProperties: ['id', 'year', 'created_at'],

@@ -1,5 +1,8 @@
 module.exports = {
-  navigation: 'Administração',
+  navigation: {
+    name: 'Administração',
+    icon: 'Settings'
+  },
   properties: {
     password: {
       type: 'password'

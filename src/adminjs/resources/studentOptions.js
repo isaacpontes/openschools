@@ -1,5 +1,8 @@
 module.exports = {
-  navigation: 'Gestão Escolar',
+  navigation: {
+    name: 'Gestão Escolar',
+    icon: 'Education'
+  },
   properties: {
     gender: {
       availableValues: [

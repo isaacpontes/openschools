@@ -1,5 +1,8 @@
 module.exports = {
-  navigation: 'Recursos Humanos',
+  navigation: {
+    name: 'Recursos Humanos',
+    icon: 'Events'
+  },
   editProperties: ['name'],
   filterProperties: ['name' ],
   listProperties: ['id', 'name', 'created_at'],

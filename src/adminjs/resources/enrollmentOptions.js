@@ -1,5 +1,8 @@
 module.exports = {
-  navigation: 'Gestão Escolar',
+  navigation: {
+    name: 'Gestão Escolar',
+    icon: 'Education'
+  },
   properties: {
     availableValues: [
       { value: 'active', label: 'Ativa' },

@@ -1,5 +1,8 @@
 module.exports = {
-  navigation: 'Recursos Humanos',
+  navigation: {
+    name: 'Recursos Humanos',
+    icon: 'Events'
+  },
   properties: {
     admission_date: {
       type: 'date'
