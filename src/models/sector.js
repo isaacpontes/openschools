@@ -16,6 +16,6 @@ class Sector extends Model {
     this.hasMany(models.Employee, { foreignKey: 'origin_sector_id', as: 'original_employees' });
     this.hasMany(models.Employee, { foreignKey: 'current_sector_id', as: 'current_employees' });
   }
-};
+}
 
 module.exports = Sector;

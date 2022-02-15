@@ -15,6 +15,6 @@ class Grade extends Model {
   static associate(models) {
     this.hasMany(models.Classroom, { foreignKey: 'grade_id', as: 'classrooms' });
   }
-};
+}
 
 module.exports = Grade;

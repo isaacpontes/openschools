@@ -1,5 +1,8 @@
 module.exports = {
-  navigation: 'Gestão Escolar',
+  navigation: {
+    name: 'Gestão Escolar',
+    icon: 'Education'
+  },
   properties: {
     availableValues: [
       { value: 'active', label: 'Ativa' },
@@ -12,4 +15,4 @@ module.exports = {
   filterProperties: ['status', 'student_id', 'classroom_id', 'academic_year_id' ],
   listProperties: ['id', 'status', 'student_id', 'classroom_id', 'academic_year_id', 'created_at'],
   showProperties: ['id', 'status', 'student_id', 'classroom_id', 'academic_year_id', 'created_at', 'updated_at']
-}
+};

@@ -26,6 +26,6 @@ class Classroom extends Model {
       as: 'students'
     });
   }
-};
+}
 
 module.exports = Classroom;

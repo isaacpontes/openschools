@@ -1,19 +1,19 @@
 const bcrypt = require('bcrypt');
-const UserService = require('../services/UserService');
+const userService = require('../services/user-service');
 
 module.exports = {
   authenticate: async (email, password) => {
-    const user = await UserService.findByEmail(email)
+    const user = await userService.findByEmail(email);
 
-    if (user) {
-      const matched = await bcrypt.compare(password, user.password)
+    if (user && user.role === 'admin') {
+      const matched = await bcrypt.compare(password, user.password);
 
       if (matched) {
-        return user
+        return user;
       }
     }
 
-    return false
+    return false;
   },
   cookiePassword: process.env.ADMINJS_COOKIE_PASSWORD
-}
+};

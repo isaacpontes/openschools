@@ -1,6 +1,6 @@
 const { Sequelize } = require('sequelize');
 const seedAdmin = require('./seed-admin');
-const UserService = require('../services/UserService');
+const userService = require('../services/user-service');
 const User = require('../models/User');
 const School = require('../models/School');
 const Grade = require('../models/Grade');
@@ -48,7 +48,7 @@ Enrollment.associate(sequelize.models);
 Sector.associate(sequelize.models);
 Employee.associate(sequelize.models);
 
-UserService.countAdminUsers().then(count => {
+userService.countAdminUsers().then(count => {
   if (count > 0) {
     console.log('It looks like you already have a registered Admin user.');
   } else {
