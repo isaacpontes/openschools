@@ -49,6 +49,8 @@ module.exports = {
     'address',
     'birthday',
     'situation',
+    'origin_sector',
+    'current_sector',
     'position',
     'role',
     'bond',
@@ -73,6 +75,8 @@ module.exports = {
     'address',
     'birthday',
     'situation',
+    'origin_sector',
+    'current_sector',
     'position',
     'role',
     'bond',
@@ -95,7 +99,8 @@ module.exports = {
     'name',
     'email',
     'phone',
-    'bond'
+    'bond',
+    'current_sector'
   ],
   showProperties: [
     'id',
@@ -106,6 +111,8 @@ module.exports = {
     'address',
     'birthday',
     'situation',
+    'origin_sector',
+    'current_sector',
     'position',
     'role',
     'bond',

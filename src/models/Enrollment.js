@@ -1,50 +1,33 @@
 'use strict';
 
-const { Model, DataTypes } = require('sequelize');
-
-class Enrollment extends Model {
-  static init(sequelize) {
-    super.init({
-      status: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        defaultValue: 'pending',
-        validate: {
-          isIn: [[ 'active', 'pending', 'rejected', 'inactive' ]]
-        }
+module.exports = (sequelize, DataTypes) => {
+  const Enrollment = sequelize.define('Enrollment', {
+    status: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 'pending',
+      validate: {
+        isIn: [[ 'active', 'pending', 'rejected', 'inactive' ]]
       }
-    }, { sequelize });
-  }
+    }
+  }, {
+    tableName: 'enrollments'
+  })
 
-  static associate(models) {
-    this.belongsTo(models.AcademicYear, {
+  Enrollment.associate = () => {
+    Enrollment.belongsTo(sequelize.models.AcademicYear, {
       foreignKey: 'academic_year_id',
-      as: 'academic_year'
+      as: 'academicYear'
     });
-    this.belongsTo(models.Classroom, {
+    Enrollment.belongsTo(sequelize.models.Classroom, {
       foreignKey: 'classroom_id',
       as: 'classroom'
     });
-    this.belongsTo(models.Student, {
+    Enrollment.belongsTo(sequelize.models.Student, {
       foreignKey: 'student_id',
       as: 'student'
     });
   }
 
-  readableStatus() {
-    switch (this.status) {
-    case 'active':
-      return 'Ativa';
-    case 'pending':
-      return 'Pendente';
-    case 'rejected':
-      return 'Recusada';
-    case 'inactive':
-      return 'Inativa';
-    default:
-      return '';
-    }
-  }
+  return Enrollment
 }
-
-module.exports = Enrollment;

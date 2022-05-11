@@ -1,5 +1,5 @@
 const { QueryTypes } = require('sequelize');
-const Sector = require('../models/Sector');
+const { Sector } = require('../models');
 
 module.exports = {
   create: (name) => {

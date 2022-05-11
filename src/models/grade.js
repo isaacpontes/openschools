@@ -1,20 +1,18 @@
 'use strict';
 
-const { Model, DataTypes } = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  const Grade = sequelize.define('Grade', {
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
+  }, {
+    tableName: 'grades'
+  })
 
-class Grade extends Model {
-  static init(sequelize) {
-    super.init({
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false
-      }
-    }, { sequelize });
+  Grade.associate = () => {
+    Grade.hasMany(sequelize.models.Classroom, { foreignKey: 'grade_id', as: 'classrooms' });
   }
 
-  static associate(models) {
-    this.hasMany(models.Classroom, { foreignKey: 'grade_id', as: 'classrooms' });
-  }
+  return Grade
 }
-
-module.exports = Grade;

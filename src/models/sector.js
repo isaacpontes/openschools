@@ -1,21 +1,25 @@
 'use strict';
 
-const { Model, DataTypes } = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  const Sector = sequelize.define('Sector', {
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
+  }, {
+    tableName: 'sectors'
+  })
 
-class Sector extends Model {
-  static init(sequelize) {
-    super.init({
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false
-      }
-    }, { sequelize });
+  Sector.associate = () => {
+    Sector.hasMany(sequelize.models.Employee, {
+      foreignKey: 'origin_sector_id',
+      as: 'originalEmployees'
+    });
+    Sector.hasMany(sequelize.models.Employee, {
+      foreignKey: 'current_sector_id',
+      as: 'currentEmployees'
+    });
   }
 
-  static associate(models) {
-    this.hasMany(models.Employee, { foreignKey: 'origin_sector_id', as: 'original_employees' });
-    this.hasMany(models.Employee, { foreignKey: 'current_sector_id', as: 'current_employees' });
-  }
+  return Sector
 }
-
-module.exports = Sector;

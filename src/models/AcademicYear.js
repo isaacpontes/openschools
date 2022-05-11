@@ -1,29 +1,27 @@
 'use strict';
 
-const { Model, DataTypes } = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  const AcademicYear = sequelize.define('AcademicYear', {
+    year: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
+  }, {
+    tableName: 'academic_years'
+  })
 
-class AcademicYear extends Model {
-  static init(sequelize) {
-    super.init({
-      year: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      }
-    }, { sequelize });
-  }
-
-  static associate(models) {
-    this.belongsToMany(models.Classroom, {
+  AcademicYear.associate = () => {
+    AcademicYear.belongsToMany(sequelize.models.Classroom, {
       foreignKey: 'academic_year_id',
       through: 'enrollments',
       as: 'classrooms'
     });
-    this.belongsToMany(models.Student, {
+    AcademicYear.belongsToMany(sequelize.models.Student, {
       foreignKey: 'academic_year_id',
       through: 'enrollments',
       as: 'students'
     });
   }
-}
 
-module.exports = AcademicYear;
+  return AcademicYear
+}

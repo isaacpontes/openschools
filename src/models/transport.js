@@ -1,28 +1,29 @@
 'use strict';
 
-const { Model, DataTypes } = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  const Transport = sequelize.define('Transport', {
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    driver: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    info: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    }
+  }, {
+    tableName: 'transports'
+  })
 
-class Transport extends Model {
-  static init(sequelize) {
-    super.init({
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      driver: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      info: {
-        type: DataTypes.TEXT,
-        allowNull: true
-      }
-    }, { sequelize });
+  Transport.associate = () => {
+    Transport.hasMany(sequelize.models.Student, {
+      foreignKey: 'transport_id',
+      as: 'transports'
+    });
   }
 
-  static associate(models) {
-    this.hasMany(models.Student, { foreignKey: 'transport_id', as: 'transports' });
-  }
+  return Transport
 }
-
-module.exports = Transport;

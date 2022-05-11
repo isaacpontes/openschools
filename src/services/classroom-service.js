@@ -1,5 +1,5 @@
 const { QueryTypes } = require('sequelize');
-const Classroom = require('../models/Classroom');
+const { Classroom } = require('../models');
 
 module.exports = {
   create: (name, grade_id, school_id) => {

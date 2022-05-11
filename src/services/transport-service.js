@@ -1,4 +1,4 @@
-const Transport = require('../models/Transport');
+const { Transport } = require('../models');
 
 module.exports = {
   create: (name, driver, info) => {

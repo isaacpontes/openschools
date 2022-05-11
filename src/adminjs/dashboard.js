@@ -1,8 +1,5 @@
 const AdminJs = require('adminjs');
-const Employee = require('../models/Employee');
-const School = require('../models/School');
-const Sector = require('../models/Sector');
-const Student = require('../models/Student');
+const { Employee, School, Sector, Student } = require('../models');
 
 module.exports = {
   handler: async (req, res, context) => {

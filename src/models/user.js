@@ -1,62 +1,59 @@
 'use strict';
 
-const { Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 
-class User extends Model {
-
-  static init(sequelize) {
-    super.init({
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      role: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          isIn: {
-            args: [['admin', 'manager', 'teacher', 'student']],
-            msg: 'Invalid role'
-          }
+module.exports = (sequelize, DataTypes) => {
+  const User = sequelize.define('User', {
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isIn: {
+          args: [['admin', 'manager', 'teacher', 'student']],
+          msg: 'Invalid role'
         }
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        validate: {
-          isEmail: true
+      }
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true
+      }
+    },
+    password: DataTypes.STRING
+  }, {
+    tableName: 'users',
+    hooks: {
+      beforeSave: async (user) => {
+        if (user.isNewRecord || user.changed('password')) {
+          user.password = await bcrypt.hash(user.password.toString(), 10);
         }
-      },
-      password: DataTypes.STRING
-    }, { sequelize });
-
-    this.addHook('beforeCreate', async (user) => {
-      if (user.isNewRecord || user.changed('password')) {
-        user.password = await bcrypt.hash(user.password, 10);
       }
-    });
+    }
+  })
 
-    this.addHook('beforeUpdate', async (user) => {
-      if (user.isNewRecord || user.changed('password')) {
-        user.password = await bcrypt.hash(user.password, 10);
-      }
-    });
-  }
-
-  static associate(models) {
-    this.hasMany(models.School, { foreignKey: 'user_id', as: 'schools' });
-  }
-
-  checkPassword(password, callback) {
+  User.prototype.checkPassword = function (password, callbackfn) {
     bcrypt.compare(password, this.password, (err, isSame) => {
-      if (err)
-        callback(err);
-      else
-        callback(err, isSame);
+      if (err) {
+        callbackfn(err, false)
+      } else {
+        callbackfn(err, isSame)
+      }
+    })
+  }
+
+  User.associate = () => {
+    User.hasMany(sequelize.models.School, {
+      foreignKey: 'user_id',
+      as: 'schools'
     });
   }
-}
 
-module.exports = User;
+  return User
+}
