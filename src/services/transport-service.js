@@ -28,4 +28,4 @@ module.exports = {
   deleteOne: async (id) => {
     await Transport.destroy({ where: { id } });
   }
-}
+};

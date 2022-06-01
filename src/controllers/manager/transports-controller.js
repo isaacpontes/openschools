@@ -1,4 +1,4 @@
-const transportService = require("../../services/transport-service");
+const transportService = require('../../services/transport-service');
 
 module.exports = {
   // Find all transports
@@ -14,4 +14,4 @@ module.exports = {
       });
     }
   }
-}
+};

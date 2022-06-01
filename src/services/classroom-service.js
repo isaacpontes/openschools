@@ -56,4 +56,4 @@ module.exports = {
   deleteOne: async (id) => {
     await Classroom.destroy({ where: { id } });
   }
-}
+};

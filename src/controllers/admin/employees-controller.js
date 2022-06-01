@@ -1,4 +1,4 @@
-const employeeService = require("../../services/employee-service");
+const employeeService = require('../../services/employee-service');
 
 module.exports = {
   // Return a list of all employees
@@ -161,4 +161,4 @@ module.exports = {
       });
     }
   }
-}
+};

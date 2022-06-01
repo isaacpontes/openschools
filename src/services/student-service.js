@@ -103,4 +103,4 @@ module.exports = {
   deleteOne: async (id) => {
     await Student.destroy({ where: { id } });
   }
-}
+};

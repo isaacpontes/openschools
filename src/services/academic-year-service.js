@@ -28,4 +28,4 @@ module.exports = {
   deleteOne: async (id) => {
     await AcademicYear.destroy({ where: { id } });
   }
-}
+};

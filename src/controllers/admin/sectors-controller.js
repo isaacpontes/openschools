@@ -1,4 +1,4 @@
-const sectorService = require("../../services/sector-service");
+const sectorService = require('../../services/sector-service');
 
 module.exports = {
   // Return a list of all sectors
@@ -86,4 +86,4 @@ module.exports = {
       });
     }
   }
-}
+};

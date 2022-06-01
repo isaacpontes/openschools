@@ -1,4 +1,4 @@
-const classroomService = require("../../services/classroom-service");
+const classroomService = require('../../services/classroom-service');
 
 module.exports = {
   // Return a list of all classrooms belonging to the manager's school
@@ -41,7 +41,7 @@ module.exports = {
       const classroom = await classroomService.findById(id);
       return res.status(200).json(classroom);
     } catch (error) {
-      return res.status(400).json({ message: 'Erro ao retornar turma.' })
+      return res.status(400).json({ message: 'Erro ao retornar turma.' });
     }
   },
 
@@ -84,4 +84,4 @@ module.exports = {
       });
     }
   }
-}
+};

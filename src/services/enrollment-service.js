@@ -34,4 +34,4 @@ module.exports = {
   deleteOne: async (id) => {
     await Enrollment.destroy({ where: { id } });
   }
-}
+};

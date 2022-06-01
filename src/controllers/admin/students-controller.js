@@ -1,4 +1,4 @@
-const studentService = require("../../services/student-service");
+const studentService = require('../../services/student-service');
 
 module.exports = {
   // Return a list of all students
@@ -125,7 +125,7 @@ module.exports = {
 
       await studentService.save(student);
 
-      return res.json(student)
+      return res.json(student);
     } catch (error) {
       return res.status(400).json({
         message: 'Erro ao atualizar estudante',
@@ -150,4 +150,4 @@ module.exports = {
       });
     }
   }
-}
+};

@@ -10,7 +10,7 @@ const dashboard = require('./dashboard');
 class Admin {
   constructor(rootPath, databases) {
     AdminJS.registerAdapter(AdminJSSequelize);
-    this.rootPath = rootPath
+    this.rootPath = rootPath;
     this.instance = new AdminJS({
       rootPath,
       databases,
@@ -28,4 +28,4 @@ class Admin {
   }
 }
 
-module.exports = Admin
+module.exports = Admin;

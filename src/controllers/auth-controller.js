@@ -1,5 +1,5 @@
-const jwtService = require("../services/jwt-service");
-const userService = require("../services/user-service");
+const jwtService = require('../services/jwt-service');
+const userService = require('../services/user-service');
 
 module.exports = {
   // Authenticates the user returning a JWT
@@ -21,7 +21,7 @@ module.exports = {
 
         const payload = { email };
 
-        const token = jwtService.signPayload(payload, '1d')
+        const token = jwtService.signPayload(payload, '1d');
 
         return res.status(200).json({ authenticated: true, token });
       });
@@ -29,4 +29,4 @@ module.exports = {
       return res.status(400).json({ message: 'Ocorreu um erro durante a autenticação.' });
     }
   }
-}
+};

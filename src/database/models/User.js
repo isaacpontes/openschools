@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 
 class User extends Model {
   static init(sequelize) {
-    console.log("initializing...")
+    console.log('initializing...');
     super.init({
       name: {
         type: DataTypes.STRING,

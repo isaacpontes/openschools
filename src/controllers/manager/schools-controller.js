@@ -1,4 +1,4 @@
-const schoolService = require("../../services/school-service");
+const schoolService = require('../../services/school-service');
 
 module.exports = {
   // Return a list of all schools belonging to current user
@@ -29,4 +29,4 @@ module.exports = {
       return res.status(400).json({ message: 'Erro ao recuperar escola.' });
     }
   }
-}
+};

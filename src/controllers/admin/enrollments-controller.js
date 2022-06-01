@@ -1,4 +1,4 @@
-const enrollmentService = require("../../services/enrollment-service");
+const enrollmentService = require('../../services/enrollment-service');
 
 module.exports = {
   // Return a list of all enrollments
@@ -68,4 +68,4 @@ module.exports = {
       });
     }
   }
-}
+};

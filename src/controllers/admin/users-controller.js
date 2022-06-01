@@ -23,7 +23,7 @@ module.exports = {
     const user = userService.create(name, role, email, password);
 
     try {
-      await userService.save(user)
+      await userService.save(user);
       
       return res.status(201).json(user);
     } catch (error) {
@@ -65,7 +65,7 @@ module.exports = {
       if (email) user.email = email;
       if (password) {
         if (!password_confirmation) {
-          throw new Error('A confirmação da senha é obrigatória.')
+          throw new Error('A confirmação da senha é obrigatória.');
         }
         if (password !== password_confirmation) {
           throw new Error('As senhas não conferem.');
@@ -99,4 +99,4 @@ module.exports = {
       });
     }
   }
-}
+};

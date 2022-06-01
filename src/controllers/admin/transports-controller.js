@@ -1,4 +1,4 @@
-const transportService = require("../../services/transport-service");
+const transportService = require('../../services/transport-service');
 
 module.exports = {
   // Return a list of all transports
@@ -96,4 +96,4 @@ module.exports = {
       });
     }
   }
-}
+};

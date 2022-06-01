@@ -1,4 +1,4 @@
-const gradeService = require("../../services/grade-service");
+const gradeService = require('../../services/grade-service');
 
 module.exports = {
   // Return a list of all grades
@@ -68,4 +68,4 @@ module.exports = {
       });
     }
   }
-}
+};

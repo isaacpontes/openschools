@@ -8,7 +8,7 @@ const ensureAuth = (req, res, next) => {
     return res.status(401).json({ message: 'Não Autorizado: nenhum token encontrado.'});
   }
 
-  const payload = jwtService.verifyToken(token)
+  const payload = jwtService.verifyToken(token);
 
   if (typeof payload === 'undefined') {
     return res.status(401).json({ message: 'Não Autorizado: token inválido.'});

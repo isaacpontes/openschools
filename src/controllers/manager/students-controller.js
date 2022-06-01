@@ -1,11 +1,9 @@
-const studentService = require("../../services/student-service");
+const studentService = require('../../services/student-service');
 
 module.exports = {
   // Find all students from the manager's schools
   // GET /api/manager/students
   index: async (req, res) => {
-    const { id } = req.user;
-
     try {
       const students = await studentService.findAll();
 
@@ -157,4 +155,4 @@ module.exports = {
       return res.status(400).json({ message: 'Erro ao retornar estudantes.', error: error.message });
     }
   }
-}
+};

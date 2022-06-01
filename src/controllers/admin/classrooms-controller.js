@@ -1,4 +1,4 @@
-const classroomService = require("../../services/classroom-service");
+const classroomService = require('../../services/classroom-service');
 
 module.exports = {
   // Return a list of all classrooms
@@ -95,4 +95,4 @@ module.exports = {
       });
     }
   }
-}
+};

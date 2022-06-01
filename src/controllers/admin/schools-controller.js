@@ -1,4 +1,4 @@
-const schoolService = require("../../services/school-service");
+const schoolService = require('../../services/school-service');
 
 module.exports = {
   // Return a list of all schools
@@ -97,4 +97,4 @@ module.exports = {
       });
     }
   }
-}
+};

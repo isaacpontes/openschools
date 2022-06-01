@@ -69,4 +69,4 @@ module.exports = {
   deleteOne: async (id) => {
     await Employee.destroy({ where: { id } });
   }
-}
+};

@@ -4,7 +4,7 @@ const { Model, DataTypes } = require('sequelize');
 
 class Enrollment extends Model {
   static init(sequelize) {
-    console.log("initializing...")
+    console.log('initializing...');
     super.init({
       status: {
         type: DataTypes.INTEGER,

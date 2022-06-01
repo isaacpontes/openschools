@@ -1,4 +1,4 @@
-const academicYearService = require("../../services/academic-year-service");
+const academicYearService = require('../../services/academic-year-service');
 
 module.exports = {
   // Return a list of all academic years
@@ -68,4 +68,4 @@ module.exports = {
       });
     }
   }
-}
+};
