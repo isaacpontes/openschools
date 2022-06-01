@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const User = require('../database/models/User');
 
 module.exports = {
   create: (name, role, email, password) => {
@@ -12,7 +12,7 @@ module.exports = {
   },
 
   findAllManagers: async () => {
-    const users = await User.findAll({ where: { role: 'manager' } });
+    const users = await User.findAll({ where: { role: 'manager' }});
     return users;
   },
 
@@ -27,12 +27,12 @@ module.exports = {
   },
 
   findByEmail: async (email) => {
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ where: { email }});
     return user;
   },
 
   deleteOne: async (id) => {
-    await User.destroy({ where: { id } });
+    await User.destroy({ where: { id }});
   },
 
   countAdminUsers: async () => {

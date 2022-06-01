@@ -2,10 +2,9 @@
   "name": "openschools",
   "version": "0.0.1",
   "description": "A simple schools managing system.",
-  "main": "src/server.js",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
+    "start": "node ./bin/www",
+    "dev": "nodemon start",
     "webpack": "webpack --mode development",
     "webpack-prod": "webpack --mode production",
     "create-test-db": "cross-env NODE_ENV=test sequelize-cli db:create",

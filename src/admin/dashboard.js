@@ -1,5 +1,5 @@
 const AdminJs = require('adminjs');
-const { Employee, School, Sector, Student } = require('../models');
+const { Employee, School, Sector, Student } = require('../database/models');
 
 module.exports = {
   handler: async (req, res, context) => {
@@ -21,5 +21,5 @@ module.exports = {
       }
     }
   },
-  component: AdminJs.bundle('../adminjs/components/Dashboard')
+  component: AdminJs.bundle('./components/Dashboard')
 };

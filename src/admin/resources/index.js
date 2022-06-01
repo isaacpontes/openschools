@@ -1,4 +1,4 @@
-const models = require('../../models');
+const models = require('../../database/models');
 const classroomOptions = require('./classroomOptions');
 const schoolOptions = require('./schoolOptions');
 const studentOptions = require('./studentOptions');

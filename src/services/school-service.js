@@ -1,5 +1,5 @@
 const { QueryTypes } = require('sequelize');
-const { School } = require('../models');
+const School = require('../database/models/School');
 
 module.exports = {
   create: (name, inep_code, address, user_id) => {
@@ -27,7 +27,7 @@ module.exports = {
   },
 
   findByManager: async (user_id) => {
-    const schools = await School.findAll({ where: { user_id } });
+    const schools = await School.findAll({ where: { user_id }});
     return schools;
   },
 
@@ -70,7 +70,7 @@ module.exports = {
   },
 
   deleteOne: async (id) => {
-    await School.destroy({ where: { id } });
+    await School.destroy({ where: { id }});
   },
 
   getStudentsCountBySchool: async () => {

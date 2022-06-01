@@ -1,4 +1,4 @@
-const { Employee } = require('../models');
+const Employee = require('../database/models/Employee');
 
 module.exports = {
   create: (values) => {

@@ -1,4 +1,4 @@
-const { AcademicYear } = require('../models');
+const AcademicYear = require('../database/models/AcademicYear');
 
 module.exports = {
   create: (year) => {

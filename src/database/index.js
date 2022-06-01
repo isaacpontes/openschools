@@ -1,15 +1,12 @@
 const { Sequelize } = require('sequelize');
+const PostgresConnectionAdapter = require('./adapters/PostgresConnectionAdapter');
 
-function connect() {
-  const databaseUrl = process.env.NODE_ENV !== 'test'
-    ? process.env.DATABASE_URL
-    : process.env.TEST_DATABASE_URL
-
-  const sequelize = new Sequelize(databaseUrl, {
-    define: { underscored: true }
-  });
-
-  return sequelize
+class Database {
+  constructor() {
+    const connectionString = process.env.DATABASE_URL
+    this.adapter = new PostgresConnectionAdapter(connectionString)
+    this.adapter.prepareModels()
+  }
 }
 
-module.exports = { connect };
+module.exports = Database

@@ -1,4 +1,4 @@
-const { Enrollment } = require('../models');
+const Enrollment = require('../database/models/Enrollment');
 
 module.exports = {
   create: (student_id, classroom_id, academic_year_id, status) => {
