@@ -4,10 +4,10 @@ module.exports = {
   // Return a list of all schools belonging to current user
   // GET /api/manager/schools
   index: async (req, res) => {
-    const manager = req.user.id;
+    const managerId = req.user.id;
 
     try {
-      const schools = await schoolService.findByManager(manager);
+      const schools = await schoolService.findByManagerId(managerId);
       return res.status(200).json(schools);
     } catch (error) {
       return res.status(400).json({
@@ -23,7 +23,7 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      const school = await schoolService.findById(id);
+      const school = await schoolService.findByIdWithClassrooms(id);
       return res.status(200).json(school);
     } catch (error) {
       return res.status(400).json({ message: 'Erro ao recuperar escola.' });

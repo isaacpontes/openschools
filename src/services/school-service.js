@@ -26,8 +26,11 @@ module.exports = {
     return schools;
   },
 
-  findByManager: async (user_id) => {
-    const schools = await School.findAll({ where: { user_id }});
+  async findByManagerId(user_id) {
+    const schools = await School.findAll({
+      where: { user_id },
+      order: [['name', 'ASC']]
+    });
     return schools;
   },
 
@@ -50,11 +53,14 @@ module.exports = {
     return school;
   },
 
-  findByIdWithClassrooms: async (id) => {
+  async findByIdWithClassrooms(id) {
     const school = await School.findByPk(id, {
       include: [
-        { association: 'manager' },
-        { association: 'classrooms' }
+        {
+          association: 'classrooms',
+          attributes: ['id', 'name', 'created_at', 'updated_at'],
+          include: 'grade'
+        }
       ]
     });
     return school;
