@@ -3,7 +3,7 @@ const models = require('../models');
 
 class PostgresConnectionAdapter {
   constructor(connectionString, customOptions) {
-    const defaultOptions = { define: { underscored: true } };
+    const defaultOptions = { define: { createdAt: 'created_at', updatedAt: 'updated_at',  } };
     const options = Object.assign({}, defaultOptions, customOptions);
     this.sequelize = new Sequelize(connectionString, options);
   }

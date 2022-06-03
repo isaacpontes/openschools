@@ -4,7 +4,6 @@ const { Model, DataTypes } = require('sequelize');
 
 class Transport extends Model {
   static init(sequelize) {
-    console.log('initializing...');
     super.init({
       name: {
         type: DataTypes.STRING,
@@ -18,7 +17,7 @@ class Transport extends Model {
         type: DataTypes.TEXT,
         allowNull: true
       }
-    }, { sequelize });
+    }, { sequelize, modelName: 'transports' });
   }
 
   static associate(models) {

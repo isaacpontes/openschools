@@ -4,7 +4,6 @@ const { Model, DataTypes } = require('sequelize');
 
 class AcademicYear extends Model {
   static init(sequelize) {
-    console.log('initializing...');
     super.init({
       year: {
         type: DataTypes.INTEGER,

@@ -4,7 +4,6 @@ const { Model, DataTypes } = require('sequelize');
 
 class Enrollment extends Model {
   static init(sequelize) {
-    console.log('initializing...');
     super.init({
       status: {
         type: DataTypes.INTEGER,
@@ -14,7 +13,7 @@ class Enrollment extends Model {
           isIn: [[ 'active', 'pending', 'rejected', 'inactive' ]]
         }
       }
-    }, { sequelize });
+    }, { sequelize, modelName: 'enrollments' });
   }
 
   static associate(models) {

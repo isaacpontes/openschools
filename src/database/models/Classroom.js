@@ -4,13 +4,12 @@ const { Model, DataTypes } = require('sequelize');
 
 class Classroom extends Model {
   static init(sequelize) {
-    console.log('initializing...');
     super.init({
       name: {
         type: DataTypes.STRING,
         allowNull: false
       }
-    }, { sequelize });
+    }, { sequelize, modelName: 'classrooms' });
   }
 
   static associate(models) {

@@ -4,7 +4,6 @@ const { Model, DataTypes } = require('sequelize');
 
 class Employee extends Model {
   static init(sequelize) {
-    console.log('initializing...');
     super.init({
       name: {
         type: DataTypes.STRING,
@@ -112,7 +111,7 @@ class Employee extends Model {
       info: {
         type: DataTypes.TEXT,
       }
-    }, { sequelize });
+    }, { sequelize, modelName: 'employees' });
   }
 
   static associate(models) {

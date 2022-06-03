@@ -5,7 +5,6 @@ const bcrypt = require('bcrypt');
 
 class User extends Model {
   static init(sequelize) {
-    console.log('initializing...');
     super.init({
       name: {
         type: DataTypes.STRING,
@@ -30,7 +29,7 @@ class User extends Model {
         }
       },
       password: DataTypes.STRING
-    }, { sequelize });
+    }, { sequelize, modelName: 'users' });
 
     this.addHook('beforeCreate', async (user) => {
       if (user.isNewRecord || user.changed('password')) {
