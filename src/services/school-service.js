@@ -71,6 +71,11 @@ module.exports = {
     return school;
   },
 
+  async addClassroom(name, grade_id, school_id) {
+    const school = await School.findByPk(school_id);
+    await school.createClassroom({ name, grade_id });
+  },
+
   updateOne: async (id, name, inep_code, address, user_id) => {
     await School.update({ name, inep_code, address, user_id }, { where: { id } });
   },

@@ -9,6 +9,7 @@ const router = express.Router();
 
 router.get('/schools', schoolsController.index);
 router.get('/schools/:id', schoolsController.show);
+router.post('/schools/:id/classrooms', schoolsController.addClassroom);
 
 router.get('/classrooms', classroomsController.index);
 router.post('/classrooms', classroomsController.save);
