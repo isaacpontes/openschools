@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "A simple schools managing system.",
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "sequelize-cli db:migrate && node ./bin/www",
     "dev": "nodemon start",
     "webpack": "webpack --mode development",
     "webpack-prod": "webpack --mode production",
