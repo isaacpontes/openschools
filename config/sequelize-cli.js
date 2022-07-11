@@ -6,5 +6,8 @@ module.exports = {
   },
   test: {
     url: process.env.TEST_DATABASE_URL
-  }
+  },
+  production: {
+    url: process.env.DATABASE_URL
+  },
 };
